@@ -4,12 +4,12 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
-  --color-yellow-300: #ffff00;
-  --color-yellow-400: #ffd500;
+  --color-yellow-300: #fff700;
+  --color-yellow-400: #ffd700;
   --color-yellow-500: #ffaa00;
-  --color-blue-400: #00bfff;
-  --color-blue-500: #0066ff;
-  --color-blue-600: #0033ff;
+  --color-blue-400: #00d2ff;
+  --color-blue-500: #0077ff;
+  --color-blue-600: #0044ff;
 }
 
 @layer base {

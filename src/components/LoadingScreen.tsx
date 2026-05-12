@@ -71,33 +71,53 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
               <motion.div 
                 animate={{ rotateY: 360 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="w-24 h-24 border-2 border-blue-500 rounded-3xl flex items-center justify-center relative shadow-[0_0_40px_rgba(0,136,255,0.4)] bg-black z-10"
+                className="w-24 h-24 border-2 border-blue-500 rounded-3xl flex items-center justify-center relative shadow-[0_0_50px_rgba(0,119,255,0.4)] bg-black z-10"
               >
                  <motion.div 
                    animate={{ rotate: 360 }}
-                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                   className="absolute inset-[-6px] border-2 border-t-yellow-400 border-r-transparent border-b-yellow-400 border-l-transparent rounded-3xl" 
+                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                   className="absolute inset-[-8px] border-2 border-t-yellow-400 border-r-transparent border-b-yellow-400 border-l-transparent rounded-[2rem] shadow-[0_0_15px_rgba(255,215,0,0.4)]" 
                  />
-                 <span className="text-white text-4xl font-bold">N</span>
+                 <span className="text-white text-4xl font-bold drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">N</span>
               </motion.div>
             </div>
 
-            <div className="relative mt-4">
+            <div className="relative mt-8 group flex justify-center items-center">
+              {/* Yellow Beam Effect emitting from the text */}
+              <div className="absolute inset-0 flex items-center justify-center -z-10 pointer-events-none">
+                <motion.div 
+                  className="w-[150%] h-[150px] bg-yellow-400/30 blur-[50px]"
+                  animate={{ opacity: [0.2, 0.7, 0.2], scale: [0.9, 1.1, 0.9] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                />
+                {/* Horizontal light ray */}
+                <motion.div 
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[2px] bg-gradient-to-r from-transparent via-yellow-300 to-transparent blur-[1px]"
+                  animate={{ opacity: [0, 0.8, 0], width: ["0%", "250%", "0%"] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                />
+                {/* Vertical light ray */}
+                <motion.div 
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] bg-gradient-to-b from-transparent via-yellow-300 to-transparent blur-[1px]"
+                  animate={{ opacity: [0, 0.5, 0], height: ["0%", "200px", "0%"] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                />
+              </div>
+
               <motion.h1 
-                className="text-4xl font-bold tracking-[0.3em] text-white"
-                animate={{ opacity: [0.6, 1, 0.6], letterSpacing: ["0.2em", "0.4em", "0.2em"] }}
+                className="text-4xl md:text-5xl font-bold tracking-[0.4em] text-white relative z-10 uppercase"
+                animate={{ 
+                  opacity: [0.8, 1, 0.8], 
+                  letterSpacing: ["0.3em", "0.5em", "0.3em"],
+                  textShadow: ["0 0 10px #ffd700", "0 0 40px #ffd700", "0 0 10px #ffd700"]
+                }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                NEWREXS
+                NEURIX
               </motion.h1>
-              <motion.div 
-                className="absolute -inset-x-4 -inset-y-2 border-x border-yellow-400/30"
-                animate={{ scaleX: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
             </div>
           </div>
-          <p className="text-blue-400 text-[10px] tracking-[0.4em] uppercase mt-4">Autonomous Bio-Logic Systems</p>
+          <p className="text-blue-400 text-[10px] tracking-[0.6em] uppercase mt-6 font-bold">Initializing Bio-Logic Matrix</p>
         </motion.div>
 
         <div className="w-full bg-blue-900/20 border border-blue-500/30 h-1.5 rounded-full overflow-hidden mb-4 p-[1px]">
