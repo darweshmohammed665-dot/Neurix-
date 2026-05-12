@@ -102,7 +102,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-yellow-500/20 relative">
+    <div className="min-h-screen bg-blue-950 text-slate-100 font-sans selection:bg-yellow-500/20 relative">
       {/* Global Soft Golden/Yellow Glow */}
       <div className="fixed inset-0 pointer-events-none z-[100] shadow-[inset_0_0_150px_rgba(234,179,8,0.15)]" />
 
@@ -122,7 +122,7 @@ export default function App() {
         </AnimatePresence>
 
         {/* Header / Nav */}
-        <header className="sticky top-0 z-50 border-b border-yellow-500/50 shadow-[0_4px_30px_-5px_rgba(234,179,8,0.25)] bg-gradient-to-b from-yellow-950/40 to-black/90 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 border-b border-yellow-500/50 shadow-[0_4px_30px_-5px_rgba(234,179,8,0.25)] bg-gradient-to-b from-yellow-950/40 to-blue-950/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 h-auto py-2 md:py-3 flex flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 shrink-0 relative">
             <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-slate-500/10 blur-[30px] rounded-full pointer-events-none" />
@@ -279,14 +279,14 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-black rounded-[2rem] p-8 border border-white/5 relative overflow-hidden">
+              <div className="bg-blue-950/50 rounded-[2rem] p-8 border border-white/5 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[80px] rounded-full point-events-none" />
                 <h4 className="text-2xl font-bold mb-8">How It Works</h4>
                 
                 <div className="space-y-8 relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-500 before:via-blue-600 before:to-transparent">
                   {/* Step 1 */}
                   <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-black bg-blue-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(59,130,246,0.2)] z-10">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-blue-950 bg-blue-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(59,130,246,0.2)] z-10">
                       1
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-4 rounded-xl bg-white/[0.03] border border-white/10 group-hover:border-blue-500/50 transition-colors">
@@ -297,7 +297,7 @@ export default function App() {
                   
                   {/* Step 2 */}
                   <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-black bg-blue-600 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(37,99,235,0.2)] z-10">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-blue-950 bg-blue-600 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(37,99,235,0.2)] z-10">
                       2
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-4 rounded-xl bg-white/[0.03] border border-white/10 group-hover:border-blue-600/50 transition-colors">
@@ -308,7 +308,7 @@ export default function App() {
                   
                   {/* Step 3 */}
                   <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-black bg-blue-700 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(29,78,216,0.2)] z-10">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-blue-950 bg-blue-700 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(29,78,216,0.2)] z-10">
                       3
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-4 rounded-xl bg-white/[0.03] border border-white/10 group-hover:border-blue-700/50 transition-colors">
@@ -436,7 +436,7 @@ export default function App() {
                  <div className="mb-32 relative group cursor-pointer" onClick={() => setSelectedMember(teamData.leader)}>
                     <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-yellow-400 rounded-[3rem] blur-2xl opacity-20" />
                     <div className="relative p-1 rounded-[3rem] bg-gradient-to-br from-blue-600 to-yellow-400 shadow-[0_0_50px_rgba(37,99,235,0.2)]">
-                       <div className="bg-black px-12 py-10 rounded-[calc(3rem-3px)] text-center w-full min-w-[320px] border border-white/10">
+                       <div className="bg-blue-950 px-12 py-10 rounded-[calc(3rem-3px)] text-center w-full min-w-[320px] border border-white/10">
                           <div className="absolute top-4 right-6 text-[8px] font-black tracking-[0.5em] text-white/20 uppercase">NEURIX</div>
                           <Hexagon className="w-12 h-12 text-yellow-400 mx-auto mb-6 group-hover:rotate-90 transition-transform duration-700" />
                           <h4 className="text-2xl font-black italic tracking-tighter text-white mb-1 uppercase">Mostafa Abdelrahman</h4>
@@ -580,7 +580,7 @@ export default function App() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setSelectedMember(null)}
-                className="absolute inset-0 bg-black/90 backdrop-blur-3xl"
+                className="absolute inset-0 bg-blue-950/90 backdrop-blur-3xl"
               />
               <motion.div
                 initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -596,7 +596,7 @@ export default function App() {
                 <div className="relative p-8 md:p-16">
                   <button 
                     onClick={() => setSelectedMember(null)}
-                    className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-yellow-400 hover:text-black hover:border-transparent transition-all z-20 group"
+                    className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-yellow-400 hover:text-blue-950 hover:border-transparent transition-all z-20 group"
                   >
                     <span className="text-2xl transition-transform group-hover:scale-110">×</span>
                   </button>
@@ -604,9 +604,9 @@ export default function App() {
                   <div className="flex flex-col md:flex-row gap-12 items-center md:items-start text-center md:text-left">
                     <div className="relative group">
                       <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600 to-yellow-400 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition-opacity" />
-                      <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-[2rem] bg-black border-2 border-white/10 flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-[2rem] bg-blue-950 border-2 border-white/10 flex items-center justify-center shrink-0 overflow-hidden">
                         <Users className="w-20 h-20 text-slate-800" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/60 to-transparent" />
                         <div className="absolute bottom-4 left-0 right-0 text-[10px] font-black uppercase tracking-[0.5em] text-yellow-400 opacity-60">Verified</div>
                       </div>
                     </div>
@@ -652,7 +652,7 @@ export default function App() {
         {/* CTA */}
         <section className="py-20 md:py-32 px-4 md:px-6">
           <div className="max-w-5xl mx-auto rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-blue-600 to-yellow-400 p-0.5 md:p-1">
-            <div className="bg-black rounded-[1.9rem] md:rounded-[2.9rem] p-8 md:p-24 text-center">
+            <div className="bg-blue-950 rounded-[1.9rem] md:rounded-[2.9rem] p-8 md:p-24 text-center">
               <h3 className="text-3xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight">
                 "Your Hand, <span className="text-yellow-400">Your World</span>"
               </h3>
