@@ -4,6 +4,9 @@
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
+  --color-yellow-300: #fffb00;
+  --color-yellow-400: #ffea00;
+  --color-yellow-500: #ffd500;
 }
 
 @layer base {

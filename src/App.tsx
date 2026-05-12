@@ -64,37 +64,6 @@ const OBJECTIVES = [
   }
 ];
 
-const PROJECT_GALLERY = [
-  {
-    id: 1,
-    title: "Spatial Hand Interaction",
-    category: "Software",
-    url: "https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=1200&auto=format&fit=crop",
-    desc: "Real-time gesture analysis capturing complex hand movements with high precision."
-  },
-  {
-    id: 2,
-    title: "Holographic Interface",
-    category: "Interface",
-    url: "https://images.unsplash.com/photo-1535223289827-42f1e9919769?q=80&w=1200&auto=format&fit=crop",
-    desc: "Futuristic digital layers rendered through Neurix's integrated software engine."
-  },
-  {
-    id: 3,
-    title: "Hardware Integration",
-    category: "Hardware",
-    url: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop",
-    desc: "Optimized circuit architecture and sensory arrays designed specifically for Neurix."
-  },
-  {
-    id: 4,
-    title: "Data Visualization",
-    category: "AI / Analytics",
-    url: "https://images.unsplash.com/photo-1551288049-bbbda536339a?q=80&w=1200&auto=format&fit=crop",
-    desc: "Real-time feedback loop processing motion data into actionable digital commands."
-  }
-];
-
 const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
   <motion.div 
     className={`relative ${className}`}
@@ -144,43 +113,10 @@ const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [activeImage, setActiveImage] = useState<typeof PROJECT_GALLERY[0] | null>(null);
 
   return (
     <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-blue-600/40">
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {activeImage && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-black/95 backdrop-blur-sm"
-            onClick={() => setActiveImage(null)}
-          >
-            <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="relative max-w-5xl w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-600/20"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img src={activeImage.url} alt={activeImage.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col justify-end p-8">
-                <p className="text-yellow-400 font-bold text-sm uppercase tracking-widest mb-2">{activeImage.category}</p>
-                <h4 className="text-3xl font-bold text-white mb-2">{activeImage.title}</h4>
-                <p className="text-slate-300 max-w-2xl">{activeImage.desc}</p>
-              </div>
-              <button 
-                className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black/50 border border-white/10 hover:bg-black/80 flex items-center justify-center text-yellow-400 transition-colors"
-                onClick={() => setActiveImage(null)}
-              >
-                ×
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
       {/* Background decoration */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-700/20 blur-[140px] rounded-full" />
@@ -201,7 +137,6 @@ export default function App() {
             <a href="#about" className="text-sm font-medium hover:text-yellow-400 transition-colors">About</a>
             <a href="#core-concept" className="text-sm font-medium hover:text-yellow-400 transition-colors">Core Concept</a>
             <a href="#objectives" className="text-sm font-medium hover:text-yellow-400 transition-colors">Objectives</a>
-            <a href="#gallery" className="text-sm font-medium hover:text-yellow-400 transition-colors">Gallery</a>
             <a href="#team" className="text-sm font-medium hover:text-yellow-400 transition-colors">Team Members</a>
             <button className="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-yellow-400 hover:text-black transition-all active:scale-95">
               Contact Us
@@ -500,64 +435,6 @@ export default function App() {
                   <p className="text-slate-400 leading-relaxed">
                     {obj.description}
                   </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Project Gallery */}
-        <section id="gallery" className="py-24 px-6 relative overflow-hidden">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-6">
-              <div>
-                <h3 className="text-3xl md:text-5xl font-bold mb-4 text-center md:text-left">Project Showcase</h3>
-                <p className="text-slate-400 text-lg max-w-xl text-center md:text-left">
-                  Visualizing the hardware, software, and interfaces that make Neurix unique.
-                </p>
-              </div>
-              <div className="hidden md:flex gap-4">
-                <button className="p-3 rounded-full border border-white/10 hover:border-blue-500/50 transition-colors">
-                  <ArrowRight className="w-5 h-5 rotate-180 text-yellow-400" />
-                </button>
-                <button className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-blue-500/50 transition-colors">
-                  <ArrowRight className="w-5 h-5 text-yellow-400" />
-                </button>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {PROJECT_GALLERY.map((item, i) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group relative cursor-pointer"
-                  onClick={() => setActiveImage(item)}
-                >
-                  <div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-white/5 group-hover:border-blue-500/50 transition-all shadow-xl">
-                    <img 
-                      src={item.url} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity" />
-                    
-                    <div className="absolute inset-0 flex flex-col justify-end p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      <p className="text-[10px] font-black uppercase tracking-[.2em] text-yellow-400 mb-1">{item.category}</p>
-                      <h4 className="text-xl font-bold text-white leading-tight">{item.title}</h4>
-                      <div className="mt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                        <span className="text-xs font-bold text-white/50 uppercase tracking-widest">View Concept</span>
-                        <div className="w-8 h-[1px] bg-blue-500/50" />
-                      </div>
-                    </div>
-                    
-                    <div className="absolute top-4 right-4 p-2 rounded-full bg-black/40 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 border border-white/10">
-                      <Zap className="w-4 h-4 text-yellow-400" />
-                    </div>
-                  </div>
                 </motion.div>
               ))}
             </div>
