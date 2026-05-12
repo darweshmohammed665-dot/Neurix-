@@ -102,7 +102,10 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-blue-600/40 relative">
+    <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-yellow-500/40 relative">
+      {/* Global Yellow/Gold Outline */}
+      <div className="fixed inset-0 pointer-events-none z-[100] border-[2px] border-yellow-500/50 shadow-[inset_0_0_30px_rgba(234,179,8,0.25)]" />
+
       {/* Background decoration */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
@@ -119,23 +122,30 @@ export default function App() {
         </AnimatePresence>
 
         {/* Header / Nav */}
-        <header className="sticky top-0 z-50 border-b border-white/5 bg-black/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 h-auto py-3 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 w-full justify-start relative">
-            <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-yellow-500/10 blur-[30px] rounded-full pointer-events-none" />
-            <NeurixLogo className="w-10 h-10 md:w-12 md:h-12 relative z-10" />
-            <div className="text-left relative z-10">
-              <h1 className="font-bold text-xl md:text-2xl tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500">NEURIX</h1>
-              <p className="text-[8px] md:text-[10px] text-yellow-300/80 tracking-[0.3em] font-black uppercase mt-1">Project 2026</p>
+        <header className="sticky top-0 z-50 border-b border-yellow-500/50 shadow-[0_4px_30px_-5px_rgba(234,179,8,0.25)] bg-gradient-to-b from-yellow-950/40 to-black/90 backdrop-blur-xl">
+        <div className="max-w-7xl mx-auto px-4 h-auto py-2 md:py-3 flex flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2 shrink-0 relative">
+            <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-slate-500/10 blur-[30px] rounded-full pointer-events-none" />
+            <NeurixLogo className="w-8 h-8 md:w-10 md:h-10 relative z-10" />
+            <div className="text-left relative z-10 pb-0.5 mt-1">
+              <motion.h1 
+                className="font-bold text-lg md:text-xl tracking-wider leading-none bg-clip-text text-transparent bg-gradient-to-r from-slate-300 via-yellow-400 to-slate-400"
+                style={{ backgroundSize: '200% auto' }}
+                animate={{ backgroundPosition: ['0% center', '200% center'] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+              >
+                NEURIX
+              </motion.h1>
+              <p className="text-[7px] md:text-[8px] text-slate-400 tracking-[0.3em] font-black uppercase mt-0.5">Project 2026</p>
             </div>
           </div>
-          <nav className="flex flex-wrap justify-start md:justify-end w-full md:w-auto items-center gap-3 md:gap-8">
-            <a href="#about" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">About</a>
-            <a href="#core-concept" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">Concept</a>
-            <a href="#objectives" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">Objectives</a>
-            <a href="#roadmap" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">Matrix</a>
-            <button className="bg-yellow-400 text-black px-3 md:px-5 py-1 md:py-2 rounded-full text-[10px] md:text-sm font-bold hover:bg-yellow-300 transition-all active:scale-95">
-              Contact
+          <nav className="flex flex-row items-center justify-end gap-3 md:gap-8 overflow-x-auto no-scrollbar shrink-0">
+            <a href="#about" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">About</a>
+            <a href="#core-concept" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Concept</a>
+            <a href="#objectives" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Objectives</a>
+            <a href="#roadmap" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Matrix</a>
+            <button className="bg-slate-800 border border-yellow-500/30 text-yellow-400/90 px-4 md:px-6 py-1 md:py-1.5 rounded-full text-[10px] md:text-sm font-bold hover:bg-slate-800/80 hover:border-yellow-400/50 hover:text-yellow-300 hover:shadow-[0_4px_12px_rgba(234,179,8,0.15)] transition-all ease-out duration-300 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap ml-1 md:ml-3">
+              Connect
             </button>
           </nav>
         </div>
