@@ -125,20 +125,20 @@ export default function App() {
 
       {/* Header / Nav */}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-black/90 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-6 h-auto py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
             <NeurixLogo className="w-12 h-12" />
             <div>
               <h1 className="font-bold text-2xl tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">NEURIX</h1>
               <p className="text-[10px] text-yellow-400 tracking-[0.3em] font-black uppercase mt-1">Project 2026</p>
             </div>
           </div>
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#about" className="text-sm font-medium hover:text-yellow-400 transition-colors">About</a>
-            <a href="#core-concept" className="text-sm font-medium hover:text-yellow-400 transition-colors">Core Concept</a>
-            <a href="#objectives" className="text-sm font-medium hover:text-yellow-400 transition-colors">Objectives</a>
-            <a href="#team" className="text-sm font-medium hover:text-yellow-400 transition-colors">Team Members</a>
-            <button className="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-yellow-400 hover:text-black transition-all active:scale-95">
+          <nav className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
+            <a href="#about" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">About</a>
+            <a href="#core-concept" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">Core Concept</a>
+            <a href="#objectives" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">Objectives</a>
+            <a href="#team" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">Team Members</a>
+            <button className="bg-white text-black px-4 md:px-5 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-yellow-400 hover:text-black transition-all active:scale-95">
               Contact Us
             </button>
           </nav>
@@ -147,13 +147,13 @@ export default function App() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative pt-20 pb-32 overflow-hidden px-6">
-          <div className="max-w-7xl mx-auto">
+        <section className="relative pt-20 pb-32 overflow-hidden px-6 lg:px-16 w-full">
+          <div className="w-full xl:pl-8">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-3xl"
+              className="max-w-4xl"
             >
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-yellow-400 text-xs font-bold uppercase tracking-wider mb-6">
                 <span className="relative flex h-2 w-2">
