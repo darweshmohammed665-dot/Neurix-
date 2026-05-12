@@ -102,9 +102,9 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-yellow-500/40 relative">
-      {/* Global Yellow/Gold Outline */}
-      <div className="fixed inset-0 pointer-events-none z-[100] border-[2px] border-yellow-500/50 shadow-[inset_0_0_30px_rgba(234,179,8,0.25)]" />
+    <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-yellow-500/20 relative">
+      {/* Global Soft Golden/Yellow Glow */}
+      <div className="fixed inset-0 pointer-events-none z-[100] shadow-[inset_0_0_150px_rgba(234,179,8,0.15)]" />
 
       {/* Background decoration */}
       <div className="fixed inset-0 pointer-events-none z-0">
