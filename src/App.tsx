@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { LoadingScreen } from './components/LoadingScreen';
 import { 
   Cpu, 
   Layers, 
@@ -21,26 +22,29 @@ import {
 } from 'lucide-react';
 
 const TEAM_MEMBERS = [
-  { id: 1, name: "Mostafa Abdelrahman Mohamed Elsaid", role: "Team Leader & Systems Architect" },
-  { id: 2, name: "Mohamed Assem Salah Hamed", role: "Hardware Integration Lead" },
-  { id: 3, name: "Mariam Tarek Mohamed Gharib", role: "Software Engineering Lead" },
-  { id: 4, name: "Mariam Abdelsadeq Abdelwahed Abdelsadeq", role: "Embedded Systems Developer" },
-  { id: 5, name: "Mariam Ahmed Mohamed Fouad", role: "UI/UX & Tangible Interface Design" },
-  { id: 6, name: "Mariam Hassan Ali Hassan", role: "AI Model Researcher" },
-  { id: 7, name: "Mohamed Abdullah Mohamed Abdelhamed", role: "IoT Communication Specialist" },
-  { id: 8, name: "Mohamed Saaed Aboelmagd Ramadan", role: "Mechanical Design & Prototyping" },
-  { id: 9, name: "Dalia Refat Metwally Mahmoud", role: "Data Analysis & Processing" },
-  { id: 10, name: "Hala Walid Ali Abdullah", role: "Quality Assurance & Testing" },
-  { id: 11, name: "Jana Mohamed Hassan El Sharnouby", role: "Front-end Development" },
-  { id: 12, name: "Mohamed Alaa Abdel Fattah Mahmoud", role: "Sensing Technologies Expert" },
-  { id: 13, name: "Malak Sabry Mostafa El Sayed", role: "Backend Systems Architect" },
-  { id: 14, name: "Damiana Aziz Awad Aziz", role: "Circuit Design & Optimization" },
-  { id: 15, name: "Haneen Masoud Mohie Gab Allah", role: "Research & Documentation" },
-  { id: 16, name: "Ahmed Mohamed Mahmoud El Didamony", role: "Control Systems Engineer" },
-  { id: 17, name: "Mohamed Yasser El Sayed Abdel Galil", role: "Product Strategy & Media" },
-  { id: 18, name: "Abdelrahman Emad Shaaban Hamada", role: "Support Engineer" },
-  { id: 19, name: "Bilal Ahmed Abdel Hakim", role: "Logistics & Resource Management" },
-  { id: 20, name: "Basmala Mostafa Hassanein Aly", role: "System Documentation" },
+  // Software
+  { id: 1, name: "Mostafa Abdelrahman Mohamed Elsaid", role: "Team Leader & Systems Architect", team: "Software" },
+  { id: 3, name: "Mariam Tarek Mohamed Gharib", role: "Software Engineering Lead", team: "Software" },
+  { id: 5, name: "Mariam Ahmed Mohamed Fouad", role: "UI/UX & Tangible Interface Design", team: "Software" },
+  { id: 6, name: "Mariam Hassan Ali Hassan", role: "AI Model Researcher", team: "Software" },
+  { id: 9, name: "Dalia Refat Metwally Mahmoud", role: "Data Analysis & Processing", team: "Software" },
+  { id: 10, name: "Hala Walid Ali Abdullah", role: "Quality Assurance & Testing", team: "Software" },
+  { id: 11, name: "Jana Mohamed Hassan El Sharnouby", role: "Front-end Development", team: "Software" },
+  { id: 13, name: "Malak Sabry Mostafa El Sayed", role: "Backend Systems Architect", team: "Software" },
+  // Hardware
+  { id: 2, name: "Mohamed Assem Salah Hamed", role: "Hardware Integration Lead", team: "Hardware" },
+  { id: 4, name: "Mariam Abdelsadeq Abdelwahed Abdelsadeq", role: "Embedded Systems Developer", team: "Hardware" },
+  { id: 7, name: "Mohamed Abdullah Mohamed Abdelhamed", role: "IoT Communication Specialist", team: "Hardware" },
+  { id: 8, name: "Mohamed Saaed Aboelmagd Ramadan", role: "Mechanical Design & Prototyping", team: "Hardware" },
+  { id: 12, name: "Mohamed Alaa Abdel Fattah Mahmoud", role: "Sensing Technologies Expert", team: "Hardware" },
+  { id: 14, name: "Damiana Aziz Awad Aziz", role: "Circuit Design & Optimization", team: "Hardware" },
+  { id: 16, name: "Ahmed Mohamed Mahmoud El Didamony", role: "Control Systems Engineer", team: "Hardware" },
+  // Presentation
+  { id: 15, name: "Haneen Masoud Mohie Gab Allah", role: "Research & Documentation", team: "Presentation" },
+  { id: 17, name: "Mohamed Yasser El Sayed Abdel Galil", role: "Product Strategy & Media", team: "Presentation" },
+  { id: 18, name: "Abdelrahman Emad Shaaban Hamada", role: "Support Engineer", team: "Presentation" },
+  { id: 19, name: "Bilal Ahmed Abdel Hakim", role: "Logistics & Resource Management", team: "Presentation" },
+  { id: 20, name: "Basmala Mostafa Hassanein Aly", role: "System Documentation", team: "Presentation" },
 ];
 
 const OBJECTIVES = [
@@ -72,8 +76,8 @@ const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
     <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]">
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#eab308" />
+          <stop offset="0%" stopColor="#0088ff" />
+          <stop offset="100%" stopColor="#ffff00" />
         </linearGradient>
       </defs>
       {/* Outer abstract shape */}
@@ -83,7 +87,7 @@ const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
         stroke="url(#logoGradient)" 
         strokeWidth="2"
         initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 0.3 }}
+        animate={{ pathLength: 1, opacity: 0.4 }}
         transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
       />
       {/* The 'N' structure */}
@@ -97,13 +101,13 @@ const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
       />
       {/* Neural points */}
       <motion.circle 
-        cx="35" cy="35" r="3" fill="#3b82f6"
-        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+        cx="35" cy="35" r="3" fill="#0088ff"
+        animate={{ scale: [1, 1.5, 1], opacity: [0.8, 1, 0.8] }}
         transition={{ duration: 2, repeat: Infinity }}
       />
       <motion.circle 
-        cx="65" cy="65" r="3" fill="#eab308"
-        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+        cx="65" cy="65" r="3" fill="#ffff00"
+        animate={{ scale: [1, 1.5, 1], opacity: [0.8, 1, 0.8] }}
         transition={{ duration: 2, repeat: Infinity, delay: 1 }}
       />
     </svg>
@@ -113,33 +117,39 @@ const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-blue-600/40">
+      <AnimatePresence>
+        {isLoading && (
+          <LoadingScreen onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
 
       {/* Background decoration */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-700/20 blur-[140px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/20 blur-[140px] rounded-full" />
+        <div className="absolute top-[-10%] left-[-10%] w-[60%] md:w-[40%] h-[40%] bg-blue-500/20 blur-[120px] md:blur-[140px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] md:w-[40%] h-[40%] bg-blue-700/20 blur-[120px] md:blur-[140px] rounded-full" />
       </div>
 
       {/* Header / Nav */}
       <header className="sticky top-0 z-50 border-b border-white/5 bg-black/90 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 h-auto py-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-4 w-full md:w-auto justify-center md:justify-start">
-            <NeurixLogo className="w-12 h-12" />
+        <div className="max-w-7xl mx-auto px-4 md:px-6 h-auto py-3 md:py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
+            <NeurixLogo className="w-10 h-10 md:w-12 md:h-12" />
             <div>
-              <h1 className="font-bold text-2xl tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">NEURIX</h1>
-              <p className="text-[10px] text-yellow-400 tracking-[0.3em] font-black uppercase mt-1">Project 2026</p>
+              <h1 className="font-bold text-xl md:text-2xl tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">NEURIX</h1>
+              <p className="text-[8px] md:text-[10px] text-yellow-300 tracking-[0.3em] font-black uppercase mt-1">Project 2026</p>
             </div>
           </div>
-          <nav className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-            <a href="#about" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">About</a>
-            <a href="#core-concept" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">Core Concept</a>
-            <a href="#objectives" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">Objectives</a>
-            <a href="#team" className="text-xs md:text-sm font-medium hover:text-yellow-400 transition-colors">Team Members</a>
-            <button className="bg-white text-black px-4 md:px-5 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-bold hover:bg-yellow-400 hover:text-black transition-all active:scale-95">
-              Contact Us
+          <nav className="flex flex-wrap justify-center items-center gap-3 md:gap-8">
+            <a href="#about" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">About</a>
+            <a href="#core-concept" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">Concept</a>
+            <a href="#objectives" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">Objectives</a>
+            <a href="#team" className="text-[10px] md:text-sm font-medium hover:text-yellow-300 transition-colors">Team</a>
+            <button className="bg-yellow-400 text-black px-3 md:px-5 py-1 md:py-2 rounded-full text-[10px] md:text-sm font-bold hover:bg-yellow-300 transition-all active:scale-95">
+              Contact
             </button>
           </nav>
         </div>
@@ -147,44 +157,44 @@ export default function App() {
 
       <main>
         {/* Hero Section */}
-        <section className="relative pt-20 pb-32 overflow-hidden px-6 lg:px-16 w-full">
-          <div className="w-full xl:pl-8">
+        <section className="relative pt-12 md:pt-20 pb-24 md:pb-32 overflow-hidden px-6 lg:px-16 w-full">
+          <div className="w-full xl:pl-8 flex flex-col items-center md:items-start text-center md:text-left">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="max-w-4xl"
+              className="max-w-4xl w-full"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-yellow-400 text-xs font-bold uppercase tracking-wider mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-yellow-300 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                 </span>
                 Active Project
               </div>
-              <h2 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-[1.1]">
-                Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-blue-400 to-yellow-400">Interactive</span> Hardware-Software System.
+              <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 md:mb-8 leading-[1.1] md:leading-[1.1]">
+                Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-blue-400 to-yellow-300">Interactive</span> Hardware-Software System.
               </h2>
-              <p className="text-xl text-slate-400 mb-10 leading-relaxed max-w-2xl">
+              <p className="text-lg md:text-xl text-slate-400 mb-8 md:mb-10 leading-relaxed max-w-2xl mx-auto md:mx-0">
                 Developing the next generation of tangible interaction. Bringing your hand into your world with seamless sensor integration and advanced embedded logic.
               </p>
               
-              <div className="flex flex-wrap gap-4 items-center">
-                <button className="group bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center gap-2 shadow-xl shadow-blue-600/20">
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
+                <button className="w-full sm:w-auto group bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-xl shadow-blue-600/30">
                   Explore Project
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-yellow-400" />
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-yellow-300" />
                 </button>
-                <div className="flex items-center gap-4 px-6 text-slate-400 border-l border-white/10 ml-2">
-                  <div className="text-center">
-                    <p className="text-xs uppercase font-bold tracking-widest text-slate-500 mb-1">Started</p>
-                    <p className="font-mono text-slate-200">2026/02/11</p>
+                <div className="flex items-center gap-4 px-6 text-slate-400 border-l border-white/10 sm:ml-2">
+                  <div className="text-center sm:text-left">
+                    <p className="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-0.5">Started</p>
+                    <p className="font-mono text-slate-200 text-sm md:text-base">2026/02/11</p>
                   </div>
                 </div>
               </div>
             </motion.div>
           </div>
           
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-20 pointer-events-none hidden lg:block">
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-10 md:opacity-20 pointer-events-none hidden lg:block">
             <motion.div
               animate={{ 
                 rotate: 360,
@@ -206,29 +216,29 @@ export default function App() {
         {/* Brand/Affiliation */}
         <section className="py-12 border-y border-white/5 bg-white/[0.02]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8 opacity-60">
-              <div className="flex items-center gap-4">
-                <GraduationCap className="w-8 h-8 text-yellow-400" />
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Institution</p>
-                  <p className="text-lg font-semibold">Borg Al Arab Technological University</p>
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-8 opacity-60">
+                <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4">
+                  <GraduationCap className="w-8 h-8 text-yellow-400" />
+                  <div>
+                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500">Institution</p>
+                    <p className="text-base md:text-lg font-semibold">Borg Al Arab Technological University</p>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4 sm:border-l border-white/10 sm:pl-8">
+                  <MapPin className="w-8 h-8 text-yellow-400" />
+                  <div>
+                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500">Faculty</p>
+                    <p className="text-base md:text-lg font-semibold">Industrial and Energy Technology</p>
+                  </div>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4">
+                  <Award className="w-8 h-8 text-yellow-400" />
+                  <div>
+                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500">Program</p>
+                    <p className="text-base md:text-lg font-semibold">Industry Technology Program</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 border-l md:border-l-0 pl-8 md:pl-0 border-white/10">
-                <MapPin className="w-8 h-8 text-yellow-400" />
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Faculty</p>
-                  <p className="text-lg font-semibold">Industrial and Energy Technology</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Award className="w-8 h-8 text-yellow-400" />
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-widest text-slate-500">Program</p>
-                  <p className="text-lg font-semibold">Industry Technology Program</p>
-                </div>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -457,66 +467,79 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {TEAM_MEMBERS.map((member, i) => (
-                <motion.div
-                  key={member.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: (i % 8) * 0.05 }}
-                  viewport={{ once: true }}
-                  className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-blue-500/30 transition-all flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-4 text-xs font-bold text-slate-500 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                      {member.id < 10 ? `0${member.id}` : member.id}
-                    </div>
-                    <h5 className="font-bold text-lg mb-1 leading-snug group-hover:text-yellow-400 transition-colors">
-                      {member.name}
-                    </h5>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-white/5">
-                    <p className="text-xs font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
-                       <ArrowRight className="w-3 h-3 text-yellow-400" />
-                       {member.role}
-                    </p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            {["Software", "Hardware", "Presentation"].map((teamName, teamIndex) => (
+              <div key={teamName} className="mb-16">
+                <div className="flex items-center gap-4 mb-8 border-b border-white/5 pb-4">
+                  <h4 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-yellow-300">
+                    {teamName} Team
+                  </h4>
+                  <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent"></div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-slate-500 bg-white/5 px-3 py-1 rounded-full">
+                    {TEAM_MEMBERS.filter(m => m.team === teamName).length} Members
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {TEAM_MEMBERS.filter(m => m.team === teamName).map((member, i) => (
+                    <motion.div
+                      key={member.id}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: (i % 8) * 0.05 }}
+                      viewport={{ once: true }}
+                      className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-blue-500/50 hover:bg-blue-900/10 transition-all flex flex-col justify-between group"
+                    >
+                      <div>
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-4 text-xs font-bold text-slate-500 group-hover:bg-yellow-300 group-hover:text-black transition-colors shadow-[0_0_15px_rgba(255,255,0,0)] group-hover:shadow-[0_0_15px_rgba(255,255,0,0.5)]">
+                          {member.id < 10 ? `0${member.id}` : member.id}
+                        </div>
+                        <h5 className="font-bold text-lg mb-1 leading-snug group-hover:text-yellow-300 transition-colors">
+                          {member.name}
+                        </h5>
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-white/5 group-hover:border-white/10 transition-colors">
+                        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-300 flex items-center gap-2 transition-colors">
+                           <ArrowRight className="w-3 h-3 text-yellow-300 transform group-hover:translate-x-1 transition-transform" />
+                           {member.role}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* CTA */}
-        <section className="py-32 px-6">
-          <div className="max-w-5xl mx-auto rounded-[3rem] bg-gradient-to-br from-blue-600 to-yellow-500 p-1">
-            <div className="bg-black rounded-[2.9rem] p-12 md:p-24 text-center">
-              <h3 className="text-4xl md:text-6xl font-bold mb-8 leading-tight">
-                "Your Hand, Your World"
+        <section className="py-20 md:py-32 px-4 md:px-6">
+          <div className="max-w-5xl mx-auto rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-blue-600 to-yellow-400 p-0.5 md:p-1">
+            <div className="bg-black rounded-[1.9rem] md:rounded-[2.9rem] p-8 md:p-24 text-center">
+              <h3 className="text-3xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight">
+                "Your Hand, <span className="text-yellow-400">Your World</span>"
               </h3>
-              <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
+              <p className="text-base md:text-xl text-slate-400 mb-8 md:mb-12 max-w-2xl mx-auto">
                 Join us on our journey to create the most intuitive hardware-software system for humanity.
               </p>
-              <div className="flex flex-wrap justify-center gap-6">
-                <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white/[0.05] border border-white/10">
-                  <Microchip className="w-6 h-6 text-yellow-400" />
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+                <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/[0.05] border border-white/10">
+                  <Microchip className="w-5 h-5 md:w-6 md:h-6 text-yellow-300" />
                   <div className="text-left">
-                    <p className="text-[10px] uppercase font-bold text-slate-500">Tech Stack</p>
-                    <p className="font-bold">Embedded IoT</p>
+                    <p className="text-[8px] md:text-[10px] uppercase font-bold text-slate-500">Tech Stack</p>
+                    <p className="text-xs md:text-base font-bold">Embedded IoT</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white/[0.05] border border-white/10">
-                  <BrainCircuit className="w-6 h-6 text-yellow-400" />
+                <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/[0.05] border border-white/10">
+                  <BrainCircuit className="w-5 h-5 md:w-6 md:h-6 text-yellow-300" />
                   <div className="text-left">
-                    <p className="text-[10px] uppercase font-bold text-slate-500">Engine</p>
-                    <p className="font-bold">AI Processing</p>
+                    <p className="text-[8px] md:text-[10px] uppercase font-bold text-slate-500">Engine</p>
+                    <p className="text-xs md:text-base font-bold">AI Processing</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 px-6 py-4 rounded-2xl bg-white/[0.05] border border-white/10">
-                  <Globe className="w-6 h-6 text-yellow-400" />
+                <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 rounded-xl md:rounded-2xl bg-white/[0.05] border border-white/10">
+                  <Globe className="w-5 h-5 md:w-6 md:h-6 text-yellow-300" />
                   <div className="text-left">
-                    <p className="text-[10px] uppercase font-bold text-slate-500">Scope</p>
-                    <p className="font-bold">Global Impact</p>
+                    <p className="text-[8px] md:text-[10px] uppercase font-bold text-slate-500">Scope</p>
+                    <p className="text-xs md:text-base font-bold">Global Impact</p>
                   </div>
                 </div>
               </div>
