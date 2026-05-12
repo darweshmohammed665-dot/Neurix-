@@ -118,6 +118,8 @@ const NeurixLogo = ({ className = "w-10 h-10" }: { className?: string }) => (
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [isLoading, setIsLoading] = useState(true);
+  const [activeTeam, setActiveTeam] = useState('Software');
+  const [selectedMember, setSelectedMember] = useState<typeof TEAM_MEMBERS[0] | null>(null);
 
   return (
     <div className="min-h-screen bg-black text-slate-100 font-sans selection:bg-blue-600/40">
@@ -139,7 +141,7 @@ export default function App() {
           <div className="flex items-center gap-3 w-full md:w-auto justify-center md:justify-start">
             <NeurixLogo className="w-10 h-10 md:w-12 md:h-12" />
             <div>
-              <h1 className="font-bold text-xl md:text-2xl tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">NEURIX</h1>
+              <h1 className="font-bold text-xl md:text-2xl tracking-tighter leading-none bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">NEWREXS</h1>
               <p className="text-[8px] md:text-[10px] text-yellow-300 tracking-[0.3em] font-black uppercase mt-1">Project 2026</p>
             </div>
           </div>
@@ -456,59 +458,142 @@ export default function App() {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
               <div>
-                <h3 className="text-4xl font-bold mb-4">The Neurix Team</h3>
+                <h3 className="text-4xl font-bold mb-4">The Team</h3>
                 <p className="text-slate-400 text-lg max-w-xl">
                   A multi-disciplinary group of 20 pioneers working together to redefine tangible hardware interaction.
                 </p>
               </div>
-              <div className="flex items-center gap-2 bg-white/5 p-1 rounded-xl border border-white/10">
-                <Users className="w-5 h-5 ml-4 text-yellow-400" />
-                <span className="px-4 py-2 font-bold text-sm bg-blue-600 text-white rounded-lg">20 Members</span>
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-4 bg-white/5 p-1 rounded-2xl border border-white/10">
+                  {["Software", "Hardware", "Presentation"].map((team) => (
+                    <button
+                      key={team}
+                      onClick={() => setActiveTeam(team)}
+                      className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                        activeTeam === team 
+                        ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" 
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      {team === "Software" ? "Teamsoft" : team === "Hardware" ? "Hard" : team}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex items-center justify-end gap-2 text-xs font-bold text-slate-500 uppercase tracking-widest px-2">
+                  <Users className="w-4 h-4 text-yellow-400" />
+                  <span>20 Members Total</span>
+                </div>
               </div>
             </div>
 
-            {["Software", "Hardware", "Presentation"].map((teamName, teamIndex) => (
-              <div key={teamName} className="mb-16">
-                <div className="flex items-center gap-4 mb-8 border-b border-white/5 pb-4">
-                  <h4 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-yellow-300">
-                    {teamName} Team
-                  </h4>
-                  <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent"></div>
-                  <span className="text-xs font-bold uppercase tracking-widest text-slate-500 bg-white/5 px-3 py-1 rounded-full">
-                    {TEAM_MEMBERS.filter(m => m.team === teamName).length} Members
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {TEAM_MEMBERS.filter(m => m.team === teamName).map((member, i) => (
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTeam}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+                >
+                  {TEAM_MEMBERS.filter(m => m.team === activeTeam).map((member, i) => (
                     <motion.div
                       key={member.id}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: (i % 8) * 0.05 }}
-                      viewport={{ once: true }}
-                      className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-blue-500/50 hover:bg-blue-900/10 transition-all flex flex-col justify-between group"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      onClick={() => setSelectedMember(member)}
+                      className="group p-1 rounded-3xl bg-gradient-to-br from-white/10 to-transparent hover:from-blue-500/30 hover:to-yellow-500/10 transition-all cursor-pointer"
                     >
-                      <div>
-                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center mb-4 text-xs font-bold text-slate-500 group-hover:bg-yellow-300 group-hover:text-black transition-colors shadow-[0_0_15px_rgba(255,255,0,0)] group-hover:shadow-[0_0_15px_rgba(255,255,0,0.5)]">
-                          {member.id < 10 ? `0${member.id}` : member.id}
+                      <div className="p-6 rounded-[calc(1.5rem+4px)] bg-black h-full flex flex-col justify-between border border-white/5 group-hover:border-transparent transition-colors">
+                        <div>
+                          <div className="relative w-full aspect-square rounded-2xl bg-white/[0.03] border border-white/5 mb-6 overflow-hidden flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/10 to-yellow-400/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <Users className="w-12 h-12 text-slate-700 group-hover:text-blue-500 transition-colors" />
+                            <div className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-[10px] font-bold text-yellow-400">
+                              {member.id < 10 ? `0${member.id}` : member.id}
+                            </div>
+                          </div>
+                          <h5 className="font-bold text-xl mb-1 leading-snug group-hover:text-white transition-colors">
+                            {member.name}
+                          </h5>
+                          <p className="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4">{member.team}</p>
                         </div>
-                        <h5 className="font-bold text-lg mb-1 leading-snug group-hover:text-yellow-300 transition-colors">
-                          {member.name}
-                        </h5>
-                      </div>
-                      <div className="mt-4 pt-4 border-t border-white/5 group-hover:border-white/10 transition-colors">
-                        <p className="text-xs font-bold uppercase tracking-widest text-slate-500 group-hover:text-slate-300 flex items-center gap-2 transition-colors">
-                           <ArrowRight className="w-3 h-3 text-yellow-300 transform group-hover:translate-x-1 transition-transform" />
-                           {member.role}
-                        </p>
+                        <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 leading-tight pr-4">
+                             {member.role}
+                          </p>
+                          <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-yellow-400 group-hover:translate-x-1 transition-all" />
+                        </div>
                       </div>
                     </motion.div>
                   ))}
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </section>
+
+        {/* Member Profile Modal */}
+        <AnimatePresence>
+          {selectedMember && (
+            <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 md:p-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedMember(null)}
+                className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 40 }}
+                className="relative w-full max-w-2xl bg-zinc-900 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl"
+              >
+                <div className="p-8 md:p-12">
+                  <button 
+                    onClick={() => setSelectedMember(null)}
+                    className="absolute top-8 right-8 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors"
+                  >
+                    ×
+                  </button>
+                  
+                  <div className="flex flex-col md:flex-row gap-8 items-start">
+                    <div className="w-32 h-32 md:w-48 md:h-48 rounded-3xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center shrink-0">
+                      <Users className="w-16 h-16 text-blue-400" />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-yellow-400 text-[10px] font-bold uppercase tracking-widest mb-4">
+                        {selectedMember.team} Team Profile
+                      </div>
+                      <h4 className="text-3xl md:text-4xl font-bold mb-4">{selectedMember.name}</h4>
+                      <p className="text-xl text-slate-300 font-medium mb-6">{selectedMember.role}</p>
+                      
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                          <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">Status</p>
+                          <p className="text-sm font-bold text-green-400">Online</p>
+                        </div>
+                        <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                          <p className="text-[10px] uppercase font-bold text-slate-500 mb-1">Member ID</p>
+                          <p className="text-sm font-bold text-white">#NX-2026-00{selectedMember.id}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-8 pt-8 border-t border-white/10">
+                         <p className="text-slate-400 text-sm leading-relaxed">
+                           A dedicated professional at {selectedMember.team} department, focused on achieving the project's milestones for Newrexs 2026.
+                         </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
 
         {/* CTA */}
         <section className="py-20 md:py-32 px-4 md:px-6">
@@ -553,8 +638,8 @@ export default function App() {
           <div className="flex items-center gap-4">
             <NeurixLogo className="w-10 h-10 opacity-70" />
             <div>
-              <p className="text-sm font-bold text-slate-200">NEURIX</p>
-              <p className="text-xs text-slate-500">© 2026 Neurix Project Team. All Rights Reserved.</p>
+              <p className="text-sm font-bold text-slate-200">NEWREXS</p>
+              <p className="text-xs text-slate-500">© 2026 Newrexs Project Team. All Rights Reserved.</p>
             </div>
           </div>
           <div className="flex items-center gap-6">

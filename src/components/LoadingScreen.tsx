@@ -43,9 +43,9 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       exit={{ opacity: 0, scale: 1.1 }}
       transition={{ duration: 0.8, ease: "easeInOut" }}
     >
-      {/* Background Grid Effect */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="w-full h-full bg-[linear-gradient(to_right,#0066ff_1px,transparent_1px),linear-gradient(to_bottom,#0066ff_1px,transparent_1px)] bg-[size:40px_40px]" />
+      {/* Background Effect - Removed Grid as requested */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,102,255,0.15)_0%,transparent_100%)]" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center w-full max-w-md px-6">
@@ -54,18 +54,50 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-12 h-12 border-2 border-blue-500 rounded-lg flex items-center justify-center relative">
-               <motion.div 
-                 animate={{ rotate: 360 }}
-                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                 className="absolute inset-0 border-t-2 border-yellow-400 rounded-lg" 
-               />
-               <span className="text-white font-bold">N</span>
+          <div className="flex flex-col items-center justify-center gap-6 mb-4">
+            <div className="relative">
+              {/* Wrapping rings */}
+              <motion.div 
+                animate={{ rotate: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-20px] border-2 border-dashed border-blue-500/30 rounded-full"
+              />
+              <motion.div 
+                animate={{ rotate: -360 }}
+                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-10px] border border-dotted border-yellow-400/30 rounded-full"
+              />
+              
+              <motion.div 
+                animate={{ rotateY: 360 }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="w-24 h-24 border-2 border-blue-500 rounded-3xl flex items-center justify-center relative shadow-[0_0_40px_rgba(0,136,255,0.4)] bg-black z-10"
+              >
+                 <motion.div 
+                   animate={{ rotate: 360 }}
+                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                   className="absolute inset-[-6px] border-2 border-t-yellow-400 border-r-transparent border-b-yellow-400 border-l-transparent rounded-3xl" 
+                 />
+                 <span className="text-white text-4xl font-bold">N</span>
+              </motion.div>
             </div>
-            <h1 className="text-4xl font-bold tracking-[0.2em] text-white">NEURIX</h1>
+
+            <div className="relative mt-4">
+              <motion.h1 
+                className="text-4xl font-bold tracking-[0.3em] text-white"
+                animate={{ opacity: [0.6, 1, 0.6], letterSpacing: ["0.2em", "0.4em", "0.2em"] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                NEWREXS
+              </motion.h1>
+              <motion.div 
+                className="absolute -inset-x-4 -inset-y-2 border-x border-yellow-400/30"
+                animate={{ scaleX: [1, 1.2, 1], opacity: [0.2, 0.5, 0.2] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+            </div>
           </div>
-          <p className="text-blue-400 text-xs tracking-[0.5em] uppercase">Tactile Innovation Hub</p>
+          <p className="text-blue-400 text-[10px] tracking-[0.4em] uppercase mt-4">Autonomous Bio-Logic Systems</p>
         </motion.div>
 
         <div className="w-full bg-blue-900/20 border border-blue-500/30 h-1.5 rounded-full overflow-hidden mb-4 p-[1px]">
