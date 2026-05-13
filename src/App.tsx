@@ -32,10 +32,10 @@ const TEAM_MEMBERS = [
   { id: 1, name: "Mustafa Abdelrahman", role: "Team Leader & Systems Architect", team: "Governance", category: "Leadership" },
 
   // Overall Technical Management / Deputy
-  { id: 3, name: "Mohamed Asem", role: "Team Coordinator", team: "Governance", category: "Management" },
+  { id: 3, name: "Mohamed Assem", role: "Team Coordinator", team: "Governance", category: "Management" },
 
   // Software Management
-  { id: 2, name: "Mohamed Said", role: "Software Division Manager", team: "Software", category: "Software Management" },
+  { id: 2, name: "Mohamed Saeed", role: "Software Division Manager", team: "Software", category: "Software Management" },
   
   // Software Division
   { id: 4, name: "Malak Sabry", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
@@ -48,19 +48,19 @@ const TEAM_MEMBERS = [
   // Hardware Management
   { id: 10, name: "Mariam Tarek", role: "Hardware Division Manager", team: "Hardware", category: "Hardware Management" },
 
-  // Hardware Division (Stage & Setup)
-  { id: 11, name: "Mohamed Elsaid", role: "Stage & Setup specialist", team: "Hardware", category: "Stage & Setup" },
-  { id: 12, name: "Ahmed El Didamony", role: "Hardware presenter", team: "Hardware", category: "Hardware Team" },
+  // Hardware Division
+  { id: 11, name: "Mohamed Said", role: "Hardware Specialist", team: "Hardware", category: "Hardware Team" },
+  { id: 12, name: "Ahmed Didamony", role: "Hardware presenter", team: "Hardware", category: "Hardware Team" },
   { id: 13, name: "Damiana Aziz", role: "Hardware Operations", team: "Hardware", category: "Hardware Team" },
   { id: 14, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Hardware Team" },
   { id: 15, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Hardware Team" },
   
   // Presentation & Research (Affiliated with Project Governance)
-  { id: 16, name: "Mariam Abdelsadeq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
-  { id: 17, name: "Hala Walid", role: "Presentation Specialist", team: "Presentation", category: "Presentation" },
+  { id: 16, name: "Mariam Tariq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
+  { id: 17, name: "Hala Walid", role: "Research Lead", team: "Presentation", category: "Research" },
   { id: 18, name: "Haneen Masoud", role: "Presentation Media", team: "Presentation", category: "Presentation" },
   { id: 19, name: "Mohamed Alaa", role: "Presentation Support", team: "Presentation", category: "Presentation" },
-  { id: 20, name: "Basmala Mostafa", role: "Research Head", team: "Presentation", category: "Research" },
+  { id: 20, name: "Basmala Mostafa", role: "Research Specialist", team: "Presentation", category: "Research" },
   { id: 21, name: "Bilal Ahmed", role: "Research Associate", team: "Presentation", category: "Research" },
   { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Presentation", category: "Research" },
 ];
@@ -88,24 +88,36 @@ export default function App() {
   const [selectedMember, setSelectedMember] = useState<typeof TEAM_MEMBERS[0] | null>(null);
 
   const teamData = useMemo(() => {
+    const leader = TEAM_MEMBERS.find(m => m.id === 1) || null;
+    const deputy = TEAM_MEMBERS.find(m => m.id === 3) || null;
+    const softManager = TEAM_MEMBERS.find(m => m.id === 2) || null;
+    const hardManager = TEAM_MEMBERS.find(m => m.id === 10) || null;
+    const presManager = TEAM_MEMBERS.find(m => m.id === 16) || null;
+    const resManager = TEAM_MEMBERS.find(m => m.id === 17) || null;
+
     return {
-      leader: TEAM_MEMBERS.find(m => m.id === 1) || null,
-      deputy: TEAM_MEMBERS.find(m => m.id === 3) || null,
-      softManager: TEAM_MEMBERS.find(m => m.id === 2) || null,
-      hardManager: TEAM_MEMBERS.find(m => m.id === 10) || null,
-      softTeam: TEAM_MEMBERS.filter(m => m.team === "Software" && m.id !== 2),
+      leader,
+      deputy,
+      softManager,
+      hardManager,
+      presManager,
+      resManager,
+      softTeam: TEAM_MEMBERS.filter(m => m.team === "Software" && m.name !== softManager?.name),
       hardTeam: (() => {
-        const members = TEAM_MEMBERS.filter(m => m.team === "Hardware" && m.id !== 10 && m.category !== "Stage & Setup");
-        // Sort so Damiana(13) then Ahmed(12) are first
+        const members = TEAM_MEMBERS.filter(m => m.team === "Hardware" && m.name !== hardManager?.name);
+        // Sort so Damiana(13) then Ahmed(12) then Mohamed Said(11) are first
         return members.sort((a, b) => {
           if (a.id === 13) return -1;
           if (b.id === 13) return 1;
           if (a.id === 12) return -1;
           if (b.id === 12) return 1;
+          if (a.id === 11) return -1;
+          if (b.id === 11) return 1;
           return 0;
         });
       })(),
-      presentationTeam: TEAM_MEMBERS.filter(m => m.team === "Presentation")
+      presentationTeam: TEAM_MEMBERS.filter(m => m.category === "Presentation" && m.name !== presManager?.name),
+      researchTeam: TEAM_MEMBERS.filter(m => m.category === "Research" && m.name !== resManager?.name)
     };
   }, []);
 
@@ -521,19 +533,23 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Branch 2: Presentation & Research */}
+                    {/* Branch 2: Presentation Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
                       <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-emerald-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
-                        <div className="px-6 py-3 rounded-full bg-emerald-900/40 border border-emerald-500/40 shadow-[0_10px_30px_rgba(16,185,129,0.1)] backdrop-blur-md text-center min-w-[180px] group transition-all hover:bg-emerald-900/60">
-                           <span className="text-[9px] font-black text-emerald-300 uppercase tracking-[0.3em]">Research & Present</span>
+                        <div 
+                          onClick={() => setSelectedMember(teamData.presManager)}
+                          className="px-6 py-3 rounded-full bg-emerald-900/40 border border-emerald-500/40 shadow-[0_10px_30px_rgba(16,185,129,0.1)] backdrop-blur-md text-center min-w-[170px] group transition-all hover:bg-emerald-900/60 cursor-pointer"
+                        >
+                           <span className="text-[9px] font-black text-emerald-300 uppercase tracking-[0.3em]">Presentation</span>
+                           <p className="text-[7px] font-black text-emerald-400 uppercase tracking-widest mt-1">Lead: {teamData.presManager?.name}</p>
                         </div>
                         <div className="h-12 w-px bg-emerald-500/20" />
                       </div>
 
-                      <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
+                      <div className="grid grid-cols-1 gap-2 w-full max-w-[170px]">
                         {teamData.presentationTeam.map((member) => (
                            <motion.div 
                              key={member.id}
@@ -551,22 +567,24 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Branch 3: Stage & Setup */}
+                    {/* Branch 3: Research Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
                       <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-orange-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
-                        <div className="px-6 py-4 rounded-3xl bg-orange-900/40 border border-orange-500/50 shadow-[0_10px_30px_rgba(249,115,22,0.15)] backdrop-blur-md text-center min-w-[180px] transition-all hover:bg-orange-900/60">
-                           <Layers className="w-5 h-5 text-orange-400 mx-auto mb-2" />
-                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-orange-200">Stage & Setup</h5>
-                           <p className="text-[8px] font-black text-orange-400 uppercase tracking-widest mt-1">Infrastructure</p>
+                        <div 
+                          onClick={() => setSelectedMember(teamData.resManager)}
+                          className="px-6 py-3 rounded-full bg-orange-900/40 border border-orange-500/50 shadow-[0_10px_30px_rgba(249,115,22,0.1)] backdrop-blur-md text-center min-w-[170px] transition-all hover:bg-orange-900/60 group cursor-pointer"
+                        >
+                           <span className="text-[9px] font-black text-orange-200 uppercase tracking-[0.3em]">Research</span>
+                           <p className="text-[7px] font-black text-orange-400 uppercase tracking-widest mt-1">Lead: {teamData.resManager?.name}</p>
                         </div>
                         <div className="h-12 w-px bg-orange-500/20" />
                       </div>
 
-                      <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
-                        {TEAM_MEMBERS.filter(m => m.category === "Stage & Setup").map((member) => (
+                      <div className="grid grid-cols-1 gap-2 w-full max-w-[170px]">
+                        {teamData.researchTeam.map((member) => (
                            <motion.div 
                              key={member.id}
                              whileHover={{ scale: 1.02, x: -5 }}
