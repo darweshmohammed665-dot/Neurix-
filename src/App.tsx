@@ -268,10 +268,17 @@ export default function App() {
         </section>
         
         {/* Infinite Gold Brand Marquee */}
-        <section className="bg-blue-600 font-black py-4 md:py-8 overflow-hidden relative shadow-[0_0_50px_rgba(37,99,235,0.3)]">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700" />
+        <section className="bg-blue-700 font-black py-5 md:py-10 overflow-hidden relative shadow-[0_30px_100px_rgba(0,0,0,0.5)] border-y-2 border-yellow-500/20">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-800 via-blue-700 to-blue-800" />
+          {/* Subtle light sweep across the whole strip */}
           <motion.div 
-            animate={{ x: [0, -2000] }}
+            animate={{ x: ['100%', '-100%'] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg]"
+          />
+          
+          <motion.div 
+            animate={{ x: [0, -1500] }}
             transition={{ 
               x: {
                 repeat: Infinity,
@@ -280,22 +287,29 @@ export default function App() {
                 ease: "linear",
               },
             }}
-            className="flex gap-20 whitespace-nowrap relative z-10"
+            className="flex gap-32 whitespace-nowrap relative z-10"
           >
             {[...Array(10)].map((_, i) => (
-              <div key={i} className="flex gap-20 items-center">
-                <motion.span 
-                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="text-4xl md:text-6xl tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-500 to-yellow-800 bg-[length:200%_auto] drop-shadow-[0_2px_15px_rgba(234,179,8,0.4)]"
-                >
-                  NEURIX
-                </motion.span>
-                <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.8)]" />
-                <span className="text-4xl md:text-6xl tracking-tighter italic text-white/90">
-                  FUTURE TECH
-                </span>
-                <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-white opacity-50" />
+              <div key={i} className="flex gap-32 items-center">
+                <motion.div className="relative">
+                  <motion.span 
+                    animate={{ 
+                      backgroundPosition: ["200% 0%", "-200% 0%"],
+                      textShadow: [
+                        "0 0 20px rgba(253,224,71,0.4)",
+                        "0 0 50px rgba(253,224,71,0.8)",
+                        "0 0 20px rgba(253,224,71,0.4)"
+                      ]
+                    }}
+                    transition={{ 
+                      backgroundPosition: { duration: 4, repeat: Infinity, ease: "linear" },
+                      textShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                    }}
+                    className="text-6xl md:text-9xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#fff7ad] to-[#d4af37] bg-[length:200%_auto]"
+                  >
+                    NEURIX
+                  </motion.span>
+                </motion.div>
               </div>
             ))}
           </motion.div>
