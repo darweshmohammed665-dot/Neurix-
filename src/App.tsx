@@ -27,7 +27,13 @@ import {
   Smartphone,
   Megaphone,
   Search,
-  Mail
+  Mail,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+  MessageSquare,
+  ExternalLink
 } from 'lucide-react';
 
 const TEAM_MEMBERS = [
@@ -167,6 +173,7 @@ export default function App() {
             <a href="#core-concept" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Concept</a>
             <a href="#objectives" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Objectives</a>
             <a href="#roadmap" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Matrix</a>
+            <a href="#contact-hub" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Hub</a>
             <button className="bg-slate-800 border border-yellow-500/30 text-yellow-400/90 px-4 md:px-6 py-1 md:py-1.5 rounded-full text-[10px] md:text-sm font-bold hover:bg-slate-800/80 hover:border-yellow-400/50 hover:text-yellow-300 hover:shadow-[0_4px_12px_rgba(234,179,8,0.15)] transition-all ease-out duration-300 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap ml-1 md:ml-3">
               Connect
             </button>
@@ -241,9 +248,13 @@ export default function App() {
             >
               <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full scale-110" />
               <motion.img 
-                src="/photo_2026-02-06_16-01-29.jpg.jpeg" 
+                src="/workspace.jpg" 
                 alt="Neurix Interactive Table Concept"
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200"; // Tech/Hardware placeholder
+                }}
                 animate={{ 
                   x: [-15, 15, -15],
                   y: [-10, 10, -10],
@@ -384,9 +395,13 @@ export default function App() {
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
-                        src="/photo_2026-02-06_15-56-51.jpg.jpeg" 
-                        alt="Smart Interactive Interface" 
+                        src="/interface.jpg" 
+                        alt="Smart Interface" 
                         referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200"; // UI/Cyber placeholder
+                        }}
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                       />
                     </div>
@@ -404,9 +419,13 @@ export default function App() {
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
-                        src="/photo_2026-02-06_16-01-29.jpg.jpeg" 
+                        src="/workspace.jpg" 
                         alt="Future Workspace Table" 
                         referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=1200"; // Tech Workspace placeholder
+                        }}
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                       />
                     </div>
@@ -424,9 +443,13 @@ export default function App() {
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
-                        src="/IMG-20260513-WA0050.jpg.jpeg" 
+                        src="/presentation.jpg" 
                         alt="Advanced Presentation System" 
                         referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200"; // Network/Global placeholder
+                        }}
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                       />
                     </div>
@@ -502,9 +525,13 @@ export default function App() {
                 >
                   <div className="absolute inset-0 bg-blue-600/10 z-10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                   <motion.img 
-                    src="/photo_2026-02-06_15-56-51.jpg.jpeg" 
+                    src="/interface.jpg" 
                     alt="Neurix Holographic Interface"
                     referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200";
+                    }}
                     animate={{ 
                       x: [-5, 5, -5],
                       rotate: [-1, 1, -1],
@@ -890,6 +917,91 @@ export default function App() {
                  </div>
               </div>
            </div>
+        </section>
+
+        {/* Contact Hub: Digital Portal */}
+        <section id="contact-hub" className="py-32 px-6 relative overflow-hidden">
+          <div className="absolute inset-0 bg-blue-900/10 pointer-events-none" />
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="text-center mb-20">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-500 text-[10px] font-black uppercase tracking-[0.4em] mb-6 shadow-[0_0_20px_rgba(234,179,8,0.1)]"
+              >
+                The Connection Nexus
+              </motion.div>
+              <h3 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter italic uppercase text-white">
+                Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-600 drop-shadow-[0_0_15px_rgba(234,179,8,0.4)]">Hub</span>
+              </h3>
+              <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+                Bridge the gap between vision and reality. Access our official networks and technical repositories below.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {[
+                { name: "GitHub Repository", desc: "View the core system source code and technical documentation.", icon: <Github className="w-6 h-6" />, color: "from-slate-700 to-slate-900", link: "#" },
+                { name: "LinkedIn Professional", desc: "Connect with our leadership team and stay updated on milestones.", icon: <Linkedin className="w-6 h-6" />, color: "from-blue-600 to-blue-800", link: "#" },
+                { name: "X / Twitter Feed", desc: "Real-time updates on active development and field tests.", icon: <Twitter className="w-6 h-6" />, color: "from-blue-400 to-blue-500", link: "#" },
+                { name: "Instagram Gallery", desc: "Visual showcase of our hardware iterations and design lab.", icon: <Instagram className="w-6 h-6" />, color: "from-pink-600 to-purple-600", link: "#" },
+                { name: "Community Discord", desc: "Join our developer community and discuss spatial interaction tech.", icon: <MessageSquare className="w-6 h-6" />, color: "from-indigo-500 to-indigo-700", link: "#" },
+                { name: "Official Email", desc: "Direct inquiry line for partnerships and technical collaboration.", icon: <Mail className="w-6 h-6" />, color: "from-blue-500 to-indigo-600", link: "mailto:neurixt@gmail.com" },
+              ].map((hub, i) => (
+                <motion.a
+                  key={hub.name}
+                  href={hub.link}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="group relative h-full flex flex-col p-8 rounded-[2.5rem] bg-blue-950/40 border border-white/5 hover:border-yellow-500/40 transition-all duration-500 shadow-2xl overflow-hidden"
+                >
+                  {/* Background Glow */}
+                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${hub.color} opacity-[0.03] group-hover:opacity-20 blur-[40px] transition-opacity duration-500`} />
+                  
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${hub.color} flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform duration-500 shadow-lg`}>
+                    {hub.icon}
+                  </div>
+                  
+                  <div className="flex-grow">
+                    <h4 className="text-2xl font-bold text-white mb-3 group-hover:text-yellow-400 transition-colors flex items-center gap-2">
+                      {hub.name}
+                      <ExternalLink className="w-4 h-4 opacity-0 group-hover:opacity-50 transition-opacity" />
+                    </h4>
+                    <p className="text-slate-400 leading-relaxed text-sm">
+                      {hub.desc}
+                    </p>
+                  </div>
+                  
+                  {/* Bottom Accent */}
+                  <div className="mt-8 h-1 w-0 group-hover:w-full bg-gradient-to-r from-transparent via-yellow-500 to-transparent transition-all duration-700 opacity-50" />
+                </motion.a>
+              ))}
+            </div>
+
+            {/* Special Callout */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="mt-20 p-1 rounded-[3rem] bg-gradient-to-r from-blue-600/20 via-yellow-400/30 to-blue-600/20"
+            >
+              <div className="bg-blue-950 rounded-[calc(3rem-4px)] px-8 py-10 text-center flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-full bg-yellow-400/10 flex items-center justify-center border border-yellow-400/20">
+                    <Globe className="w-8 h-8 text-yellow-400 animate-pulse" />
+                  </div>
+                  <div className="text-left">
+                    <h5 className="text-xl font-bold text-white uppercase tracking-tight">Technical Partnership</h5>
+                    <p className="text-slate-400 text-sm">Seeking investors and hardware manufacturers for Q3 2026 expansion.</p>
+                  </div>
+                </div>
+                <button className="px-10 py-5 bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-black uppercase tracking-widest text-sm rounded-2xl transition-all shadow-[0_10px_30px_rgba(234,179,8,0.3)] hover:shadow-[0_15px_40px_rgba(234,179,8,0.5)] hover:-translate-y-1">
+                  Connect Now
+                </button>
+              </div>
+            </motion.div>
+          </div>
         </section>
 
         <MemberProfileModal member={selectedMember} onClose={() => setSelectedMember(null)} />
