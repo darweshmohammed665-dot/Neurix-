@@ -241,7 +241,7 @@ export default function App() {
             >
               <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full scale-110" />
               <motion.img 
-                src="photo_2026-02-06_16-01-29.jpg.jpeg" 
+                src="/photo_2026-02-06_16-01-29.jpg.jpeg" 
                 alt="Neurix Interactive Table Concept"
                 referrerPolicy="no-referrer"
                 animate={{ 
@@ -384,7 +384,7 @@ export default function App() {
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
-                        src="photo_2026-02-06_15-56-51.jpg.jpeg" 
+                        src="/photo_2026-02-06_15-56-51.jpg.jpeg" 
                         alt="Smart Interactive Interface" 
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
@@ -404,7 +404,7 @@ export default function App() {
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
-                        src="photo_2026-02-06_16-01-29.jpg.jpeg" 
+                        src="/photo_2026-02-06_16-01-29.jpg.jpeg" 
                         alt="Future Workspace Table" 
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
@@ -420,11 +420,11 @@ export default function App() {
                   {/* Image 3 */}
                   <motion.div 
                     whileHover={{ scale: 1.05, rotate: 1.5, y: -10 }}
-                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-blue-400/30 bg-blue-950/60 shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-blue-400/30 bg-blue-950/60 shadow-[0_30px_60_rgba(0,0,0,0.6)]"
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
-                        src="IMG-20260513-WA0050.jpg.jpeg" 
+                        src="/IMG-20260513-WA0050.jpg.jpeg" 
                         alt="Advanced Presentation System" 
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
@@ -502,7 +502,7 @@ export default function App() {
                 >
                   <div className="absolute inset-0 bg-blue-600/10 z-10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                   <motion.img 
-                    src="photo_2026-02-06_15-56-51.jpg.jpeg" 
+                    src="/photo_2026-02-06_15-56-51.jpg.jpeg" 
                     alt="Neurix Holographic Interface"
                     referrerPolicy="no-referrer"
                     animate={{ 
