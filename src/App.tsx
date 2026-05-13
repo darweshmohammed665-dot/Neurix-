@@ -266,80 +266,162 @@ export default function App() {
             </motion.div>
           </div>
         </section>
+        
+        {/* Infinite Gold Brand Marquee */}
+        <section className="bg-blue-600 font-black py-4 md:py-8 overflow-hidden relative shadow-[0_0_50px_rgba(37,99,235,0.3)]">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-blue-600 to-blue-700" />
+          <motion.div 
+            animate={{ x: [0, -2000] }}
+            transition={{ 
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 20,
+                ease: "linear",
+              },
+            }}
+            className="flex gap-20 whitespace-nowrap relative z-10"
+          >
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="flex gap-20 items-center">
+                <motion.span 
+                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  className="text-4xl md:text-6xl tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-500 to-yellow-800 bg-[length:200%_auto] drop-shadow-[0_2px_15px_rgba(234,179,8,0.4)]"
+                >
+                  NEURIX
+                </motion.span>
+                <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-yellow-400 shadow-[0_0_15px_rgba(250,204,21,0.8)]" />
+                <span className="text-4xl md:text-6xl tracking-tighter italic text-white/90">
+                  FUTURE TECH
+                </span>
+                <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-white opacity-50" />
+              </div>
+            ))}
+          </motion.div>
+        </section>
 
         {/* Visual Showcase Gallery: Infinite Moving Strip */}
-        <section className="py-24 px-0 bg-blue-900/10 overflow-hidden relative border-y border-white/5">
-          <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+        <section className="py-24 px-0 bg-blue-900/5 overflow-hidden relative border-y border-white/5">
+          <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
             <h3 className="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-yellow-400">Technical Showcase</h3>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
-              A futuristic moving strip of the Neurix ecosystem and our core interactive technologies.
+              Explore the Neurix ecosystem through our dynamic interactive gallery.
             </p>
           </div>
           
-          <div className="relative flex overflow-hidden">
+          <div className="relative flex overflow-hidden py-12">
+            {/* Background Text Overlay for the strip */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none overflow-hidden select-none">
+              <motion.div
+                animate={{ x: [0, -1000] }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="text-[20rem] font-black whitespace-nowrap text-blue-500"
+              >
+                NEURIX NEURIX NEURIX NEURIX
+              </motion.div>
+            </div>
+
             <motion.div 
               animate={{ 
-                x: [0, -1920],
+                x: [0, -3500],
               }}
               transition={{ 
                 x: {
                   repeat: Infinity,
                   repeatType: "loop",
-                  duration: 30,
+                  duration: 50,
                   ease: "linear",
                 },
               }}
-              className="flex gap-8 whitespace-nowrap"
+              className="flex gap-16 whitespace-nowrap items-center"
             >
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="flex gap-8">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="flex gap-16 items-center">
+                  {/* Stylized Gold Text */}
+                  <div className="flex flex-col items-center justify-center px-12 group">
+                    <motion.span 
+                      animate={{ 
+                        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{ 
+                        backgroundPosition: { duration: 5, repeat: Infinity, ease: "linear" },
+                        scale: { duration: 4, repeat: Infinity }
+                      }}
+                      className="text-7xl md:text-9xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-yellow-100 via-yellow-500 to-yellow-800 bg-[length:200%_auto] drop-shadow-[0_0_30px_rgba(234,179,8,0.5)]"
+                    >
+                      NEURIX
+                    </motion.span>
+                    <motion.div 
+                      animate={{ 
+                        width: ["0%", "100%", "0%"],
+                        opacity: [0.2, 0.8, 0.2]
+                      }}
+                      transition={{ duration: 6, repeat: Infinity }}
+                      className="h-2 bg-gradient-to-r from-transparent via-yellow-500 to-transparent mt-4" 
+                    />
+                  </div>
+
                   {/* Image 1 */}
-                  <div className="w-[350px] md:w-[450px] flex-shrink-0 group relative overflow-hidden rounded-[2.5rem] border border-blue-500/30 bg-blue-950/40 shadow-2xl">
+                  <motion.div 
+                    whileHover={{ scale: 1.05, rotate: 1.5, y: -10 }}
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-blue-500/30 bg-blue-950/60 shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+                  >
                     <div className="aspect-video overflow-hidden">
                       <img 
                         src="photo_2026-02-06_15-56-51.jpg.jpeg" 
                         alt="Smart Interactive Interface" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                       />
                     </div>
-                    <div className="p-6 bg-gradient-to-t from-blue-950/80 to-transparent">
-                      <h5 className="text-lg font-bold text-white mb-1">Smart Interface</h5>
-                      <p className="text-[10px] text-blue-400 font-black uppercase tracking-widest">Interaction Mapping</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-transparent opacity-90" />
+                    <div className="absolute bottom-0 left-0 p-10">
+                      <h5 className="text-2xl font-bold text-white mb-1">Smart Interface</h5>
+                      <p className="text-xs text-blue-400 font-black uppercase tracking-widest">Interaction Mapping</p>
                     </div>
-                  </div>
+                  </motion.div>
 
                   {/* Image 2 */}
-                  <div className="w-[350px] md:w-[450px] flex-shrink-0 group relative overflow-hidden rounded-[2.5rem] border border-yellow-500/30 bg-blue-950/40 shadow-2xl">
+                  <motion.div 
+                    whileHover={{ scale: 1.05, rotate: -1.5, y: -10 }}
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-yellow-500/30 bg-blue-950/60 shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+                  >
                     <div className="aspect-video overflow-hidden">
                       <img 
                         src="photo_2026-02-06_16-01-29.jpg.jpeg" 
                         alt="Future Workspace Table" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                       />
                     </div>
-                    <div className="p-6 bg-gradient-to-t from-blue-950/80 to-transparent">
-                      <h5 className="text-lg font-bold text-white mb-1">Future Workspace</h5>
-                      <p className="text-[10px] text-yellow-400 font-black uppercase tracking-widest">Next-Gen Collaboration</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-transparent opacity-90" />
+                    <div className="absolute bottom-0 left-0 p-10">
+                      <h5 className="text-2xl font-bold text-white mb-1">Future Workspace</h5>
+                      <p className="text-xs text-yellow-400 font-black uppercase tracking-widest">Next-Gen Collaboration</p>
                     </div>
-                  </div>
+                  </motion.div>
 
                   {/* Image 3 */}
-                  <div className="w-[350px] md:w-[450px] flex-shrink-0 group relative overflow-hidden rounded-[2.5rem] border border-blue-400/30 bg-blue-950/40 shadow-2xl">
+                  <motion.div 
+                    whileHover={{ scale: 1.05, rotate: 1.5, y: -10 }}
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-blue-400/30 bg-blue-950/60 shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+                  >
                     <div className="aspect-video overflow-hidden">
                       <img 
                         src="IMG-20260513-WA0050.jpg.jpeg" 
                         alt="Advanced Presentation System" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
                       />
                     </div>
-                    <div className="p-6 bg-gradient-to-t from-blue-950/80 to-transparent">
-                      <h5 className="text-lg font-bold text-white mb-1">Advanced Projection</h5>
-                      <p className="text-[10px] text-blue-300 font-black uppercase tracking-widest">Optical Logic</p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-transparent opacity-90" />
+                    <div className="absolute bottom-0 left-0 p-10">
+                      <h5 className="text-2xl font-bold text-white mb-1">Advanced Projection</h5>
+                      <p className="text-xs text-blue-300 font-black uppercase tracking-widest">Optical Logic</p>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               ))}
             </motion.div>
