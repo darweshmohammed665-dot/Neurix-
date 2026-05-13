@@ -24,7 +24,9 @@ import {
   Award,
   GitBranch,
   Hexagon,
-  Smartphone
+  Smartphone,
+  Megaphone,
+  Search
 } from 'lucide-react';
 
 const TEAM_MEMBERS = [
@@ -55,14 +57,14 @@ const TEAM_MEMBERS = [
   { id: 14, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Hardware Team" },
   { id: 15, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Hardware Team" },
   
-  // Presentation & Research (Affiliated with Project Governance)
-  { id: 16, name: "Mariam Tariq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
-  { id: 17, name: "Hala Walid", role: "Research Lead", team: "Presentation", category: "Research" },
-  { id: 18, name: "Haneen Masoud", role: "Presentation Media", team: "Presentation", category: "Presentation" },
-  { id: 19, name: "Mohamed Alaa", role: "Presentation Support", team: "Presentation", category: "Presentation" },
-  { id: 20, name: "Basmala Mostafa", role: "Research Specialist", team: "Presentation", category: "Research" },
-  { id: 21, name: "Bilal Ahmed", role: "Research Associate", team: "Presentation", category: "Research" },
-  { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Presentation", category: "Research" },
+  // Location & Research (Affiliated with Project Governance)
+  { id: 16, name: "Mariam Abdelsadeq", role: "Location Lead", team: "Location", category: "Location" },
+  { id: 17, name: "Hala Walid", role: "Research Lead", team: "Location", category: "Research" },
+  { id: 18, name: "Haneen Masoud", role: "Location Media", team: "Location", category: "Location" },
+  { id: 19, name: "Mohamed Alaa", role: "Location Support", team: "Location", category: "Location" },
+  { id: 20, name: "Basmala Mostafa", role: "Research Specialist", team: "Location", category: "Research" },
+  { id: 21, name: "Bilal Ahmed", role: "Research Associate", team: "Location", category: "Research" },
+  { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Location", category: "Research" },
 ];
 
 const OBJECTIVES = [
@@ -116,7 +118,7 @@ export default function App() {
           return 0;
         });
       })(),
-      presentationTeam: TEAM_MEMBERS.filter(m => m.category === "Presentation" && m.name !== presManager?.name),
+      presentationTeam: TEAM_MEMBERS.filter(m => m.category === "Location" && m.name !== presManager?.name),
       researchTeam: TEAM_MEMBERS.filter(m => m.category === "Research" && m.name !== resManager?.name)
     };
   }, []);
@@ -533,20 +535,21 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Branch 2: Presentation Team */}
+                    {/* Branch 2: Location Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
-                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-emerald-500/50" />
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-blue-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
                         <div 
                           onClick={() => setSelectedMember(teamData.presManager)}
-                          className="px-6 py-3 rounded-full bg-emerald-900/40 border border-emerald-500/40 shadow-[0_10px_30px_rgba(16,185,129,0.1)] backdrop-blur-md text-center min-w-[170px] group transition-all hover:bg-emerald-900/60 cursor-pointer"
+                          className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-blue-400/50 shadow-[0_10px_30px_rgba(59,130,246,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[170px] hover:scale-105 transition-transform group"
                         >
-                           <span className="text-[9px] font-black text-emerald-300 uppercase tracking-[0.3em]">Presentation</span>
-                           <p className="text-[7px] font-black text-emerald-400 uppercase tracking-widest mt-1">Lead: {teamData.presManager?.name}</p>
+                           <Megaphone className="w-5 h-5 text-blue-400 mx-auto mb-2 group-hover:rotate-12 transition-transform" />
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-blue-100">Location</h5>
+                           <p className="text-[8px] font-black text-blue-400 uppercase tracking-widest mt-1">Lead: {teamData.presManager?.name}</p>
                         </div>
-                        <div className="h-12 w-px bg-emerald-500/20" />
+                        <div className="h-12 w-px bg-blue-500/20" />
                       </div>
 
                       <div className="grid grid-cols-1 gap-2 w-full max-w-[170px]">
@@ -555,12 +558,12 @@ export default function App() {
                              key={member.id}
                              whileHover={{ scale: 1.02, y: -2 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-sm group"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 border border-blue-500/10 hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1 h-1 rounded-full bg-emerald-500 group-hover:scale-150 transition-transform" />
+                             <div className="w-1 h-1 rounded-full bg-blue-500 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
                                <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[6px] text-emerald-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
+                               <p className="text-[6px] text-blue-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
@@ -570,17 +573,18 @@ export default function App() {
                     {/* Branch 3: Research Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
-                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-orange-500/50" />
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-sky-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
                         <div 
                           onClick={() => setSelectedMember(teamData.resManager)}
-                          className="px-6 py-3 rounded-full bg-orange-900/40 border border-orange-500/50 shadow-[0_10px_30px_rgba(249,115,22,0.1)] backdrop-blur-md text-center min-w-[170px] transition-all hover:bg-orange-900/60 group cursor-pointer"
+                          className="px-6 py-4 rounded-3xl bg-sky-900/40 border border-sky-400/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[170px] transition-all hover:bg-sky-900/60 group hover:scale-105"
                         >
-                           <span className="text-[9px] font-black text-orange-200 uppercase tracking-[0.3em]">Research</span>
-                           <p className="text-[7px] font-black text-orange-400 uppercase tracking-widest mt-1">Lead: {teamData.resManager?.name}</p>
+                           <Search className="w-5 h-5 text-sky-400 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-sky-100">Research</h5>
+                           <p className="text-[8px] font-black text-sky-400 uppercase tracking-widest mt-1">Lead: {teamData.resManager?.name}</p>
                         </div>
-                        <div className="h-12 w-px bg-orange-500/20" />
+                        <div className="h-12 w-px bg-sky-500/20" />
                       </div>
 
                       <div className="grid grid-cols-1 gap-2 w-full max-w-[170px]">
@@ -589,12 +593,12 @@ export default function App() {
                              key={member.id}
                              whileHover={{ scale: 1.02, x: -5 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-2 p-2.5 rounded-xl bg-orange-500/5 border border-orange-500/10 hover:border-orange-500/40 hover:bg-orange-500/10 transition-all cursor-pointer shadow-sm group"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-sky-500/5 border border-sky-500/10 hover:border-sky-400/40 hover:bg-sky-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1 h-1 rounded-full bg-orange-500 group-hover:scale-150 transition-transform" />
+                             <div className="w-1 h-1 rounded-full bg-sky-400 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
                                <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[6px] text-orange-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
+                               <p className="text-[6px] text-sky-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
