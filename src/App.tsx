@@ -57,14 +57,14 @@ const TEAM_MEMBERS = [
   { id: 14, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Hardware Team" },
   { id: 15, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Hardware Team" },
   
-  // Location & Research (Affiliated with Project Governance)
-  { id: 16, name: "Mariam Abdelsadeq", role: "Location Lead", team: "Location", category: "Location" },
-  { id: 17, name: "Hala Walid", role: "Research Lead", team: "Location", category: "Research" },
-  { id: 18, name: "Haneen Masoud", role: "Location Media", team: "Location", category: "Location" },
-  { id: 19, name: "Mohamed Alaa", role: "Location Support", team: "Location", category: "Location" },
-  { id: 20, name: "Basmala Mostafa", role: "Research Specialist", team: "Location", category: "Research" },
-  { id: 21, name: "Bilal Ahmed", role: "Research Associate", team: "Location", category: "Research" },
-  { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Location", category: "Research" },
+  // Presentation & Research (Affiliated with Project Governance)
+  { id: 16, name: "Mariam Abdelsadeq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
+  { id: 17, name: "Hala Walid", role: "Research Lead", team: "Presentation", category: "Research" },
+  { id: 18, name: "Haneen Masoud", role: "Presentation Media", team: "Presentation", category: "Presentation" },
+  { id: 19, name: "Mohamed Alaa", role: "Presentation Support", team: "Presentation", category: "Presentation" },
+  { id: 20, name: "Basmala Mostafa", role: "Research Specialist", team: "Presentation", category: "Research" },
+  { id: 21, name: "Bilal Ahmed", role: "Research Associate", team: "Presentation", category: "Research" },
+  { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Presentation", category: "Research" },
 ];
 
 const OBJECTIVES = [
@@ -118,7 +118,7 @@ export default function App() {
           return 0;
         });
       })(),
-      presentationTeam: TEAM_MEMBERS.filter(m => m.category === "Location" && m.name !== presManager?.name),
+      presentationTeam: TEAM_MEMBERS.filter(m => m.category === "Presentation" && m.name !== presManager?.name),
       researchTeam: TEAM_MEMBERS.filter(m => m.category === "Research" && m.name !== resManager?.name)
     };
   }, []);
@@ -535,7 +535,7 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Branch 2: Location Team */}
+                    {/* Branch 2: Presentation Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
                       <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-blue-500/50" />
@@ -546,7 +546,7 @@ export default function App() {
                           className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-blue-400/50 shadow-[0_10px_30px_rgba(59,130,246,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[170px] hover:scale-105 transition-transform group"
                         >
                            <Megaphone className="w-5 h-5 text-blue-400 mx-auto mb-2 group-hover:rotate-12 transition-transform" />
-                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-blue-100">Location</h5>
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-blue-100">Presentation</h5>
                            <p className="text-[8px] font-black text-blue-400 uppercase tracking-widest mt-1">Lead: {teamData.presManager?.name}</p>
                         </div>
                         <div className="h-12 w-px bg-blue-500/20" />
