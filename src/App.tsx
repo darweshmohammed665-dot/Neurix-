@@ -29,14 +29,14 @@ import {
 
 const TEAM_MEMBERS = [
   // Leadership
-  { id: 1, name: "Mustafa Abdelrahman", role: "Project Manager / Leader", team: "Governance", category: "Leadership" },
+  { id: 1, name: "Mustafa Abdelrahman", role: "Team Leader & Systems Architect", team: "Governance", category: "Leadership" },
+
+  // Overall Technical Management / Deputy
+  { id: 3, name: "Mohamed Asem", role: "Team Coordinator", team: "Governance", category: "Management" },
 
   // Software Management
   { id: 2, name: "Mohamed Said", role: "Software Division Manager", team: "Software", category: "Software Management" },
   
-  // Hardware Management
-  { id: 3, name: "Mohamed Asem", role: "Hardware Division Manager", team: "Hardware", category: "Hardware Management" },
-
   // Software Division
   { id: 4, name: "Malak Sabry", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
   { id: 5, name: "Mariam Hassan", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
@@ -45,13 +45,15 @@ const TEAM_MEMBERS = [
   { id: 8, name: "Mohamed Saeed", role: "Frontend Developer", team: "Software", category: "Frontend / GUI" },
   { id: 9, name: "Jana Mohamed", role: "Frontend Developer", team: "Software", category: "Frontend / GUI" },
   
-  // Hardware Division
-  { id: 10, name: "Mariam Tarek", role: "Projection System", team: "Hardware", category: "Projection System" },
-  { id: 11, name: "Mohamed Elsaid", role: "Projection System", team: "Hardware", category: "Projection System" },
-  { id: 12, name: "Ahmed El Didamony", role: "Box & Glass Specialist", team: "Hardware", category: "Box & Glass" },
-  { id: 13, name: "Damiana Aziz", role: "Electricity Engineer", team: "Hardware", category: "Project Electricity" },
-  { id: 14, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Project Electricity" },
-  { id: 15, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Project Electricity" },
+  // Hardware Management
+  { id: 10, name: "Mariam Tarek", role: "Hardware Division Manager", team: "Hardware", category: "Hardware Management" },
+
+  // Hardware Division (Stage & Setup)
+  { id: 11, name: "Mohamed Elsaid", role: "Stage & Setup specialist", team: "Hardware", category: "Stage & Setup" },
+  { id: 12, name: "Ahmed El Didamony", role: "Hardware presenter", team: "Hardware", category: "Hardware Team" },
+  { id: 13, name: "Damiana Aziz", role: "Hardware Operations", team: "Hardware", category: "Hardware Team" },
+  { id: 14, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Hardware Team" },
+  { id: 15, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Hardware Team" },
   
   // Presentation & Research (Affiliated with Project Governance)
   { id: 16, name: "Mariam Abdelsadeq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
@@ -88,10 +90,21 @@ export default function App() {
   const teamData = useMemo(() => {
     return {
       leader: TEAM_MEMBERS.find(m => m.id === 1) || null,
+      deputy: TEAM_MEMBERS.find(m => m.id === 3) || null,
       softManager: TEAM_MEMBERS.find(m => m.id === 2) || null,
-      hardManager: TEAM_MEMBERS.find(m => m.id === 3) || null,
+      hardManager: TEAM_MEMBERS.find(m => m.id === 10) || null,
       softTeam: TEAM_MEMBERS.filter(m => m.team === "Software" && m.id !== 2),
-      hardTeam: TEAM_MEMBERS.filter(m => m.team === "Hardware" && m.id !== 3),
+      hardTeam: (() => {
+        const members = TEAM_MEMBERS.filter(m => m.team === "Hardware" && m.id !== 10 && m.category !== "Stage & Setup");
+        // Sort so Damiana(13) then Ahmed(12) are first
+        return members.sort((a, b) => {
+          if (a.id === 13) return -1;
+          if (b.id === 13) return 1;
+          if (a.id === 12) return -1;
+          if (b.id === 12) return 1;
+          return 0;
+        });
+      })(),
       presentationTeam: TEAM_MEMBERS.filter(m => m.team === "Presentation")
     };
   }, []);
@@ -427,9 +440,11 @@ export default function App() {
 
               {/* Org Chart Visualization */}
               <div className="flex flex-col items-center">
-                
-                {/* 1. Level 1: Project Leader */}
-                <div className="relative mb-24 flex flex-col items-center">
+                {/* 1. Level 1: Team Leader */}
+                <div className="relative mb-32 flex flex-col items-center">
+                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                    <span className="text-3xl md:text-5xl font-black text-yellow-400 uppercase tracking-[0.2em] italic border-b-2 border-yellow-400 pb-2">TEAM LEADER</span>
+                  </div>
                   <motion.div 
                     whileHover={{ scale: 1.05 }}
                     onClick={() => setSelectedMember(teamData.leader)}
@@ -438,117 +453,165 @@ export default function App() {
                     <div className="bg-blue-950 px-16 py-10 rounded-[calc(2.5rem-4px)] text-center min-w-[320px] border border-white/5">
                       <Hexagon className="w-12 h-12 text-yellow-400 mx-auto mb-4 group-hover:rotate-180 transition-transform duration-1000" />
                       <h4 className="text-3xl font-black italic tracking-tighter text-white uppercase">{teamData.leader?.name}</h4>
-                      <p className="text-xs font-black text-blue-400 uppercase tracking-[0.3em] mt-2">Project Leader</p>
+                      <p className="text-xs font-black text-blue-400 uppercase tracking-[0.3em] mt-2">{teamData.leader?.role}</p>
                     </div>
                   </motion.div>
                   
-                  {/* Stem Down to Horizontal Bar */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-24 w-px bg-gradient-to-b from-yellow-400 to-blue-500" />
+                  {/* Stem Down to Level 2 */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-yellow-400 to-blue-500" />
                 </div>
 
-                {/* Level 2 & 3: Divisions */}
+                {/* 2. Level 2: Project Management / Technical Lead (Mohamed Asem) */}
+                <div className="relative mb-24 flex flex-col items-center">
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setSelectedMember(teamData.deputy)}
+                    className="relative p-1 rounded-[2rem] bg-gradient-to-br from-indigo-500 to-purple-600 shadow-[0_0_30px_rgba(99,102,241,0.2)] cursor-pointer group"
+                  >
+                    <div className="bg-blue-950 px-12 py-8 rounded-[calc(2rem-4px)] text-center min-w-[280px] border border-white/10">
+                      <Microchip className="w-8 h-8 text-indigo-400 mx-auto mb-3" />
+                      <h4 className="text-2xl font-black italic tracking-tighter text-white uppercase">{teamData.deputy?.name}</h4>
+                      <p className="text-[10px] font-black text-indigo-300 uppercase tracking-widest mt-1">{teamData.deputy?.role}</p>
+                    </div>
+                  </motion.div>
+
+                  {/* Stem Down to Divisions */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-purple-500/50 to-blue-500/50" />
+                </div>
+
+                {/* Level 3: Divisions */}
                 <div className="w-full relative">
-                  {/* Horizontal Bar Connecting All 3 Branches */}
-                  <div className="absolute top-[-48px] left-[16.6%] right-[16.6%] h-px bg-gradient-to-r from-blue-500/50 via-yellow-400/50 to-blue-500/50" />
+                  {/* Horizontal Bar Connecting All 4 Branches */}
+                  <div className="absolute top-[-48px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-blue-500/40 via-indigo-500/40 via-emerald-500/40 via-orange-500/40 to-blue-400/40" />
                   
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 lg:gap-12">
                     
-                    {/* Left Branch: Software */}
+                    {/* Left Branch: Software Team */}
                     <div className="flex flex-col items-center relative">
-                      {/* Line from horizontal bar to manager */}
+                      {/* Line from horizontal bar to branch start */}
                       <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-blue-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
-                        <motion.div 
-                          whileHover={{ y: -5 }}
+                        <div 
                           onClick={() => setSelectedMember(teamData.softManager)}
-                          className="px-8 py-5 rounded-3xl bg-blue-900/40 border border-blue-500/40 shadow-xl backdrop-blur-md cursor-pointer text-center min-w-[220px]"
+                          className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-blue-400/50 shadow-[0_10px_30px_rgba(59,130,246,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[180px] hover:scale-105 transition-transform group"
                         >
-                           <Zap className="w-6 h-6 text-blue-400 mx-auto mb-2" />
-                           <h5 className="text-lg font-bold text-white uppercase tracking-tight">{teamData.softManager?.name}</h5>
-                           <p className="text-[9px] font-black text-yellow-400 uppercase tracking-widest mt-1">Soft Manager</p>
-                        </motion.div>
+                           <Zap className="w-5 h-5 text-blue-400 mx-auto mb-2 group-hover:animate-pulse" />
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight">Software Team</h5>
+                           <p className="text-[8px] font-black text-blue-300 uppercase tracking-widest mt-1">Lead: {teamData.softManager?.name}</p>
+                        </div>
                         <div className="h-12 w-px bg-blue-500/20" />
                       </div>
 
-                      <div className="grid grid-cols-1 gap-3 w-full max-w-[240px]">
+                      <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
                         {teamData.softTeam.map((member) => (
                            <motion.div 
                              key={member.id}
                              whileHover={{ scale: 1.02, x: 5 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-blue-500/30 transition-all cursor-pointer"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 border border-blue-500/10 hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                             <div className="w-1 h-1 rounded-full bg-blue-500 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
-                               <p className="text-xs font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[7px] text-slate-500 uppercase tracking-widest">{member.role}</p>
+                               <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[6px] text-blue-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
                       </div>
                     </div>
 
-                    {/* Center Branch: Presentation & Research */}
+                    {/* Branch 2: Presentation & Research */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
-                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-yellow-500/50" />
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-emerald-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
-                        <div className="px-8 py-3 rounded-full bg-slate-900/40 border border-slate-500/40 backdrop-blur-md text-center min-w-[220px]">
-                           <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">Research & Presentation</span>
+                        <div className="px-6 py-3 rounded-full bg-emerald-900/40 border border-emerald-500/40 shadow-[0_10px_30px_rgba(16,185,129,0.1)] backdrop-blur-md text-center min-w-[180px] group transition-all hover:bg-emerald-900/60">
+                           <span className="text-[9px] font-black text-emerald-300 uppercase tracking-[0.3em]">Research & Present</span>
                         </div>
-                        <div className="h-12 w-px bg-slate-500/20" />
+                        <div className="h-12 w-px bg-emerald-500/20" />
                       </div>
 
-                      <div className="grid grid-cols-1 gap-3 w-full max-w-[240px]">
+                      <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
                         {teamData.presentationTeam.map((member) => (
                            <motion.div 
                              key={member.id}
-                             whileHover={{ scale: 1.02, x: 5 }}
+                             whileHover={{ scale: 1.02, y: -2 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-slate-500/30 transition-all cursor-pointer"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-500/5 border border-emerald-500/10 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                             <div className="w-1 h-1 rounded-full bg-emerald-500 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
-                               <p className="text-xs font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[7px] text-slate-500 uppercase tracking-widest">{member.role}</p>
+                               <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[6px] text-emerald-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
                       </div>
                     </div>
 
-                    {/* Right Branch: Hardware */}
+                    {/* Branch 3: Stage & Setup */}
                     <div className="flex flex-col items-center relative">
-                      {/* Line from horizontal bar to manager */}
-                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-yellow-500/50" />
+                      {/* Line from horizontal bar to branch start */}
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-orange-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
-                        <motion.div 
-                          whileHover={{ y: -5 }}
-                          onClick={() => setSelectedMember(teamData.hardManager)}
-                          className="px-8 py-5 rounded-3xl bg-yellow-950/20 border border-yellow-500/40 shadow-xl backdrop-blur-md cursor-pointer text-center min-w-[220px]"
-                        >
-                           <Microchip className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
-                           <h5 className="text-lg font-bold text-white uppercase tracking-tight">{teamData.hardManager?.name}</h5>
-                           <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mt-1">Hard Manager</p>
-                        </motion.div>
-                        <div className="h-12 w-px bg-yellow-500/20" />
+                        <div className="px-6 py-4 rounded-3xl bg-orange-900/40 border border-orange-500/50 shadow-[0_10px_30px_rgba(249,115,22,0.15)] backdrop-blur-md text-center min-w-[180px] transition-all hover:bg-orange-900/60">
+                           <Layers className="w-5 h-5 text-orange-400 mx-auto mb-2" />
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-orange-200">Stage & Setup</h5>
+                           <p className="text-[8px] font-black text-orange-400 uppercase tracking-widest mt-1">Infrastructure</p>
+                        </div>
+                        <div className="h-12 w-px bg-orange-500/20" />
                       </div>
 
-                      <div className="grid grid-cols-1 gap-3 w-full max-w-[240px]">
+                      <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
+                        {TEAM_MEMBERS.filter(m => m.category === "Stage & Setup").map((member) => (
+                           <motion.div 
+                             key={member.id}
+                             whileHover={{ scale: 1.02, x: -5 }}
+                             onClick={() => setSelectedMember(member)}
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-orange-500/5 border border-orange-500/10 hover:border-orange-500/40 hover:bg-orange-500/10 transition-all cursor-pointer shadow-sm group"
+                           >
+                             <div className="w-1 h-1 rounded-full bg-orange-500 group-hover:scale-150 transition-transform" />
+                             <div className="text-left">
+                               <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[6px] text-orange-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
+                             </div>
+                           </motion.div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Branch 4: Hardware Support / Team */}
+                    <div className="flex flex-col items-center relative">
+                      {/* Line from horizontal bar to branch start */}
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-sky-500/50" />
+                      
+                      <div className="mb-12 relative flex flex-col items-center">
+                        <div 
+                          onClick={() => setSelectedMember(teamData.hardManager)}
+                          className="px-6 py-4 rounded-3xl bg-sky-900/40 border border-sky-400/50 shadow-[0_10px_30px_rgba(56,189,248,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[180px] hover:scale-105 transition-transform group"
+                        >
+                           <Microchip className="w-5 h-5 text-sky-400 mx-auto mb-2 group-hover:rotate-12 transition-transform" />
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-sky-100">Hardware Team</h5>
+                           <p className="text-[8px] font-black text-sky-400 uppercase tracking-widest mt-1">Lead: {teamData.hardManager?.name}</p>
+                        </div>
+                        <div className="h-12 w-px bg-sky-500/20" />
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
                         {teamData.hardTeam.map((member) => (
                            <motion.div 
                              key={member.id}
                              whileHover={{ scale: 1.02, x: -5 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-yellow-500/30 transition-all cursor-pointer"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-sky-500/5 border border-sky-500/10 hover:border-sky-400/40 hover:bg-sky-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+                             <div className="w-1 h-1 rounded-full bg-sky-400 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
-                               <p className="text-xs font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[7px] text-slate-500 uppercase tracking-widest">{member.role}</p>
+                               <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[6px] text-sky-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
