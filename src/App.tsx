@@ -28,34 +28,39 @@ import {
 } from 'lucide-react';
 
 const TEAM_MEMBERS = [
-  // Software Team
-  { id: 13, name: "Malak Sabry", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
-  { id: 6, name: "Mariam Hassan", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
-  { id: 9, name: "Dalia Refaat", role: "CV Developer (OpenCV)", team: "Software", category: "Camera & Vision" },
+  // Leadership
+  { id: 1, name: "Mustafa Abdelrahman", role: "Project Manager / Leader", team: "Governance", category: "Leadership" },
+
+  // Software Management
+  { id: 2, name: "Mohamed Said", role: "Software Division Manager", team: "Software", category: "Software Management" },
+  
+  // Hardware Management
+  { id: 3, name: "Mohamed Asem", role: "Hardware Division Manager", team: "Hardware", category: "Hardware Management" },
+
+  // Software Division
+  { id: 4, name: "Malak Sabry", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
+  { id: 5, name: "Mariam Hassan", role: "Backend Developer", team: "Software", category: "Backend / Logic" },
+  { id: 6, name: "Dalia Refaat", role: "CV Developer (OpenCV)", team: "Software", category: "Camera & Vision" },
   { id: 7, name: "Mohamed Abdullah", role: "CV Developer (OpenCV)", team: "Software", category: "Camera & Vision" },
   { id: 8, name: "Mohamed Saeed", role: "Frontend Developer", team: "Software", category: "Frontend / GUI" },
-  { id: 11, name: "Jana Mohamed", role: "Frontend Developer", team: "Software", category: "Frontend / GUI" },
+  { id: 9, name: "Jana Mohamed", role: "Frontend Developer", team: "Software", category: "Frontend / GUI" },
   
-  // Hardware Team (Team Hard)
-  { id: 3, name: "Mariam Tarek", role: "Projection System", team: "Hardware", category: "Projection System" },
-  { id: 17, name: "Mohamed Elsaid", role: "Projection System", team: "Hardware", category: "Projection System" },
-  { id: 16, name: "Ahmed El Didamony", role: "Box & Glass Specialist", team: "Hardware", category: "Box & Glass" },
-  { id: 14, name: "Damiana Aziz", role: "Electricity Engineer", team: "Hardware", category: "Project Electricity" },
-  { id: 5, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Project Electricity" },
-  { id: 21, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Project Electricity" },
-  { id: 2, name: "Mohamed Assem", role: "Raspberry Pi Expert", team: "Hardware", category: "Raspberry Pi" },
+  // Hardware Division
+  { id: 10, name: "Mariam Tarek", role: "Projection System", team: "Hardware", category: "Projection System" },
+  { id: 11, name: "Mohamed Elsaid", role: "Projection System", team: "Hardware", category: "Projection System" },
+  { id: 12, name: "Ahmed El Didamony", role: "Box & Glass Specialist", team: "Hardware", category: "Box & Glass" },
+  { id: 13, name: "Damiana Aziz", role: "Electricity Engineer", team: "Hardware", category: "Project Electricity" },
+  { id: 14, name: "Mariam Ahmed", role: "Electricity Specialist", team: "Hardware", category: "Project Electricity" },
+  { id: 15, name: "Haneen Abdo", role: "Electricity Tech", team: "Hardware", category: "Project Electricity" },
   
-  // Presentation Team (Research & Presentation)
-  { id: 4, name: "Mariam Abdelsadeq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
-  { id: 10, name: "Hala Walid", role: "Presentation Specialist", team: "Presentation", category: "Presentation" },
-  { id: 15, name: "Haneen Masoud", role: "Presentation Media", team: "Presentation", category: "Presentation" },
-  { id: 12, name: "Mohamed Alaa", role: "Presentation Support", team: "Presentation", category: "Presentation" },
+  // Presentation & Research (Affiliated with Project Governance)
+  { id: 16, name: "Mariam Abdelsadeq", role: "Presentation Lead", team: "Presentation", category: "Presentation" },
+  { id: 17, name: "Hala Walid", role: "Presentation Specialist", team: "Presentation", category: "Presentation" },
+  { id: 18, name: "Haneen Masoud", role: "Presentation Media", team: "Presentation", category: "Presentation" },
+  { id: 19, name: "Mohamed Alaa", role: "Presentation Support", team: "Presentation", category: "Presentation" },
   { id: 20, name: "Basmala Mostafa", role: "Research Head", team: "Presentation", category: "Research" },
-  { id: 19, name: "Bilal Ahmed", role: "Research Associate", team: "Presentation", category: "Research" },
-  { id: 18, name: "Abdelrahman Emad", role: "Research Support", team: "Presentation", category: "Research" },
-  
-  // Legend / Leader
-  { id: 1, name: "Mostafa Abdelrahman", role: "Systems Architect", team: "Governance", category: "Architecture" },
+  { id: 21, name: "Bilal Ahmed", role: "Research Associate", team: "Presentation", category: "Research" },
+  { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Presentation", category: "Research" },
 ];
 
 const OBJECTIVES = [
@@ -82,22 +87,12 @@ export default function App() {
 
   const teamData = useMemo(() => {
     return {
-      hard: {
-        projection: TEAM_MEMBERS.filter(m => m.category === "Projection System"),
-        box: TEAM_MEMBERS.filter(m => m.category === "Box & Glass"),
-        electricity: TEAM_MEMBERS.filter(m => m.category === "Project Electricity"),
-        pi: TEAM_MEMBERS.filter(m => m.category === "Raspberry Pi")
-      },
-      soft: {
-        backend: TEAM_MEMBERS.filter(m => m.category === "Backend / Logic"),
-        vision: TEAM_MEMBERS.filter(m => m.category === "Camera & Vision"),
-        frontend: TEAM_MEMBERS.filter(m => m.category === "Frontend / GUI")
-      },
-      presentation: {
-        general: TEAM_MEMBERS.filter(m => m.category === "Presentation"),
-        research: TEAM_MEMBERS.filter(m => m.category === "Research")
-      },
-      leader: TEAM_MEMBERS.find(m => m.id === 1) || null
+      leader: TEAM_MEMBERS.find(m => m.id === 1) || null,
+      softManager: TEAM_MEMBERS.find(m => m.id === 2) || null,
+      hardManager: TEAM_MEMBERS.find(m => m.id === 3) || null,
+      softTeam: TEAM_MEMBERS.filter(m => m.team === "Software" && m.id !== 2),
+      hardTeam: TEAM_MEMBERS.filter(m => m.team === "Hardware" && m.id !== 3),
+      presentationTeam: TEAM_MEMBERS.filter(m => m.team === "Presentation")
     };
   }, []);
 
@@ -151,7 +146,7 @@ export default function App() {
         </div>
       </header>
 
-      <main>
+      <div className="flex-grow">
         {/* Hero Section */}
         <section className="relative pt-12 md:pt-20 pb-24 md:pb-32 overflow-hidden px-6 lg:px-16 w-full">
           {/* Subtle Animated Background */}
@@ -413,112 +408,156 @@ export default function App() {
           </div>
         </section>
 
-        {/* Roadmap Command Matrix */}
-        <section id="roadmap" className="py-32 px-6 relative">
-           <div className="absolute inset-0 opacity-5 pointer-events-none overflow-hidden">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-blue-500 rounded-full animate-[pulse_10s_infinite]" />
+        {/* Roadmap Command Matrix - Org Chart Style */}
+        <section id="roadmap" className="py-32 px-6 relative overflow-hidden">
+           <div className="absolute inset-0 opacity-5 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-blue-500/20 rounded-full animate-[pulse_10s_infinite]" />
            </div>
 
            <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-24">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-[0.4em] mb-6">
-                  Team Hierarchy
+                  Structural Hierarchy
                 </div>
-                <h3 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter italic italic-shadow uppercase">NEURIX Matrix Map</h3>
-                <p className="text-slate-500 text-lg max-w-2xl mx-auto font-medium">
-                  The organizational structure of the Neurix project, showing the flow of leadership and technical collaboration.
+                <h3 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter italic italic-shadow uppercase">NEURIX Org Chart</h3>
+                <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+                  The mission-critical leadership structure driving the Neurix initiative.
                 </p>
               </div>
 
-              {/* Functional Matrix Flow */}
+              {/* Org Chart Visualization */}
               <div className="flex flex-col items-center">
-                 {/* 1. Core Architecture (The Center) */}
-                 <div className="mb-32 relative group cursor-pointer" onClick={() => setSelectedMember(teamData.leader)}>
-                    <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-yellow-400 rounded-[3rem] blur-2xl opacity-20" />
-                    <div className="relative p-1 rounded-[3rem] bg-gradient-to-br from-blue-600 to-yellow-400 shadow-[0_0_50px_rgba(37,99,235,0.2)]">
-                       <div className="bg-blue-950 px-12 py-10 rounded-[calc(3rem-3px)] text-center w-full min-w-[320px] border border-white/10">
-                          <div className="absolute top-4 right-6 text-[8px] font-black tracking-[0.5em] text-white/20 uppercase">NEURIX</div>
-                          <Hexagon className="w-12 h-12 text-yellow-400 mx-auto mb-6 group-hover:rotate-90 transition-transform duration-700" />
-                          <h4 className="text-2xl font-black italic tracking-tighter text-white mb-1 uppercase">Mostafa Abdelrahman</h4>
-                          <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Team Leader & Systems Architect</p>
-                       </div>
+                
+                {/* 1. Level 1: Project Leader */}
+                <div className="relative mb-24 flex flex-col items-center">
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setSelectedMember(teamData.leader)}
+                    className="relative p-1 rounded-[2.5rem] bg-gradient-to-br from-blue-600 via-yellow-400 to-blue-400 shadow-[0_0_50px_rgba(37,99,235,0.3)] cursor-pointer group"
+                  >
+                    <div className="bg-blue-950 px-16 py-10 rounded-[calc(2.5rem-4px)] text-center min-w-[320px] border border-white/5">
+                      <Hexagon className="w-12 h-12 text-yellow-400 mx-auto mb-4 group-hover:rotate-180 transition-transform duration-1000" />
+                      <h4 className="text-3xl font-black italic tracking-tighter text-white uppercase">{teamData.leader?.name}</h4>
+                      <p className="text-xs font-black text-blue-400 uppercase tracking-[0.3em] mt-2">Project Leader</p>
                     </div>
-                    {/* Vertical Pipe Down */}
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 h-32 w-px bg-gradient-to-b from-blue-500 to-transparent" />
-                 </div>
+                  </motion.div>
+                  
+                  {/* Stem Down to Horizontal Bar */}
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-24 w-px bg-gradient-to-b from-yellow-400 to-blue-500" />
+                </div>
 
-                 {/* 2. Horizontal Connection Line */}
-                 <div className="hidden md:block relative w-[80%] h-px bg-white/10 mb-20">
-                    <div className="absolute top-0 left-0 h-4 w-px bg-white/20" />
-                    <div className="absolute top-0 right-0 h-4 w-px bg-white/20" />
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 h-4 w-px bg-white/20" />
-                 </div>
-
-                 {/* 3. Team Divisions */}
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 w-full relative">
+                {/* Level 2 & 3: Divisions */}
+                <div className="w-full relative">
+                  {/* Horizontal Bar Connecting All 3 Branches */}
+                  <div className="absolute top-[-48px] left-[16.6%] right-[16.6%] h-px bg-gradient-to-r from-blue-500/50 via-yellow-400/50 to-blue-500/50" />
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                     
-                    {/* Team Hard */}
-                    <div className="flex flex-col items-center gap-10">
-                       <div className="relative group">
-                          <div className="px-8 py-3 rounded-2xl border border-yellow-500/20 bg-yellow-500/10 text-sm font-black text-yellow-400 uppercase tracking-[0.2em] mb-4 shadow-xl">Team Hard</div>
-                          <motion.div 
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="absolute -right-12 top-1/2 -translate-y-1/2 text-yellow-500 hidden md:block"
-                          >
-                             {/* Arrow Pointing FROM Hard TO Soft */}
-                             <div className="flex items-center">
-                                <div className="w-12 h-px bg-yellow-500/30" />
-                                <ArrowRight className="w-3 h-3 -ml-1 text-blue-500" />
+                    {/* Left Branch: Software */}
+                    <div className="flex flex-col items-center relative">
+                      {/* Line from horizontal bar to manager */}
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-blue-500/50" />
+                      
+                      <div className="mb-12 relative flex flex-col items-center">
+                        <motion.div 
+                          whileHover={{ y: -5 }}
+                          onClick={() => setSelectedMember(teamData.softManager)}
+                          className="px-8 py-5 rounded-3xl bg-blue-900/40 border border-blue-500/40 shadow-xl backdrop-blur-md cursor-pointer text-center min-w-[220px]"
+                        >
+                           <Zap className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                           <h5 className="text-lg font-bold text-white uppercase tracking-tight">{teamData.softManager?.name}</h5>
+                           <p className="text-[9px] font-black text-yellow-400 uppercase tracking-widest mt-1">Soft Manager</p>
+                        </motion.div>
+                        <div className="h-12 w-px bg-blue-500/20" />
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-3 w-full max-w-[240px]">
+                        {teamData.softTeam.map((member) => (
+                           <motion.div 
+                             key={member.id}
+                             whileHover={{ scale: 1.02, x: 5 }}
+                             onClick={() => setSelectedMember(member)}
+                             className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-blue-500/30 transition-all cursor-pointer"
+                           >
+                             <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                             <div className="text-left">
+                               <p className="text-xs font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[7px] text-slate-500 uppercase tracking-widest">{member.role}</p>
                              </div>
-                          </motion.div>
-                       </div>
-                       
-                         <div className="space-y-6 w-full flex flex-col items-center">
-                          <RoadmapNugget title="Projection System" data={teamData.hard.projection} icon={Cpu} color="yellow-400" delay={0} onSelect={setSelectedMember} />
-                          <RoadmapNugget title="Box & Glass" data={teamData.hard.box} icon={Smartphone} color="yellow-500" delay={0.1} onSelect={setSelectedMember} />
-                          <RoadmapNugget title="Electricity" data={teamData.hard.electricity} icon={Zap} color="amber-400" delay={0.2} onSelect={setSelectedMember} />
-                          <RoadmapNugget title="Raspberry Pi" data={teamData.hard.pi} icon={Microchip} color="orange-500" delay={0.3} onSelect={setSelectedMember} />
-                       </div>
+                           </motion.div>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Team Soft */}
-                    <div className="flex flex-col items-center gap-10">
-                       <div className="relative group">
-                          <div className="px-8 py-3 rounded-2xl border border-blue-500/20 bg-blue-500/10 text-sm font-black text-blue-400 uppercase tracking-[0.2em] mb-4 shadow-xl">Team Soft</div>
-                          <motion.div 
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                            className="absolute -right-12 top-1/2 -translate-y-1/2 text-blue-500 hidden md:block"
-                          >
-                             {/* Arrow Pointing FROM Soft TO Presentation */}
-                             <div className="flex items-center">
-                                <div className="w-12 h-px bg-blue-500/30" />
-                                <ArrowRight className="w-3 h-3 -ml-1 text-slate-500" />
+                    {/* Center Branch: Presentation & Research */}
+                    <div className="flex flex-col items-center relative">
+                      {/* Line from horizontal bar to branch start */}
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-yellow-500/50" />
+                      
+                      <div className="mb-12 relative flex flex-col items-center">
+                        <div className="px-8 py-3 rounded-full bg-slate-900/40 border border-slate-500/40 backdrop-blur-md text-center min-w-[220px]">
+                           <span className="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em]">Research & Presentation</span>
+                        </div>
+                        <div className="h-12 w-px bg-slate-500/20" />
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-3 w-full max-w-[240px]">
+                        {teamData.presentationTeam.map((member) => (
+                           <motion.div 
+                             key={member.id}
+                             whileHover={{ scale: 1.02, x: 5 }}
+                             onClick={() => setSelectedMember(member)}
+                             className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-slate-500/30 transition-all cursor-pointer"
+                           >
+                             <div className="w-1.5 h-1.5 rounded-full bg-slate-500" />
+                             <div className="text-left">
+                               <p className="text-xs font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[7px] text-slate-500 uppercase tracking-widest">{member.role}</p>
                              </div>
-                          </motion.div>
-                       </div>
-                       
-                       <div className="space-y-6 w-full flex flex-col items-center">
-                          <RoadmapNugget title="Backend / Logic" data={teamData.soft.backend} icon={BrainCircuit} color="blue-500" delay={0} onSelect={setSelectedMember} />
-                          <RoadmapNugget title="Camera & Vision" data={teamData.soft.vision} icon={Layers} color="blue-400" delay={0.1} onSelect={setSelectedMember} />
-                          <RoadmapNugget title="Frontend / GUI" data={teamData.soft.frontend} icon={Smartphone} color="cyan-500" delay={0.2} onSelect={setSelectedMember} />
-                       </div>
+                           </motion.div>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Team Presentation */}
-                    <div className="flex flex-col items-center gap-10">
-                       <div className="relative group">
-                          <div className="px-8 py-3 rounded-2xl border border-white/20 bg-white/5 text-sm font-black text-slate-400 uppercase tracking-[0.2em] mb-4 shadow-xl">Presentation Team</div>
-                       </div>
-                       
-                       <div className="space-y-6 w-full flex flex-col items-center">
-                          <RoadmapNugget title="Presentation" data={teamData.presentation.general} icon={Globe} color="slate-400" delay={0} onSelect={setSelectedMember} />
-                          <RoadmapNugget title="Research" data={teamData.presentation.research} icon={Award} color="slate-500" delay={0.1} onSelect={setSelectedMember} />
-                       </div>
+                    {/* Right Branch: Hardware */}
+                    <div className="flex flex-col items-center relative">
+                      {/* Line from horizontal bar to manager */}
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-yellow-500/50" />
+                      
+                      <div className="mb-12 relative flex flex-col items-center">
+                        <motion.div 
+                          whileHover={{ y: -5 }}
+                          onClick={() => setSelectedMember(teamData.hardManager)}
+                          className="px-8 py-5 rounded-3xl bg-yellow-950/20 border border-yellow-500/40 shadow-xl backdrop-blur-md cursor-pointer text-center min-w-[220px]"
+                        >
+                           <Microchip className="w-6 h-6 text-yellow-400 mx-auto mb-2" />
+                           <h5 className="text-lg font-bold text-white uppercase tracking-tight">{teamData.hardManager?.name}</h5>
+                           <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mt-1">Hard Manager</p>
+                        </motion.div>
+                        <div className="h-12 w-px bg-yellow-500/20" />
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-3 w-full max-w-[240px]">
+                        {teamData.hardTeam.map((member) => (
+                           <motion.div 
+                             key={member.id}
+                             whileHover={{ scale: 1.02, x: -5 }}
+                             onClick={() => setSelectedMember(member)}
+                             className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:border-yellow-500/30 transition-all cursor-pointer"
+                           >
+                             <div className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+                             <div className="text-left">
+                               <p className="text-xs font-bold text-slate-100">{member.name}</p>
+                               <p className="text-[7px] text-slate-500 uppercase tracking-widest">{member.role}</p>
+                             </div>
+                           </motion.div>
+                        ))}
+                      </div>
                     </div>
 
-                 </div>
+                  </div>
+                </div>
+
               </div>
            </div>
         </section>
@@ -572,82 +611,7 @@ export default function App() {
         </section>
 
 
-        <AnimatePresence>
-          {selectedMember && (
-            <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 md:p-8">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedMember(null)}
-                className="absolute inset-0 bg-blue-950/90 backdrop-blur-3xl"
-              />
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9, y: 40 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: 40 }}
-                className="relative w-full max-w-3xl bg-zinc-900 border border-yellow-400/20 rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(255,215,0,0.1)]"
-              >
-                <div className="absolute inset-0 opacity-20 pointer-events-none">
-                   <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/30 blur-[100px] rounded-full" />
-                   <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-400/10 blur-[100px] rounded-full" />
-                </div>
-                
-                <div className="relative p-8 md:p-16">
-                  <button 
-                    onClick={() => setSelectedMember(null)}
-                    className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-yellow-400 hover:text-blue-950 hover:border-transparent transition-all z-20 group"
-                  >
-                    <span className="text-2xl transition-transform group-hover:scale-110">×</span>
-                  </button>
-                  
-                  <div className="flex flex-col md:flex-row gap-12 items-center md:items-start text-center md:text-left">
-                    <div className="relative group">
-                      <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600 to-yellow-400 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition-opacity" />
-                      <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-[2rem] bg-blue-950 border-2 border-white/10 flex items-center justify-center shrink-0 overflow-hidden">
-                        <Users className="w-20 h-20 text-slate-800" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-blue-950/60 to-transparent" />
-                        <div className="absolute bottom-4 left-0 right-0 text-[10px] font-black uppercase tracking-[0.5em] text-yellow-400 opacity-60">Verified</div>
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1">
-                      <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-blue-600 border border-white/20 text-white text-[10px] font-black uppercase tracking-[0.3em] mb-6 shadow-xl shadow-blue-600/30">
-                        {selectedMember.team === "Software" ? "Soft" : selectedMember.team === "Hardware" ? "Hardware" : selectedMember.team} Division
-                      </div>
-                      <h4 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">{selectedMember.name}</h4>
-                      <p className="text-xl text-yellow-400 font-bold mb-8 tracking-wide drop-shadow-lg">{selectedMember.role}</p>
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="p-5 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-                          <p className="text-[10px] uppercase font-bold text-slate-500 mb-2 tracking-[0.2em]">Operational Status</p>
-                          <div className="flex items-center gap-2">
-                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
-                             <p className="text-sm font-black text-white uppercase tracking-widest">Active Member</p>
-                          </div>
-                        </div>
-                        <div className="p-5 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
-                          <p className="text-[10px] uppercase font-bold text-slate-500 mb-2 tracking-[0.2em]">Matrix Credential</p>
-                          <p className="text-sm font-mono font-bold text-blue-400">#NX-2026-{selectedMember.id.toString().padStart(4, '0')}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-10 pt-10 border-t border-white/5">
-                         <div className="flex items-center gap-4 mb-4">
-                            <div className="h-0.5 w-12 bg-yellow-400" />
-                            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Member Biography</p>
-                         </div>
-                         <p className="text-slate-400 text-base leading-relaxed font-medium">
-                           Integral member of the project ecosystem, specializing in {selectedMember.role.toLowerCase()}. Contributing to the architectural evolution of the Neurix tangible interface through precise execution and cross-discipline collaboration.
-                         </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+        <MemberProfileModal member={selectedMember} onClose={() => setSelectedMember(null)} />
 
         {/* CTA */}
         <section className="py-20 md:py-32 px-4 md:px-6">
@@ -685,23 +649,22 @@ export default function App() {
             </div>
           </div>
         </section>
-      </main>
-
-      <footer className="py-16 border-t border-white/5 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
-          <div className="flex items-center gap-4">
-            <NeurixLogo className="w-10 h-10 opacity-70" />
-            <div>
-              <p className="text-sm font-bold text-slate-200">NEURIX</p>
-              <p className="text-xs text-slate-500">© 2026 Neurix Project Team. All Rights Reserved.</p>
+      </div>
+        <footer className="py-16 border-t border-white/5 px-6">
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+            <div className="flex items-center gap-4">
+              <NeurixLogo className="w-10 h-10 opacity-70" />
+              <div>
+                <p className="text-sm font-bold text-slate-200">NEURIX</p>
+                <p className="text-xs text-slate-500">© 2026 Neurix Project Team. All Rights Reserved.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-6">
+               <Calendar className="w-4 h-4 text-yellow-400" />
+               <p className="text-sm text-slate-400">Founded Feb 11, 2026</p>
             </div>
           </div>
-          <div className="flex items-center gap-6">
-             <Calendar className="w-4 h-4 text-yellow-400" />
-             <p className="text-sm text-slate-400">Founded Feb 11, 2026</p>
-          </div>
-        </div>
-      </footer>
+        </footer>
       </div>
     </div>
   );

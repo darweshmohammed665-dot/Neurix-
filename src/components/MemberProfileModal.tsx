@@ -17,7 +17,7 @@ export const MemberProfileModal = React.memo(({ member, onClose }: MemberProfile
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/90 backdrop-blur-3xl"
+            className="absolute inset-0 bg-blue-950/90 backdrop-blur-3xl"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -33,7 +33,7 @@ export const MemberProfileModal = React.memo(({ member, onClose }: MemberProfile
             <div className="relative p-8 md:p-16">
               <button 
                 onClick={onClose}
-                className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-yellow-400 hover:text-black hover:border-transparent transition-all z-20 group"
+                className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-yellow-400 hover:text-blue-950 hover:border-transparent transition-all z-20 group"
               >
                 <span className="text-2xl transition-transform group-hover:scale-110">×</span>
               </button>
@@ -41,9 +41,9 @@ export const MemberProfileModal = React.memo(({ member, onClose }: MemberProfile
               <div className="flex flex-col md:flex-row gap-12 items-center md:items-start text-center md:text-left">
                 <div className="relative group">
                   <div className="absolute -inset-4 bg-gradient-to-tr from-blue-600 to-yellow-400 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition-opacity" />
-                  <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-[2rem] bg-black border-2 border-white/10 flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-[2rem] bg-blue-950 border-2 border-white/10 flex items-center justify-center shrink-0 overflow-hidden">
                     <Users className="w-20 h-20 text-slate-800" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950/60 to-transparent" />
                     <div className="absolute bottom-4 left-0 right-0 text-[10px] font-black uppercase tracking-[0.5em] text-yellow-400 opacity-60">Verified</div>
                   </div>
                 </div>
