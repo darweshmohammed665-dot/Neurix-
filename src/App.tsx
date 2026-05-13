@@ -26,7 +26,8 @@ import {
   Hexagon,
   Smartphone,
   Megaphone,
-  Search
+  Search,
+  Mail
 } from 'lucide-react';
 
 const TEAM_MEMBERS = [
@@ -231,21 +232,116 @@ export default function App() {
             </motion.div>
           </div>
           
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-10 md:opacity-20 pointer-events-none hidden lg:block">
+          <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[45%] h-auto hidden lg:block z-0 pr-12">
             <motion.div
+              initial={{ opacity: 0, x: 50, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full scale-110" />
+              <motion.img 
+                src="photo_2026-02-06_16-01-29.jpg.jpeg" 
+                alt="Neurix Interactive Table Concept"
+                referrerPolicy="no-referrer"
+                animate={{ 
+                  x: [-15, 15, -15],
+                  y: [-10, 10, -10],
+                  rotate: [-2, 2, -2]
+                }}
+                transition={{ 
+                  duration: 8, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="relative z-10 w-full h-auto rounded-[3rem] border border-blue-400/30 shadow-[0_20px_50px_rgba(59,130,246,0.3)] backdrop-blur-sm"
+              />
+              
+              {/* Floating UI Elements decoration */}
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="absolute -top-10 -left-10 w-32 h-32 bg-yellow-400/10 blur-[40px] rounded-full"
+              />
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Visual Showcase Gallery: Infinite Moving Strip */}
+        <section className="py-24 px-0 bg-blue-900/10 overflow-hidden relative border-y border-white/5">
+          <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
+            <h3 className="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-yellow-400">Technical Showcase</h3>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
+              A futuristic moving strip of the Neurix ecosystem and our core interactive technologies.
+            </p>
+          </div>
+          
+          <div className="relative flex overflow-hidden">
+            <motion.div 
               animate={{ 
-                rotate: 360,
-                scale: [1, 1.1, 1]
+                x: [0, -1920],
               }}
               transition={{ 
-                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 30,
+                  ease: "linear",
+                },
               }}
-              className="w-[500px] h-[500px] border-[1px] border-blue-500/30 rounded-full flex items-center justify-center"
+              className="flex gap-8 whitespace-nowrap"
             >
-              <div className="w-[400px] h-[400px] border-[1px] border-blue-400/20 rounded-full flex items-center justify-center">
-                <div className="w-[300px] h-[300px] border-[1px] border-blue-600/10 rounded-full" />
-              </div>
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="flex gap-8">
+                  {/* Image 1 */}
+                  <div className="w-[350px] md:w-[450px] flex-shrink-0 group relative overflow-hidden rounded-[2.5rem] border border-blue-500/30 bg-blue-950/40 shadow-2xl">
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src="photo_2026-02-06_15-56-51.jpg.jpeg" 
+                        alt="Smart Interactive Interface" 
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+                      />
+                    </div>
+                    <div className="p-6 bg-gradient-to-t from-blue-950/80 to-transparent">
+                      <h5 className="text-lg font-bold text-white mb-1">Smart Interface</h5>
+                      <p className="text-[10px] text-blue-400 font-black uppercase tracking-widest">Interaction Mapping</p>
+                    </div>
+                  </div>
+
+                  {/* Image 2 */}
+                  <div className="w-[350px] md:w-[450px] flex-shrink-0 group relative overflow-hidden rounded-[2.5rem] border border-yellow-500/30 bg-blue-950/40 shadow-2xl">
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src="photo_2026-02-06_16-01-29.jpg.jpeg" 
+                        alt="Future Workspace Table" 
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+                      />
+                    </div>
+                    <div className="p-6 bg-gradient-to-t from-blue-950/80 to-transparent">
+                      <h5 className="text-lg font-bold text-white mb-1">Future Workspace</h5>
+                      <p className="text-[10px] text-yellow-400 font-black uppercase tracking-widest">Next-Gen Collaboration</p>
+                    </div>
+                  </div>
+
+                  {/* Image 3 */}
+                  <div className="w-[350px] md:w-[450px] flex-shrink-0 group relative overflow-hidden rounded-[2.5rem] border border-blue-400/30 bg-blue-950/40 shadow-2xl">
+                    <div className="aspect-video overflow-hidden">
+                      <img 
+                        src="IMG-20260513-WA0050.jpg.jpeg" 
+                        alt="Advanced Presentation System" 
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
+                      />
+                    </div>
+                    <div className="p-6 bg-gradient-to-t from-blue-950/80 to-transparent">
+                      <h5 className="text-lg font-bold text-white mb-1">Advanced Projection</h5>
+                      <p className="text-[10px] text-blue-300 font-black uppercase tracking-widest">Optical Logic</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </motion.div>
           </div>
         </section>
@@ -301,48 +397,34 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-blue-950/50 rounded-[2rem] p-8 border border-white/5 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 blur-[80px] rounded-full point-events-none" />
-                <h4 className="text-2xl font-bold mb-8">How It Works</h4>
-                
-                <div className="space-y-8 relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-500 before:via-blue-600 before:to-transparent">
-                  {/* Step 1 */}
-                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-blue-950 bg-blue-500 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(59,130,246,0.2)] z-10">
-                      1
-                    </div>
-                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-4 rounded-xl bg-white/[0.03] border border-white/10 group-hover:border-blue-500/50 transition-colors">
-                      <h5 className="font-bold text-yellow-400 mb-1">Input Layer</h5>
-                      <p className="text-sm text-slate-400">A camera captures the user's hand movements and gestures in the air.</p>
-                    </div>
+              <div className="bg-blue-950/50 rounded-[2rem] p-4 border border-white/5 relative overflow-hidden group">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8 }}
+                  className="relative h-full w-full rounded-[1.5rem] overflow-hidden shadow-2xl"
+                >
+                  <div className="absolute inset-0 bg-blue-600/10 z-10 group-hover:bg-blue-600/0 transition-colors duration-500" />
+                  <motion.img 
+                    src="photo_2026-02-06_15-56-51.jpg.jpeg" 
+                    alt="Neurix Holographic Interface"
+                    referrerPolicy="no-referrer"
+                    animate={{ 
+                      x: [-5, 5, -5],
+                      rotate: [-1, 1, -1],
+                      scale: [1, 1.03, 1]
+                    }}
+                    transition={{ 
+                      duration: 7, 
+                      repeat: Infinity, 
+                      ease: "easeInOut" 
+                    }}
+                    className="w-full h-full object-cover min-h-[400px]"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-blue-950 to-transparent z-20">
+                    <p className="text-yellow-400 font-bold text-sm tracking-widest uppercase">System Interface Concept</p>
                   </div>
-                  
-                  {/* Step 2 */}
-                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-blue-950 bg-blue-600 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(37,99,235,0.2)] z-10">
-                      2
-                    </div>
-                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-4 rounded-xl bg-white/[0.03] border border-white/10 group-hover:border-blue-600/50 transition-colors">
-                      <h5 className="font-bold text-yellow-400 mb-1">Processing Layer</h5>
-                      <p className="text-sm text-slate-400">Analyzes movements in real-time, recognizes patterns, and maps to commands.</p>
-                    </div>
-                  </div>
-                  
-                  {/* Step 3 */}
-                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full border-4 border-blue-950 bg-blue-700 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-[0_0_0_4px_rgba(29,78,216,0.2)] z-10">
-                      3
-                    </div>
-                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] p-4 rounded-xl bg-white/[0.03] border border-white/10 group-hover:border-blue-700/50 transition-colors">
-                      <h5 className="font-bold text-yellow-400 mb-1">Output Layer</h5>
-                      <p className="text-sm text-slate-400">Executes command instantly — modifying a model, navigating, or triggering response.</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl text-center">
-                  <p className="text-yellow-300 font-medium">Move your hand → System understands → System responds instantly</p>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -672,9 +754,25 @@ export default function App() {
                     </div>
                  </div>
                  <div className="flex-1 w-full relative aspect-square md:aspect-video rounded-[3rem] overflow-hidden border border-white/10 group">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-yellow-400/10" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                       <div className="relative w-48 h-48">
+                    <div className="absolute inset-0 bg-blue-600/10 z-10 group-hover:opacity-0 transition-opacity duration-700" />
+                    <motion.img 
+                      src="IMG-20260513-WA0050.jpg.jpeg" 
+                      alt="Neurix Hardware Integration"
+                      referrerPolicy="no-referrer"
+                      animate={{ 
+                        x: [-10, 10, -10],
+                        rotate: [-2, 2, -2]
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ 
+                        x: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                        rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+                        scale: { duration: 1.5 }
+                      }}
+                      className="w-full h-full object-cover opacity-80"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center z-20">
+                       <div className="relative w-48 h-48 pointer-events-none">
                           <motion.div 
                             animate={{ rotate: 360 }}
                             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -690,11 +788,13 @@ export default function App() {
                           </div>
                        </div>
                     </div>
+                    <div className="absolute bottom-6 right-6 bg-blue-500/20 backdrop-blur-md px-4 py-2 rounded-full border border-blue-400/30 z-30">
+                       <p className="text-[10px] font-black text-blue-100 uppercase tracking-widest">Hardware Module v1.0</p>
+                    </div>
                  </div>
               </div>
            </div>
         </section>
-
 
         <MemberProfileModal member={selectedMember} onClose={() => setSelectedMember(null)} />
 
@@ -744,9 +844,15 @@ export default function App() {
                 <p className="text-xs text-slate-500">© 2026 Neurix Project Team. All Rights Reserved.</p>
               </div>
             </div>
-            <div className="flex items-center gap-6">
-               <Calendar className="w-4 h-4 text-yellow-400" />
-               <p className="text-sm text-slate-400">Founded Feb 11, 2026</p>
+            <div className="flex flex-col items-center md:items-end gap-2">
+              <div className="flex items-center gap-2 text-slate-400 hover:text-yellow-400 transition-colors cursor-pointer group">
+                <Mail className="w-4 h-4 text-yellow-400 group-hover:scale-110 transition-transform" />
+                <a href="mailto:neurixt@gmail.com" className="text-sm font-medium">neurixt@gmail.com</a>
+              </div>
+              <div className="flex items-center gap-6">
+                 <Calendar className="w-4 h-4 text-yellow-400" />
+                 <p className="text-sm text-slate-400">Founded Feb 11, 2026</p>
+              </div>
             </div>
           </div>
         </footer>
