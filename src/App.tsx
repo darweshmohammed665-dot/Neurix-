@@ -3,33 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { NeurixLogo } from './components/NeurixLogo';
 import { RoadmapNugget } from './components/RoadmapNugget';
 import { MemberProfileModal } from './components/MemberProfileModal';
-import { auth, db } from './lib/firebase';
-import { 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  onAuthStateChanged, 
-  signOut,
-  User
-} from 'firebase/auth';
-import { 
-  doc, 
-  getDoc, 
-  setDoc, 
-  collection, 
-  query, 
-  where, 
-  onSnapshot,
-  getDocFromServer,
-  addDoc,
-  deleteDoc,
-  updateDoc
-} from 'firebase/firestore';
 import { 
   Cpu, 
   Layers, 
@@ -56,61 +35,8 @@ import {
   MessageSquare,
   ExternalLink,
   Code,
-  CircuitBoard,
-  LogIn,
-  LogOut,
-  Settings,
-  Plus,
-  Trash2,
-  CheckCircle2
+  CircuitBoard
 } from 'lucide-react';
-
-enum OperationType {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete',
-  LIST = 'list',
-  GET = 'get',
-  WRITE = 'write',
-}
-
-interface FirestoreErrorInfo {
-  error: string;
-  operationType: OperationType;
-  path: string | null;
-  authInfo: {
-    userId?: string | null;
-    email?: string | null;
-    emailVerified?: boolean | null;
-    isAnonymous?: boolean | null;
-    tenantId?: string | null;
-    providerInfo?: {
-      providerId?: string | null;
-      email?: string | null;
-    }[];
-  }
-}
-
-function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
-  const errInfo: FirestoreErrorInfo = {
-    error: error instanceof Error ? error.message : String(error),
-    authInfo: {
-      userId: auth.currentUser?.uid,
-      email: auth.currentUser?.email,
-      emailVerified: auth.currentUser?.emailVerified,
-      isAnonymous: auth.currentUser?.isAnonymous,
-      tenantId: auth.currentUser?.tenantId,
-      providerInfo: auth.currentUser?.providerData?.map(provider => ({
-        providerId: provider.providerId,
-        email: provider.email,
-      })) || []
-    },
-    operationType,
-    path
-  }
-  console.error('Firestore Error: ', JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
-}
 
 const TEAM_MEMBERS = [
   // Leadership
@@ -171,138 +97,6 @@ const OBJECTIVES = [
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMember, setSelectedMember] = useState<typeof TEAM_MEMBERS[0] | null>(null);
-  
-  // Firebase State
-  const [user, setUser] = useState<User | null>(null);
-  const [userProfile, setUserProfile] = useState<any>(null);
-  const [customGestures, setCustomGestures] = useState<any[]>([]);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [showPreferences, setShowPreferences] = useState(false);
-
-  // Form State
-  const [newGesture, setNewGesture] = useState({ name: '', trigger: '', action: '' });
-
-  // Initialize Firebase
-  useEffect(() => {
-    const testConnection = async () => {
-      try {
-        await getDocFromServer(doc(db, 'test', 'connection'));
-      } catch (error) {
-        if(error instanceof Error && error.message.includes('the client is offline')) {
-          console.error("Please check your Firebase configuration.");
-        }
-      }
-    };
-    testConnection();
-
-    return onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      if (currentUser) {
-        syncUserProfile(currentUser);
-        subscribeToGestures(currentUser.uid);
-      } else {
-        setUserProfile(null);
-        setCustomGestures([]);
-      }
-    });
-  }, []);
-
-  const syncUserProfile = async (currentUser: User) => {
-    const userRef = doc(db, 'users', currentUser.uid);
-    try {
-      const userSnap = await getDoc(userRef);
-      if (!userSnap.exists()) {
-        const initialProfile = {
-          uid: currentUser.uid,
-          email: currentUser.email,
-          displayName: currentUser.displayName,
-          photoURL: currentUser.photoURL,
-          theme: 'dark',
-          sensitivity: 0.5,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        };
-        await setDoc(userRef, initialProfile);
-        setUserProfile(initialProfile);
-      } else {
-        setUserProfile(userSnap.data());
-      }
-    } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, `users/${currentUser.uid}`);
-    }
-  };
-
-  const subscribeToGestures = (uid: string) => {
-    const q = query(collection(db, 'users', uid, 'gestures'), where("userId", "==", uid));
-    return onSnapshot(q, (snapshot) => {
-      const gestures = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setCustomGestures(gestures);
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, `users/${uid}/gestures`);
-    });
-  };
-
-  const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      setIsAuthModalOpen(false);
-    } catch (error: any) {
-      if (error.code === 'auth/popup-closed-by-user') {
-        console.log('User cancelled the login popup');
-      } else {
-        console.error("Login failed:", error);
-      }
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      setShowPreferences(false);
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
-
-  const handleAddGesture = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) return;
-    
-    const gestureData = {
-      ...newGesture,
-      userId: user.uid,
-      isActive: true,
-      createdAt: new Date().toISOString()
-    };
-
-    try {
-      await addDoc(collection(db, 'users', user.uid, 'gestures'), gestureData);
-      setNewGesture({ name: '', trigger: '', action: '' });
-    } catch (error) {
-      handleFirestoreError(error, OperationType.CREATE, `users/${user.uid}/gestures`);
-    }
-  };
-
-  const handleDeleteGesture = async (id: string) => {
-    if (!user) return;
-    try {
-      await deleteDoc(doc(db, 'users', user.uid, 'gestures', id));
-    } catch (error) {
-      handleFirestoreError(error, OperationType.DELETE, `users/${user.uid}/gestures/${id}`);
-    }
-  };
-
-  const handleUpdatePreference = async (field: string, value: any) => {
-    if (!user) return;
-    const userRef = doc(db, 'users', user.uid);
-    try {
-      await updateDoc(userRef, { [field]: value, updatedAt: new Date().toISOString() });
-      setUserProfile((prev: any) => ({ ...prev, [field]: value }));
-    } catch (error) {
-       handleFirestoreError(error, OperationType.UPDATE, `users/${user.uid}`);
-    }
-  };
 
   const teamData = useMemo(() => {
     const leader = TEAM_MEMBERS.find(m => m.id === 1) || null;
@@ -383,31 +177,6 @@ export default function App() {
             <a href="#architecture" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Stack</a>
             <a href="#roadmap" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Matrix</a>
             <a href="#contact-hub" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Contact</a>
-            
-            {user ? (
-              <div className="flex items-center gap-3">
-                <button 
-                  onClick={() => setShowPreferences(!showPreferences)}
-                  className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-yellow-500/30 overflow-hidden hover:border-yellow-400 transition-all"
-                >
-                  <img src={user.photoURL || ''} alt={user.displayName || 'User'} className="w-full h-full object-cover" />
-                </button>
-                <button 
-                  onClick={handleLogout}
-                  className="p-2 text-slate-400 hover:text-red-400 transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
-              </div>
-            ) : (
-              <button 
-                onClick={() => setIsAuthModalOpen(true)}
-                className="bg-slate-800 border border-yellow-500/30 text-yellow-400/90 px-4 md:px-6 py-1 md:py-1.5 rounded-full text-[10px] md:text-sm font-bold hover:bg-slate-800/80 hover:border-yellow-400/50 hover:text-yellow-300 hover:shadow-[0_4px_12px_rgba(234,179,8,0.15)] transition-all ease-out duration-300 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap ml-1 md:ml-3 flex items-center gap-2"
-              >
-                <LogIn className="w-3 h-3 md:w-4 md:h-4" />
-                Sign In
-              </button>
-            )}
           </nav>
         </div>
       </header>
@@ -1318,152 +1087,6 @@ export default function App() {
         </section>
 
         <MemberProfileModal member={selectedMember} onClose={() => setSelectedMember(null)} />
-
-        {/* User Preferences Overlay */}
-        <AnimatePresence>
-          {showPreferences && user && (
-            <motion.div 
-              initial={{ opacity: 0, x: 300 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 300 }}
-              className="fixed top-20 right-6 bottom-6 w-full max-w-md z-[60] bg-blue-950/95 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col"
-            >
-              <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.02]">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-yellow-400/10 flex items-center justify-center">
-                    <Settings className="w-6 h-6 text-yellow-400" />
-                  </div>
-                  <h4 className="text-xl font-bold uppercase tracking-tight">Profile & Gestures</h4>
-                </div>
-                <button onClick={() => setShowPreferences(false)} className="text-slate-500 hover:text-white transition-colors">✕</button>
-              </div>
-
-              <div className="flex-grow overflow-y-auto no-scrollbar p-8 space-y-10">
-                {/* System Preferences */}
-                <div>
-                  <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-6">System Preferences</h5>
-                  <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-slate-300">Gesture Sensitivity</span>
-                      <input 
-                        type="range" 
-                        min="0.1" 
-                        max="1" 
-                        step="0.1" 
-                        value={userProfile?.sensitivity || 0.5}
-                        onChange={(e) => handleUpdatePreference('sensitivity', parseFloat(e.target.value))}
-                        className="w-32 accent-yellow-400"
-                      />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-slate-300">Interface Theme</span>
-                      <select 
-                        value={userProfile?.theme || 'dark'}
-                        onChange={(e) => handleUpdatePreference('theme', e.target.value)}
-                        className="bg-white/5 border border-white/10 rounded-lg px-3 py-1 text-xs outline-none"
-                      >
-                        <option value="dark">Dark Matrix</option>
-                        <option value="light">Solar System</option>
-                        <option value="system">Auto Sync</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Custom Gestures */}
-                <div>
-                  <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] mb-6">Your Custom Gestures</h5>
-                  
-                  <div className="space-y-3 mb-8">
-                    {customGestures.map((g) => (
-                      <div key={g.id} className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 flex items-center justify-between group">
-                        <div>
-                          <p className="text-sm font-bold text-white">{g.name}</p>
-                          <p className="text-[10px] text-slate-500 uppercase tracking-wider">{g.trigger} → {g.action}</p>
-                        </div>
-                        <button onClick={() => handleDeleteGesture(g.id)} className="p-2 text-slate-600 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                    {customGestures.length === 0 && (
-                      <div className="text-center py-8 border-2 border-dashed border-white/5 rounded-3xl">
-                        <p className="text-slate-500 text-xs">No custom gestures saved.</p>
-                      </div>
-                    )}
-                  </div>
-
-                  <form onSubmit={handleAddGesture} className="space-y-4 p-6 rounded-3xl bg-blue-900/20 border border-blue-400/10">
-                    <p className="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-2">New Neural Command</p>
-                    <input 
-                      required
-                      placeholder="Gesture Name (e.g. Wave)"
-                      value={newGesture.name}
-                      onChange={(e) => setNewGesture({...newGesture, name: e.target.value})}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-blue-400/50 transition-colors"
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                      <input 
-                        required
-                        placeholder="Trigger"
-                        value={newGesture.trigger}
-                        onChange={(e) => setNewGesture({...newGesture, trigger: e.target.value})}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none"
-                      />
-                      <input 
-                        required
-                        placeholder="Action"
-                        value={newGesture.action}
-                        onChange={(e) => setNewGesture({...newGesture, action: e.target.value})}
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none"
-                      />
-                    </div>
-                    <button type="submit" className="w-full py-3 bg-blue-500 hover:bg-blue-400 text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                      <Plus className="w-4 h-4" /> Save Command
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Auth Modal Overlay */}
-        <AnimatePresence>
-          {isAuthModalOpen && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] flex items-center justify-center px-6"
-            >
-              <div className="absolute inset-0 bg-blue-950/80 backdrop-blur-md" onClick={() => setIsAuthModalOpen(false)} />
-              <motion.div 
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="relative bg-white/5 border border-white/10 rounded-[3rem] p-12 max-w-lg w-full text-center shadow-2xl backdrop-blur-2xl"
-              >
-                <div className="w-20 h-20 rounded-[2rem] bg-gradient-to-br from-yellow-400 to-blue-500 flex items-center justify-center mx-auto mb-8">
-                  <BrainCircuit className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-3xl font-black italic tracking-tighter text-white uppercase mb-4">Initialize Neural Profile</h3>
-                <p className="text-slate-400 mb-10 leading-relaxed">
-                  Connect your identity to save custom gestures, system preferences, and technical configurations within the Neurix matrix.
-                </p>
-                <button 
-                  onClick={handleGoogleLogin}
-                  className="w-full py-5 bg-white text-blue-950 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-4 hover:bg-slate-100 transition-all shadow-[0_10px_30px_rgba(255,255,255,0.1)]"
-                >
-                  <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="Google" />
-                  Sync with Google
-                </button>
-                <p className="mt-8 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                  Secure encrypted transmission • No third-party tracking
-                </p>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* CTA */}
         <section className="py-20 md:py-32 px-4 md:px-6">
