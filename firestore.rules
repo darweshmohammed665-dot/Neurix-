@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    match /users/{userId} {
+      function isValidUserProfile(data) {
+        return data.uid == request.auth.uid &&
+               data.email is string &&
+               (!('displayName' in data) || data.displayName is string) &&
+               (!('photoURL' in data) || data.photoURL is string) &&
+               (!('theme' in data) || data.theme in ['dark', 'light', 'system']) &&
+               (!('sensitivity' in data) || (data.sensitivity is number && data.sensitivity >= 0 && data.sensitivity <= 1));
+      }
+
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidUserProfile(incoming());
+      allow update: if isOwner(userId) && isValidUserProfile(incoming());
+
+      match /gestures/{gestureId} {
+        function isValidGesture(data) {
+          return data.userId == request.auth.uid &&
+                 data.name is string && data.name.size() <= 50 &&
+                 data.trigger is string &&
+                 data.action is string;
+        }
+
+        allow list: if isOwner(userId);
+        allow get: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidId(gestureId) && isValidGesture(incoming());
+        allow update: if isOwner(userId) && isValidGesture(incoming()) && 
+                        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'trigger', 'action', 'isActive']);
+        allow delete: if isOwner(userId);
+      }
+    }
+  }
+}
