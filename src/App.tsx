@@ -247,8 +247,12 @@ export default function App() {
     try {
       await signInWithPopup(auth, provider);
       setIsAuthModalOpen(false);
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (error: any) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.log('User cancelled the login popup');
+      } else {
+        console.error("Login failed:", error);
+      }
     }
   };
 

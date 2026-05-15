@@ -104,17 +104,40 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 />
               </div>
 
-              <motion.h1 
-                className="text-4xl md:text-5xl font-bold tracking-[0.4em] text-white relative z-10 uppercase"
-                animate={{ 
-                  opacity: [0.8, 1, 0.8], 
-                  letterSpacing: ["0.3em", "0.5em", "0.3em"],
-                  textShadow: ["0 0 10px #ffd700", "0 0 40px #ffd700", "0 0 10px #ffd700"]
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                NEURIX
-              </motion.h1>
+              <div className="flex font-bold text-white relative z-10 uppercase text-4xl md:text-5xl my-4">
+                {"NEURIX".split('').map((letter, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: "-100vh" }}
+                    animate={{ 
+                      opacity: 1, 
+                      y: 0,
+                      textShadow: ["0 0 0px #ffd700", "0 0 25px #ffd700", "0 0 10px #ffd700"]
+                    }}
+                    transition={{
+                      y: {
+                        duration: 1.2,
+                        delay: i * 0.15,
+                        type: "spring",
+                        bounce: 0.5,
+                      },
+                      opacity: {
+                        duration: 0.3,
+                        delay: i * 0.15
+                      },
+                      textShadow: {
+                        duration: 2,
+                        delay: (i * 0.15) + 1.2,
+                        repeat: Infinity,
+                        repeatType: "reverse"
+                      }
+                    }}
+                    className="mx-[0.15em] inline-block"
+                  >
+                    {letter}
+                  </motion.span>
+                ))}
+              </div>
             </div>
           </div>
           <p className="text-blue-400 text-[10px] tracking-[0.6em] uppercase mt-6 font-bold">Initializing Bio-Logic Matrix</p>
