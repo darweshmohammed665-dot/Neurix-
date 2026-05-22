@@ -338,13 +338,13 @@ export default function App() {
         </section>
         
         {/* Infinite Gold Brand Marquee */}
-        <section className="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 font-black py-8 md:py-12 overflow-hidden relative shadow-[0_30px_100px_rgba(245,158,11,0.3)] border-y border-yellow-300/50">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent)]" />
+        <section className="bg-black font-black py-8 md:py-12 overflow-hidden relative shadow-[0_30px_100px_rgba(250,204,21,0.25)] border-y-2 border-yellow-400">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(250,204,21,0.1),transparent)]" />
           {/* Subtle light sweep across the whole strip */}
           <motion.div 
             animate={{ x: ['100%', '-100%'] }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/20 to-transparent skew-x-[-20deg]"
           />
           
           <motion.div 
@@ -362,11 +362,26 @@ export default function App() {
             {[...Array(10)].map((_, i) => (
               <div key={i} className="flex gap-32 items-center">
                 <motion.div className="relative">
-                  <span 
-                    className="text-6xl md:text-9xl font-black italic tracking-tighter text-blue-950 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
+                  <motion.span 
+                    animate={{ 
+                      opacity: [1, 0.5, 1],
+                      textShadow: [
+                        "0 0 15px rgba(250,204,21,0.6)",
+                        "0 0 35px rgba(250,204,21,1)",
+                        "0 0 15px rgba(250,204,21,0.6)"
+                      ],
+                      color: ["#facc15", "#fef08a", "#facc15"]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: i * 0.15
+                    }}
+                    className="text-6xl md:text-9xl font-black italic tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)]"
                   >
                     NEURIX
-                  </span>
+                  </motion.span>
                 </motion.div>
               </div>
             ))}

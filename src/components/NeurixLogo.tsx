@@ -4,7 +4,18 @@ import { motion } from 'motion/react';
 export const NeurixLogo = React.memo(({ className = "w-10 h-10" }: { className?: string }) => (
   <motion.div 
     className={`relative ${className}`}
-    whileHover={{ scale: 1.05 }}
+    variants={{
+      hover: { 
+        scale: 1.1,
+        rotateY: 360,
+      }
+    }}
+    whileHover="hover"
+    transition={{
+      rotateY: { duration: 1.5, ease: "easeInOut" },
+      scale: { duration: 0.4 }
+    }}
+    style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
   >
       <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_8px_rgba(200,200,200,0.5)]">
         <defs>
