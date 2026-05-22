@@ -20,15 +20,18 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(onComplete, 800);
+          setTimeout(() => {
+            onComplete();
+          }, 300);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 4) + 1;
+        return prev + Math.floor(Math.random() * 12) + 8;
       });
-    }, 40);
+    }, 25);
 
     return () => clearInterval(timer);
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const logInterval = setInterval(() => {
@@ -71,12 +74,14 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
               <motion.div 
                 animate={{ rotateY: 360 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="w-24 h-24 border-2 border-blue-500 rounded-3xl flex items-center justify-center relative shadow-[0_0_50px_rgba(0,119,255,0.4)] bg-black z-10"
+                style={{ willChange: "transform", transformStyle: "preserve-3d" }}
+                className="w-24 h-24 border-2 border-blue-500 rounded-3xl flex items-center justify-center relative shadow-[0_0_50px_rgba(0,119,255,0.4)] bg-black z-10 transform-gpu"
               >
                  <motion.div 
                    animate={{ rotate: 360 }}
                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                   className="absolute inset-[-8px] border-2 border-t-yellow-400 border-r-transparent border-b-yellow-400 border-l-transparent rounded-[2rem] shadow-[0_0_15px_rgba(255,215,0,0.4)]" 
+                   style={{ willChange: "transform" }}
+                   className="absolute inset-[-8px] border-2 border-t-yellow-400 border-r-transparent border-b-yellow-400 border-l-transparent rounded-[2rem] shadow-[0_0_15px_rgba(255,215,0,0.4)] transform-gpu" 
                  />
                  <span className="text-white text-4xl font-bold drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">N</span>
               </motion.div>
@@ -175,7 +180,8 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       <motion.div 
         animate={{ y: ["0vh", "100vh"] }}
         transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-        className="absolute top-0 left-0 w-full h-px bg-blue-500/30 shadow-[0_0_20px_rgba(0,102,255,0.5)] z-20"
+        style={{ willChange: "transform" }}
+        className="absolute top-0 left-0 w-full h-px bg-blue-500/30 shadow-[0_0_20px_rgba(0,102,255,0.5)] z-20 pointer-events-none transform-gpu"
       />
     </motion.div>
   );

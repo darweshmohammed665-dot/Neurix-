@@ -174,12 +174,23 @@ export default function App() {
           <div className="flex items-center gap-3 shrink-0 relative group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
             <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-yellow-500/5 blur-[20px] rounded-full pointer-events-none group-hover:bg-yellow-500/10 transition-colors duration-500" />
             <NeurixLogo className="w-8 h-8 md:w-10 md:h-10 relative z-10 drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-transform duration-500 group-hover:scale-105" />
-            <div className="text-left relative z-10 pb-0.5 mt-1">
+            <motion.div 
+              initial={{ y: -160, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 120, 
+                damping: 8, 
+                mass: 0.9,
+                delay: 0.85 
+              }}
+              className="text-left relative z-10 pb-0.5 mt-1"
+            >
               <h1 className="font-bold text-xl tracking-[0.2em] leading-none text-white transition-colors duration-500 group-hover:text-yellow-300">
                 NEURIX
               </h1>
               <p className="text-[7px] md:text-[8px] text-yellow-300/80 tracking-[0.4em] font-black uppercase mt-1">Project 2026</p>
-            </div>
+            </motion.div>
           </div>
           <nav className="flex flex-row items-center justify-end gap-6 md:gap-10 overflow-x-auto no-scrollbar shrink-0">
             <a href="#about" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">About</a>
