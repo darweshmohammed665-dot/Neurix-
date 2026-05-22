@@ -23,7 +23,7 @@ export const MemberProfileModal = React.memo(({ member, onClose }: MemberProfile
             initial={{ opacity: 0, scale: 0.9, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 40 }}
-            className="relative w-full max-w-3xl bg-zinc-900 border border-yellow-400/20 rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(255,215,0,0.1)]"
+            className="relative w-full max-w-3xl bg-blue-900 border border-yellow-400/20 rounded-[3rem] overflow-hidden shadow-[0_0_100px_rgba(255,215,0,0.1)]"
           >
             <div className="absolute inset-0 opacity-20 pointer-events-none">
                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/30 blur-[100px] rounded-full" />

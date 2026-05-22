@@ -7,22 +7,6 @@
   --color-yellow-300: #fff700;
   --color-yellow-400: #ffd700;
   --color-yellow-500: #ffaa00;
-
-  --color-blue-400: #00d2ff;
-  --color-blue-500: #0077ff;
-  --color-blue-600: #0044ff;
-
-  --color-slate-50: var(--color-blue-50);
-  --color-slate-100: var(--color-blue-100);
-  --color-slate-200: var(--color-blue-200);
-  --color-slate-300: var(--color-blue-300);
-  --color-slate-400: var(--color-blue-400);
-  --color-slate-500: var(--color-blue-500);
-  --color-slate-600: var(--color-blue-600);
-  --color-slate-700: var(--color-blue-700);
-  --color-slate-800: var(--color-blue-800);
-  --color-slate-900: var(--color-blue-900);
-  --color-slate-950: var(--color-blue-950);
 }
 
 @layer base {
@@ -31,7 +15,7 @@
   }
   
   body {
-    @apply bg-blue-950 text-blue-100;
+    @apply bg-blue-900 text-slate-100;
   }
 
   h1, h2, h3, h4 {
@@ -40,5 +24,5 @@
 }
 
 .markdown-body {
-  @apply text-blue-300 leading-relaxed;
+  @apply text-slate-300 leading-relaxed;
 }

@@ -133,16 +133,30 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-blue-950 text-slate-100 font-sans selection:bg-yellow-500/20 relative">
+    <div className="min-h-screen bg-blue-900 text-slate-100 font-sans selection:bg-yellow-500/20 relative">
+      {/* Global Azure Underlay overlaying the dark dark slate */}
+      <div className="fixed inset-0 pointer-events-none z-[-1] bg-gradient-to-b from-blue-900 via-sky-900/80 to-blue-900" />
       {/* Global Soft Golden/Yellow Glow */}
-      <div className="fixed inset-0 pointer-events-none z-[100] shadow-[inset_0_0_150px_rgba(234,179,8,0.15)]" />
+      <div className="fixed inset-0 pointer-events-none z-[100] shadow-[inset_0_0_150px_rgba(255,191,0,0.1)]" />
 
       {/* Background decoration */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-        <div className="absolute top-[-10%] left-[-10%] w-[60%] md:w-[40%] h-[40%] bg-blue-500/10 blur-[120px] md:blur-[140px] rounded-full" />
-        <div className="absolute top-[40%] right-[-10%] w-[60%] md:w-[40%] h-[40%] bg-amber-500/10 blur-[120px] md:blur-[140px] rounded-full" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[50%] md:w-[30%] h-[40%] bg-blue-700/10 blur-[120px] md:blur-[140px] rounded-full" />
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:24px_24px]" />
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.15, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] md:w-[50vw] md:h-[50vw] bg-sky-500/10 blur-[120px] md:blur-[160px] rounded-full" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.05, 0.1, 0.05] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] right-[-20%] w-[60vw] h-[60vw] md:w-[45vw] md:h-[45vw] bg-yellow-600/10 blur-[120px] md:blur-[150px] rounded-full" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.12, 0.08] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-[-20%] left-[10%] w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] bg-cyan-500/15 blur-[120px] md:blur-[140px] rounded-full" 
+        />
       </div>
 
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -153,30 +167,27 @@ export default function App() {
         </AnimatePresence>
 
         {/* Header / Nav */}
-        <header className="sticky top-0 z-50 border-b border-yellow-500/50 shadow-[0_4px_30px_-5px_rgba(234,179,8,0.25)] bg-gradient-to-b from-yellow-950/40 to-blue-950/90 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 h-auto py-2 md:py-3 flex flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 shrink-0 relative">
-            <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-slate-500/10 blur-[30px] rounded-full pointer-events-none" />
-            <NeurixLogo className="w-8 h-8 md:w-10 md:h-10 relative z-10" />
+        <header className="sticky top-0 z-50 border-b border-yellow-500/20 bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 backdrop-blur-2xl supports-[backdrop-filter]:bg-blue-900/80">
+        {/* Subtle gold top border highlight */}
+        <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-50" />
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 h-auto py-3 md:py-4 flex flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3 shrink-0 relative group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+            <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-yellow-500/5 blur-[20px] rounded-full pointer-events-none group-hover:bg-yellow-500/10 transition-colors duration-500" />
+            <NeurixLogo className="w-8 h-8 md:w-10 md:h-10 relative z-10 drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-transform duration-500 group-hover:scale-105" />
             <div className="text-left relative z-10 pb-0.5 mt-1">
-              <motion.h1 
-                className="font-bold text-lg md:text-xl tracking-wider leading-none bg-clip-text text-transparent bg-gradient-to-r from-slate-300 via-yellow-400 to-slate-400"
-                style={{ backgroundSize: '200% auto' }}
-                animate={{ backgroundPosition: ['0% center', '200% center'] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-              >
+              <h1 className="font-bold text-xl tracking-[0.2em] leading-none text-white transition-colors duration-500 group-hover:text-yellow-300">
                 NEURIX
-              </motion.h1>
-              <p className="text-[7px] md:text-[8px] text-slate-400 tracking-[0.3em] font-black uppercase mt-0.5">Project 2026</p>
+              </h1>
+              <p className="text-[7px] md:text-[8px] text-yellow-300/80 tracking-[0.4em] font-black uppercase mt-1">Project 2026</p>
             </div>
           </div>
-          <nav className="flex flex-row items-center justify-end gap-3 md:gap-8 overflow-x-auto no-scrollbar shrink-0">
-            <a href="#about" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">About</a>
-            <a href="#core-concept" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Concept</a>
-            <a href="#objectives" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Objectives</a>
-            <a href="#architecture" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Stack</a>
-            <a href="#roadmap" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Matrix</a>
-            <a href="#contact-hub" className="text-[10px] md:text-sm font-medium hover:text-yellow-400 transition-colors whitespace-nowrap">Contact</a>
+          <nav className="flex flex-row items-center justify-end gap-6 md:gap-10 overflow-x-auto no-scrollbar shrink-0">
+            <a href="#about" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">About</a>
+            <a href="#core-concept" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">Concept</a>
+            <a href="#objectives" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Objectives</a>
+            <a href="#architecture" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">Stack</a>
+            <a href="#roadmap" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Matrix</a>
+            <a href="#contact-hub" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">Contact</a>
           </nav>
         </div>
       </header>
@@ -189,17 +200,17 @@ export default function App() {
             <motion.div 
               animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.05, 1] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-[20%] left-[20%] w-[50%] h-[80%] bg-gradient-to-br from-blue-600/10 to-transparent blur-[100px] rounded-full"
+              className="absolute -top-[20%] left-[20%] w-[50%] h-[80%] bg-gradient-to-br from-yellow-500/10 to-transparent blur-[100px] rounded-full"
             />
             <motion.div 
               animate={{ opacity: [0.2, 0.5, 0.2], x: [0, 50, 0], y: [0, -30, 0] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-[-10%] right-[10%] w-[40%] h-[60%] bg-gradient-to-t from-yellow-500/5 to-transparent blur-[100px] rounded-full transform rotate-45"
+              className="absolute bottom-[-10%] right-[10%] w-[40%] h-[60%] bg-gradient-to-t from-yellow-700/10 to-transparent blur-[100px] rounded-full transform rotate-45"
             />
             <motion.div 
               animate={{ opacity: [0.1, 0.3, 0.1] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-20"
+              className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-[0.15]"
             />
           </div>
 
@@ -210,29 +221,35 @@ export default function App() {
               transition={{ duration: 0.6 }}
               className="max-w-4xl w-full"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-500/30 text-yellow-300 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border-2 border-yellow-400/50 hover:border-yellow-300/80 text-yellow-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
                 </span>
                 Active Project
               </div>
-              <h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-6 md:mb-8 leading-[1.1] md:leading-[1.1]">
-                Integrated <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-blue-400 to-yellow-300">Interactive</span> Hardware-Software System.
+              <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 md:mb-10 leading-[1.05] md:leading-[1.05]">
+                Integrated <br className="hidden md:block"/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600 drop-shadow-sm">Interactive</span> <br className="hidden md:block"/>
+                System.
               </h2>
-              <p className="text-lg md:text-xl text-slate-400 mb-8 md:mb-10 leading-relaxed max-w-2xl mx-auto md:mx-0">
+              <p className="text-lg md:text-xl text-slate-300/80 font-medium mb-10 md:mb-12 leading-relaxed max-w-2xl mx-auto md:mx-0">
                 Developing the next generation of tangible interaction. Bringing your hand into your world with seamless sensor integration and advanced embedded logic.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
-                <button className="w-full sm:w-auto group bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2 shadow-xl shadow-blue-600/30">
-                  Explore Project
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-yellow-300" />
+              <div className="flex flex-col sm:flex-row gap-6 items-center justify-center md:justify-start">
+                <button className="w-full sm:w-auto overflow-hidden relative group bg-white hover:bg-slate-50 text-blue-950 px-10 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:shadow-[0_0_60px_rgba(255,191,0,0.3)] hover:scale-105 active:scale-95 border border-transparent hover:border-yellow-400/50">
+                  <span className="relative z-10">Explore Project</span>
+                  <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-100 to-yellow-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </button>
-                <div className="flex items-center gap-4 px-6 text-slate-400 border-l border-white/10 sm:ml-2">
-                  <div className="text-center sm:text-left">
-                    <p className="text-[10px] uppercase font-bold tracking-widest text-slate-500 mb-0.5">Started</p>
-                    <p className="font-mono text-slate-200 text-sm md:text-base">2026/02/11</p>
+                <div className="flex items-center gap-5 px-4 text-slate-400">
+                  <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:border-yellow-500/50 transition-colors">
+                    <Zap className="w-5 h-5 text-yellow-300" />
+                  </div>
+                  <div className="text-left border-l border-white/10 pl-5">
+                    <p className="text-[10px] uppercase font-black tracking-widest text-slate-500 mb-1">Initiated</p>
+                    <p className="font-mono text-slate-200 text-sm md:text-base font-semibold">2026.02.11</p>
                   </div>
                 </div>
               </div>
@@ -246,26 +263,26 @@ export default function App() {
               transition={{ duration: 1.2, ease: "easeOut" }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full scale-110" />
+              <div className="absolute inset-0 bg-yellow-500/10 blur-[100px] rounded-full scale-110" />
               <motion.img 
                 src="/workspace.jpg" 
                 alt="Neurix Interactive Table Concept"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1200"; // Tech/Hardware placeholder
+                  target.src = "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80&w=1200"; // A gold/dark dramatic hardware-ish vibe
                 }}
                 animate={{ 
                   x: [-15, 15, -15],
                   y: [-10, 10, -10],
-                  rotate: [-2, 2, -2]
+                  rotate: [-1, 1, -1]
                 }}
                 transition={{ 
                   duration: 8, 
                   repeat: Infinity, 
                   ease: "easeInOut" 
                 }}
-                className="relative z-10 w-full h-auto rounded-[3rem] border border-blue-400/30 shadow-[0_20px_50px_rgba(59,130,246,0.3)] backdrop-blur-sm"
+                className="relative z-10 w-full h-auto rounded-[2rem] border border-yellow-400/50 shadow-[0_0_30px_rgba(255,215,0,0.15)] shadow-[0_20px_50px_rgba(245,158,11,0.15)] backdrop-blur-sm transition-all duration-700"
               />
               
               {/* Floating UI Elements decoration */}
@@ -277,15 +294,46 @@ export default function App() {
             </motion.div>
           </div>
         </section>
+
+        {/* Detailed About Section */}
+        <section id="about" className="py-24 px-6 lg:px-16 border-y border-white/5 bg-blue-900 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.03),transparent)]" />
+          <div className="max-w-6xl mx-auto relative z-10 text-center">
+            <h3 className="text-3xl md:text-5xl font-black mb-8 uppercase tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-100 via-yellow-300 to-yellow-600 drop-shadow-md">
+              Forging the Future
+            </h3>
+            <p className="text-slate-300 md:text-xl leading-relaxed mb-16 max-w-4xl mx-auto font-medium">
+              Neurix represents a paradigm shift in human-computer interaction. Conceived as a holistic hardware-software integration, this project challenges the boundaries of traditional input systems by bringing digital control directly into three-dimensional space.
+              <br/><br/>
+              By bridging spatial artificial intelligence, dynamic sensor fusion, and real-time environment mapping, Neurix empowers users to sculpt, command, and interact purely through intuition and natural gestures.
+            </p>
+            <div className="flex flex-col md:flex-row justify-center items-center gap-12 border-t border-white/5 pt-12 max-w-3xl mx-auto">
+               <div className="flex flex-col items-center gap-2">
+                 <div className="text-yellow-400 font-bold text-4xl">01</div>
+                 <div className="text-xs uppercase tracking-widest font-black text-slate-500">Spatial Engine</div>
+               </div>
+               <div className="w-px h-12 bg-white/5 hidden md:block" />
+               <div className="flex flex-col items-center gap-2">
+                 <div className="text-yellow-400 font-bold text-4xl">02</div>
+                 <div className="text-xs uppercase tracking-widest font-black text-slate-500">Sensor Fusion</div>
+               </div>
+               <div className="w-px h-12 bg-white/5 hidden md:block" />
+               <div className="flex flex-col items-center gap-2">
+                 <div className="text-yellow-400 font-bold text-4xl">03</div>
+                 <div className="text-xs uppercase tracking-widest font-black text-slate-500">Zero Latency</div>
+               </div>
+            </div>
+          </div>
+        </section>
         
         {/* Infinite Gold Brand Marquee */}
-        <section className="bg-blue-700 font-black py-5 md:py-10 overflow-hidden relative shadow-[0_30px_100px_rgba(0,0,0,0.5)] border-y-2 border-yellow-500/20">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-800 via-blue-700 to-blue-800" />
+        <section className="bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-600 font-black py-8 md:py-12 overflow-hidden relative shadow-[0_30px_100px_rgba(245,158,11,0.3)] border-y border-yellow-300/50">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.4),transparent)]" />
           {/* Subtle light sweep across the whole strip */}
           <motion.div 
             animate={{ x: ['100%', '-100%'] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg]"
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg]"
           />
           
           <motion.div 
@@ -294,7 +342,7 @@ export default function App() {
               x: {
                 repeat: Infinity,
                 repeatType: "loop",
-                duration: 20,
+                duration: 25,
                 ease: "linear",
               },
             }}
@@ -303,23 +351,11 @@ export default function App() {
             {[...Array(10)].map((_, i) => (
               <div key={i} className="flex gap-32 items-center">
                 <motion.div className="relative">
-                  <motion.span 
-                    animate={{ 
-                      backgroundPosition: ["200% 0%", "-200% 0%"],
-                      textShadow: [
-                        "0 0 20px rgba(253,224,71,0.4)",
-                        "0 0 50px rgba(253,224,71,0.8)",
-                        "0 0 20px rgba(253,224,71,0.4)"
-                      ]
-                    }}
-                    transition={{ 
-                      backgroundPosition: { duration: 4, repeat: Infinity, ease: "linear" },
-                      textShadow: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                    }}
-                    className="text-6xl md:text-9xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#fff7ad] to-[#d4af37] bg-[length:200%_auto]"
+                  <span 
+                    className="text-6xl md:text-9xl font-black italic tracking-tighter text-blue-950 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]"
                   >
                     NEURIX
-                  </motion.span>
+                  </span>
                 </motion.div>
               </div>
             ))}
@@ -327,9 +363,9 @@ export default function App() {
         </section>
 
         {/* Visual Showcase Gallery: Infinite Moving Strip */}
-        <section className="py-24 px-0 bg-blue-900/5 overflow-hidden relative border-y border-white/5">
+        <section id="showcase" className="py-24 px-0 bg-blue-900 overflow-hidden relative border-y border-white/5">
           <div className="max-w-7xl mx-auto px-6 mb-16 text-center">
-            <h3 className="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-yellow-400">Technical Showcase</h3>
+            <h3 className="text-3xl md:text-5xl font-black mb-4 uppercase tracking-tighter italic text-transparent bg-clip-text bg-gradient-to-r from-yellow-100 via-yellow-300 to-yellow-600 drop-shadow-md">Technical Showcase</h3>
             <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
               Explore the Neurix ecosystem through our dynamic interactive gallery.
             </p>
@@ -340,8 +376,8 @@ export default function App() {
             <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none overflow-hidden select-none">
               <motion.div
                 animate={{ x: [0, -1000] }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="text-[20rem] font-black whitespace-nowrap text-blue-500"
+                transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+                className="text-[20rem] font-black whitespace-nowrap text-yellow-300"
               >
                 NEURIX NEURIX NEURIX NEURIX
               </motion.div>
@@ -391,7 +427,7 @@ export default function App() {
                   {/* Image 1 */}
                   <motion.div 
                     whileHover={{ scale: 1.05, rotate: 1.5, y: -10 }}
-                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-blue-500/30 bg-blue-950/60 shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border-2 border-yellow-400/50 hover:border-yellow-300/80 bg-blue-900/60 shadow-[0_30px_60px_rgba(245,158,11,0.2)]"
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
@@ -402,20 +438,20 @@ export default function App() {
                           const target = e.target as HTMLImageElement;
                           target.src = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200"; // UI/Cyber placeholder
                         }}
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 " 
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-transparent opacity-90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-950/50 to-transparent opacity-90" />
                     <div className="absolute bottom-0 left-0 p-10">
                       <h5 className="text-2xl font-bold text-white mb-1">Smart Interface</h5>
-                      <p className="text-xs text-blue-400 font-black uppercase tracking-widest">Interaction Mapping</p>
+                      <p className="text-xs text-yellow-300 font-black uppercase tracking-widest">Interaction Mapping</p>
                     </div>
                   </motion.div>
 
                   {/* Image 2 */}
                   <motion.div 
                     whileHover={{ scale: 1.05, rotate: -1.5, y: -10 }}
-                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-yellow-500/30 bg-blue-950/60 shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border-2 border-yellow-400/50 hover:border-yellow-300/80 bg-blue-900/60 shadow-[0_30px_60px_rgba(245,158,11,0.2)]"
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
@@ -426,10 +462,10 @@ export default function App() {
                           const target = e.target as HTMLImageElement;
                           target.src = "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&q=80&w=1200"; // Tech Workspace placeholder
                         }}
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 " 
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-transparent opacity-90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-950/50 to-transparent opacity-90" />
                     <div className="absolute bottom-0 left-0 p-10">
                       <h5 className="text-2xl font-bold text-white mb-1">Future Workspace</h5>
                       <p className="text-xs text-yellow-400 font-black uppercase tracking-widest">Next-Gen Collaboration</p>
@@ -439,7 +475,7 @@ export default function App() {
                   {/* Image 3 */}
                   <motion.div 
                     whileHover={{ scale: 1.05, rotate: 1.5, y: -10 }}
-                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border border-blue-400/30 bg-blue-950/60 shadow-[0_30px_60_rgba(0,0,0,0.6)]"
+                    className="w-[380px] md:w-[550px] flex-shrink-0 group relative overflow-hidden rounded-[3.5rem] border-2 border-yellow-400/50 hover:border-yellow-300/80 bg-blue-900/60 shadow-[0_30px_60px_rgba(245,158,11,0.2)]"
                   >
                     <div className="aspect-video overflow-hidden">
                       <img 
@@ -450,13 +486,13 @@ export default function App() {
                           const target = e.target as HTMLImageElement;
                           target.src = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200"; // Network/Global placeholder
                         }}
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" 
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 " 
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-transparent to-transparent opacity-90" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-blue-950 via-blue-950/50 to-transparent opacity-90" />
                     <div className="absolute bottom-0 left-0 p-10">
                       <h5 className="text-2xl font-bold text-white mb-1">Advanced Projection</h5>
-                      <p className="text-xs text-blue-300 font-black uppercase tracking-widest">Optical Logic</p>
+                      <p className="text-xs text-yellow-300 font-black uppercase tracking-widest">Optical Logic</p>
                     </div>
                   </motion.div>
                 </div>
@@ -495,35 +531,58 @@ export default function App() {
         </section>
 
         {/* Core Concept & How it Works */}
-        <section id="core-concept" className="py-24 px-6 relative">
+        <section id="core-concept" className="py-24 md:py-32 px-6 relative border-t border-white/5 bg-gradient-to-b from-blue-950 to-blue-900/50">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-              <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-bold uppercase tracking-wider mb-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true, margin: "-100px" }}
+              >
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-400/40 shadow-[0_0_15px_rgba(255,215,0,0.2)] text-yellow-300 text-[10px] font-black uppercase tracking-widest mb-6">
+                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
                   The Core Concept
                 </div>
-                <h3 className="text-3xl md:text-5xl font-bold mb-6">Vision-Based Touchless Interactive System</h3>
-                <p className="text-lg text-slate-400 leading-relaxed mb-6">
+                <h3 className="text-4xl md:text-5xl lg:text-6xl font-black mb-8 leading-tight tracking-tight">
+                  Vision-Based <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500 drop-shadow-md">Touchless</span> System
+                </h3>
+                <p className="text-lg md:text-xl text-slate-300/90 leading-relaxed mb-8">
                   Neurix is a hardware-software system that enables users to interact with a digital environment using hand gestures in mid-air — without physical contact, controllers, or traditional input devices.
                 </p>
                 <div className="space-y-4">
-                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                    <p className="text-slate-300">Transforms interaction from touch-based to spatial, creating a more immersive and futuristic user experience.</p>
+                  <div className="p-5 md:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-yellow-500/20 hover:bg-white/[0.04] transition-all group duration-300 flex items-start gap-4">
+                    <div className="mt-1 p-2 rounded-lg bg-yellow-500/10 text-yellow-300 group-hover:scale-110 transition-transform">
+                      <Zap className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-slate-200 mb-1">Spatial Immersion</h5>
+                      <p className="text-sm text-slate-400 leading-relaxed">Transforms interaction from touch-based to spatial, creating a more immersive and futuristic user experience.</p>
+                    </div>
                   </div>
-                  <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                    <p className="text-slate-300">Captures hand movements through a camera, analyzes them in real-time, and converts them into meaningful commands.</p>
+                  <div className="p-5 md:p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-yellow-500/20 hover:bg-white/[0.04] transition-all group duration-300 flex items-start gap-4">
+                    <div className="mt-1 p-2 rounded-lg bg-yellow-500/10 text-yellow-400 group-hover:scale-110 transition-transform">
+                      <Search className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-slate-200 mb-1">Real-Time Analysis</h5>
+                      <p className="text-sm text-slate-400 leading-relaxed">Captures hand movements through a camera, analyzes them in real-time, and converts them into meaningful commands.</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="bg-blue-950/50 rounded-[2rem] p-4 border border-white/5 relative overflow-hidden group">
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="bg-blue-800/50 rounded-[2.5rem] p-4 border border-white/5 relative overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 via-transparent to-yellow-500/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8 }}
-                  className="relative h-full w-full rounded-[1.5rem] overflow-hidden shadow-2xl"
+                  className="relative h-full w-full rounded-[2rem] overflow-hidden bg-black"
                 >
-                  <div className="absolute inset-0 bg-blue-600/10 z-10 group-hover:bg-blue-600/0 transition-colors duration-500" />
                   <motion.img 
                     src="/interface.jpg" 
                     alt="Neurix Holographic Interface"
@@ -533,28 +592,28 @@ export default function App() {
                       target.src = "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200";
                     }}
                     animate={{ 
-                      x: [-5, 5, -5],
-                      rotate: [-1, 1, -1],
-                      scale: [1, 1.03, 1]
+                      scale: [1, 1.05, 1]
                     }}
                     transition={{ 
-                      duration: 7, 
+                      duration: 10, 
                       repeat: Infinity, 
                       ease: "easeInOut" 
                     }}
-                    className="w-full h-full object-cover min-h-[400px]"
+                    className="w-full h-full object-cover min-h-[400px] md:min-h-[500px] transition-all duration-700"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-blue-950 to-transparent z-20">
-                    <p className="text-yellow-400 font-bold text-sm tracking-widest uppercase">System Interface Concept</p>
+                  <div className="absolute inset-0 border border-white/10 rounded-[2rem] pointer-events-none z-20" />
+                  <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black via-black/80 to-transparent z-20">
+                    <p className="text-yellow-300 font-bold tracking-widest text-[10px] uppercase mb-2">Prototype Stage</p>
+                    <p className="text-white font-medium text-lg">System Interface Concept</p>
                   </div>
                 </motion.div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* Real-World Application */}
-        <section className="py-24 px-6 border-y border-white/5 bg-white/[0.01]">
+        <section className="py-24 px-6 border-y border-white/5 bg-blue-800/30">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h3 className="text-3xl md:text-5xl font-bold mb-4">Practical Application</h3>
@@ -610,28 +669,34 @@ export default function App() {
         </section>
 
         {/* Objectives */}
-        <section id="objectives" className="py-32 px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-20 text-center">
-              <h3 className="text-4xl font-bold mb-4">Project Objectives</h3>
-              <p className="text-slate-500 text-lg">The drive behind our innovation</p>
+        <section id="objectives" className="py-24 md:py-32 px-6 bg-blue-900 relative overflow-hidden">
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(wrap,#fff_1px,transparent_1px)] bg-[size:40px_40px]" />
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="mb-16 md:mb-24 text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-slate-300 text-[10px] font-black uppercase tracking-widest mb-6">
+                Strategic Goals
+              </div>
+              <h3 className="text-4xl md:text-6xl font-black mb-6 tracking-tight">Project Objectives</h3>
+              <p className="text-slate-400 text-lg md:text-xl font-medium max-w-2xl mx-auto">The drive behind our innovation and technological implementations.</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               {OBJECTIVES.map((obj, i) => (
                 <motion.div
                   key={obj.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group p-8 rounded-3xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.05] hover:border-cyan-500/30 transition-all"
+                  transition={{ delay: i * 0.15, duration: 0.6 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  className="group relative p-8 md:p-10 rounded-[2.5rem] bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] transition-all duration-500 overflow-hidden"
                 >
-                  <div className="mb-6 p-4 w-fit rounded-2xl bg-white/[0.05] group-hover:scale-110 transition-transform">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform origin-left scale-x-0 group-hover:scale-x-100" />
+                  
+                  <div className="mb-8 p-4 w-16 h-16 flex items-center justify-center rounded-2xl bg-white/[0.05] border border-white/10 group-hover:border-yellow-500/30 group-hover:bg-yellow-500/10 transition-colors shadow-lg">
                     {obj.icon}
                   </div>
-                  <h4 className="text-2xl font-bold mb-2">{obj.title}</h4>
-                  <p className="text-slate-400 leading-relaxed">
+                  <h4 className="text-2xl font-bold mb-4 text-white group-hover:text-yellow-300 transition-colors">{obj.title}</h4>
+                  <p className="text-sm md:text-base text-slate-400 leading-relaxed font-medium">
                     {obj.description}
                   </p>
                 </motion.div>
@@ -643,12 +708,12 @@ export default function App() {
         {/* Roadmap Command Matrix - Org Chart Style */}
         <section id="roadmap" className="py-32 px-6 relative overflow-hidden">
            <div className="absolute inset-0 opacity-5 pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-blue-500/20 rounded-full animate-[pulse_10s_infinite]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-yellow-500/20 rounded-full animate-[pulse_10s_infinite]" />
            </div>
 
            <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-24">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-[0.4em] mb-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-400/40 shadow-[0_0_15px_rgba(255,215,0,0.2)] text-yellow-400 text-[10px] font-black uppercase tracking-[0.4em] mb-6">
                   Structural Hierarchy
                 </div>
                 <h3 className="text-5xl md:text-7xl font-black mb-6 tracking-tighter italic italic-shadow uppercase">NEURIX Org Chart</h3>
@@ -667,17 +732,17 @@ export default function App() {
                   <motion.div 
                     whileHover={{ scale: 1.05 }}
                     onClick={() => setSelectedMember(teamData.leader)}
-                    className="relative p-1 rounded-[2.5rem] bg-gradient-to-br from-blue-600 via-yellow-400 to-blue-400 shadow-[0_0_50px_rgba(37,99,235,0.3)] cursor-pointer group"
+                    className="relative p-1 rounded-[2.5rem] bg-gradient-to-br from-yellow-600 via-yellow-400 to-yellow-400 shadow-[0_0_50px_rgba(245,158,11,0.3)] cursor-pointer group"
                   >
-                    <div className="bg-blue-950 px-16 py-10 rounded-[calc(2.5rem-4px)] text-center min-w-[320px] border border-white/5">
+                    <div className="bg-blue-900 px-16 py-10 rounded-[calc(2.5rem-4px)] text-center min-w-[320px] border border-white/5">
                       <Hexagon className="w-12 h-12 text-yellow-400 mx-auto mb-4 group-hover:rotate-180 transition-transform duration-1000" />
                       <h4 className="text-3xl font-black italic tracking-tighter text-white uppercase">{teamData.leader?.name}</h4>
-                      <p className="text-xs font-black text-blue-400 uppercase tracking-[0.3em] mt-2">{teamData.leader?.role}</p>
+                      <p className="text-xs font-black text-yellow-400 uppercase tracking-[0.3em] mt-2">{teamData.leader?.role}</p>
                     </div>
                   </motion.div>
                   
                   {/* Stem Down to Level 2 */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-yellow-400 to-blue-500" />
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-yellow-400 to-yellow-500" />
                 </div>
 
                 {/* 2. Level 2: Project Management / Technical Lead (Mohamed Asem) */}
@@ -687,7 +752,7 @@ export default function App() {
                     onClick={() => setSelectedMember(teamData.deputy)}
                     className="relative p-1 rounded-[2rem] bg-gradient-to-br from-indigo-500 to-purple-600 shadow-[0_0_30px_rgba(99,102,241,0.2)] cursor-pointer group"
                   >
-                    <div className="bg-blue-950 px-12 py-8 rounded-[calc(2rem-4px)] text-center min-w-[280px] border border-white/10">
+                    <div className="bg-blue-900 px-12 py-8 rounded-[calc(2rem-4px)] text-center min-w-[280px] border border-white/10">
                       <Microchip className="w-8 h-8 text-indigo-400 mx-auto mb-3" />
                       <h4 className="text-2xl font-black italic tracking-tighter text-white uppercase">{teamData.deputy?.name}</h4>
                       <p className="text-[10px] font-black text-indigo-300 uppercase tracking-widest mt-1">{teamData.deputy?.role}</p>
@@ -695,31 +760,31 @@ export default function App() {
                   </motion.div>
 
                   {/* Stem Down to Divisions */}
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-purple-500/50 to-blue-500/50" />
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 h-16 w-px bg-gradient-to-b from-purple-500/50 to-yellow-500/50" />
                 </div>
 
                 {/* Level 3: Divisions */}
                 <div className="w-full relative">
                   {/* Horizontal Bar Connecting All 4 Branches */}
-                  <div className="absolute top-[-48px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-blue-500/40 via-indigo-500/40 via-emerald-500/40 via-orange-500/40 to-blue-400/40" />
+                  <div className="absolute top-[-48px] left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-yellow-500/40 via-indigo-500/40 via-emerald-500/40 via-orange-500/40 to-yellow-400/40" />
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 lg:gap-12">
                     
                     {/* Left Branch: Software Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
-                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-blue-500/50" />
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-yellow-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
                         <div 
                           onClick={() => setSelectedMember(teamData.softManager)}
-                          className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-blue-400/50 shadow-[0_10px_30px_rgba(59,130,246,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[180px] hover:scale-105 transition-transform group"
+                          className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-yellow-400/50 shadow-[0_10px_30px_rgba(245,158,11,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[180px] hover:scale-105 transition-transform group"
                         >
-                           <Zap className="w-5 h-5 text-blue-400 mx-auto mb-2 group-hover:animate-pulse" />
+                           <Zap className="w-5 h-5 text-yellow-400 mx-auto mb-2 group-hover:animate-pulse" />
                            <h5 className="text-base font-bold text-white uppercase tracking-tight">Software Team</h5>
-                           <p className="text-[8px] font-black text-blue-300 uppercase tracking-widest mt-1">Lead: {teamData.softManager?.name}</p>
+                           <p className="text-[8px] font-black text-yellow-300 uppercase tracking-widest mt-1">Lead: {teamData.softManager?.name}</p>
                         </div>
-                        <div className="h-12 w-px bg-blue-500/20" />
+                        <div className="h-12 w-px bg-yellow-500/20" />
                       </div>
 
                       <div className="grid grid-cols-1 gap-2 w-full max-w-[180px]">
@@ -728,12 +793,12 @@ export default function App() {
                              key={member.id}
                              whileHover={{ scale: 1.02, x: 5 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 border border-blue-500/10 hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-sm group"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-yellow-500/5 border border-yellow-500/10 hover:border-yellow-500/40 hover:bg-yellow-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1 h-1 rounded-full bg-blue-500 group-hover:scale-150 transition-transform" />
+                             <div className="w-1 h-1 rounded-full bg-yellow-500 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
                                <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[6px] text-blue-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
+                               <p className="text-[6px] text-yellow-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
@@ -743,18 +808,18 @@ export default function App() {
                     {/* Branch 2: Presentation Team */}
                     <div className="flex flex-col items-center relative">
                       {/* Line from horizontal bar to branch start */}
-                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-blue-500/50" />
+                      <div className="hidden md:block absolute top-[-48px] left-1/2 h-12 w-px bg-yellow-500/50" />
                       
                       <div className="mb-12 relative flex flex-col items-center">
                         <div 
                           onClick={() => setSelectedMember(teamData.presManager)}
-                          className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-blue-400/50 shadow-[0_10px_30px_rgba(59,130,246,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[170px] hover:scale-105 transition-transform group"
+                          className="px-6 py-4 rounded-3xl bg-blue-900/60 border border-yellow-400/50 shadow-[0_10px_30px_rgba(245,158,11,0.15)] backdrop-blur-md cursor-pointer text-center min-w-[170px] hover:scale-105 transition-transform group"
                         >
-                           <Megaphone className="w-5 h-5 text-blue-400 mx-auto mb-2 group-hover:rotate-12 transition-transform" />
-                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-blue-100">Presentation</h5>
-                           <p className="text-[8px] font-black text-blue-400 uppercase tracking-widest mt-1">Lead: {teamData.presManager?.name}</p>
+                           <Megaphone className="w-5 h-5 text-yellow-400 mx-auto mb-2 group-hover:rotate-12 transition-transform" />
+                           <h5 className="text-base font-bold text-white uppercase tracking-tight text-yellow-300">Presentation</h5>
+                           <p className="text-[8px] font-black text-yellow-400 uppercase tracking-widest mt-1">Lead: {teamData.presManager?.name}</p>
                         </div>
-                        <div className="h-12 w-px bg-blue-500/20" />
+                        <div className="h-12 w-px bg-yellow-500/20" />
                       </div>
 
                       <div className="grid grid-cols-1 gap-2 w-full max-w-[170px]">
@@ -763,12 +828,12 @@ export default function App() {
                              key={member.id}
                              whileHover={{ scale: 1.02, y: -2 }}
                              onClick={() => setSelectedMember(member)}
-                             className="flex items-center gap-2 p-2.5 rounded-xl bg-blue-500/5 border border-blue-500/10 hover:border-blue-500/40 hover:bg-blue-500/10 transition-all cursor-pointer shadow-sm group"
+                             className="flex items-center gap-2 p-2.5 rounded-xl bg-yellow-500/5 border border-yellow-500/10 hover:border-yellow-500/40 hover:bg-yellow-500/10 transition-all cursor-pointer shadow-sm group"
                            >
-                             <div className="w-1 h-1 rounded-full bg-blue-500 group-hover:scale-150 transition-transform" />
+                             <div className="w-1 h-1 rounded-full bg-yellow-500 group-hover:scale-150 transition-transform" />
                              <div className="text-left">
                                <p className="text-[10px] font-bold text-slate-100">{member.name}</p>
-                               <p className="text-[6px] text-blue-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
+                               <p className="text-[6px] text-yellow-400/70 uppercase tracking-widest leading-none mt-0.5">{member.role}</p>
                              </div>
                            </motion.div>
                         ))}
@@ -853,7 +918,7 @@ export default function App() {
         </section>
 
         {/* Operational Roadmap Summary */}
-        <section className="py-32 px-6 bg-zinc-950/50 border-y border-white/5">
+        <section className="py-32 px-6 bg-blue-800/50 border-y border-white/5">
            <div className="max-w-7xl mx-auto">
               <div className="flex flex-col md:flex-row gap-12 items-center">
                  <div className="flex-1">
@@ -877,7 +942,7 @@ export default function App() {
                     </div>
                  </div>
                  <div className="flex-1 w-full relative aspect-square md:aspect-video rounded-[3rem] overflow-hidden border border-white/10 group">
-                    <div className="absolute inset-0 bg-blue-600/10 z-10 group-hover:opacity-0 transition-opacity duration-700" />
+                    <div className="absolute inset-0 bg-blue-700/10 z-10 group-hover:opacity-0 transition-opacity duration-700" />
                     <motion.img 
                       src="IMG-20260513-WA0050.jpg.jpeg" 
                       alt="Neurix Hardware Integration"
@@ -899,7 +964,7 @@ export default function App() {
                           <motion.div 
                             animate={{ rotate: 360 }}
                             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            className="absolute inset-0 border-2 border-dashed border-blue-500/30 rounded-full"
+                            className="absolute inset-0 border-2 border-dashed border-yellow-500/30 rounded-full"
                           />
                           <motion.div 
                             animate={{ rotate: -360 }}
@@ -911,8 +976,8 @@ export default function App() {
                           </div>
                        </div>
                     </div>
-                    <div className="absolute bottom-6 right-6 bg-blue-500/20 backdrop-blur-md px-4 py-2 rounded-full border border-blue-400/30 z-30">
-                       <p className="text-[10px] font-black text-blue-100 uppercase tracking-widest">Hardware Module v1.0</p>
+                    <div className="absolute bottom-6 right-6 bg-yellow-500/20 backdrop-blur-md px-4 py-2 rounded-full border-2 border-yellow-400/50 hover:border-yellow-300/80 z-30">
+                       <p className="text-[10px] font-black text-yellow-300 uppercase tracking-widest">Hardware Module v1.0</p>
                     </div>
                  </div>
               </div>
@@ -926,12 +991,12 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-[0.4em] mb-6"
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border border-yellow-400/40 shadow-[0_0_15px_rgba(255,215,0,0.2)] text-yellow-400 text-[10px] font-black uppercase tracking-[0.4em] mb-6"
               >
                 The Engine Under the Hood
               </motion.div>
               <h3 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter italic uppercase text-white">
-                Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-yellow-400">Architecture</span>
+                Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500 drop-shadow-md">Architecture</span>
               </h3>
               <p className="text-slate-400 text-lg max-w-2xl mx-auto font-medium">
                 A brief overview of the advanced fusion between high-performance hardware and intelligent software logic that brings Neurix to life.
@@ -943,10 +1008,10 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                className="p-10 rounded-[3rem] bg-blue-950/50 border border-blue-500/10 shadow-2xl group"
+                className="p-10 rounded-[3rem] bg-blue-800/50 border border-yellow-500/10 shadow-2xl group"
               >
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-8 border border-blue-500/20 group-hover:bg-blue-500/20 transition-colors">
-                  <Code className="w-8 h-8 text-blue-400" />
+                <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-8 border border-yellow-500/20 group-hover:bg-yellow-500/20 transition-colors">
+                  <Code className="w-8 h-8 text-yellow-400" />
                 </div>
                 <h4 className="text-3xl font-black italic tracking-tight text-white mb-6 uppercase">Software Engineering</h4>
                 <ul className="space-y-6">
@@ -957,7 +1022,7 @@ export default function App() {
                     { title: "Backend Core", desc: "Scalable logic architecture handling state synchronization and gesture parsing." }
                   ].map((item, idx) => (
                     <li key={idx} className="flex gap-4">
-                      <div className="w-1 h-1 rounded-full bg-blue-500 mt-2 shrink-0" />
+                      <div className="w-1 h-1 rounded-full bg-yellow-500 mt-2 shrink-0" />
                       <div>
                         <p className="text-white font-bold text-lg mb-1">{item.title}</p>
                         <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
@@ -998,7 +1063,7 @@ export default function App() {
             
             <div className="mt-20 text-center">
               <p className="inline-block px-8 py-4 rounded-2xl bg-white/5 border border-white/10 text-slate-400 font-mono text-sm">
-                Built with: <span className="text-blue-400">OpenCV</span> + <span className="text-yellow-400">Embedded IoT Architecture</span> + <span className="text-purple-400">Spatial AI Logic</span>
+                Built with: <span className="text-yellow-400">OpenCV</span> + <span className="text-yellow-400">Embedded IoT Architecture</span> + <span className="text-purple-400">Spatial AI Logic</span>
               </p>
             </div>
           </div>
@@ -1028,7 +1093,7 @@ export default function App() {
               {[
                 { name: "GitHub Repository", desc: "View the core system source code and technical desktop application documentation.", icon: <Github className="w-6 h-6" />, color: "from-slate-700 to-slate-900", link: "https://github.com/Mostafa8269/Neurix-desktop-app" },
                 { name: "Instagram Gallery", desc: "Visual showcase of our hardware iterations and design lab.", icon: <Instagram className="w-6 h-6" />, color: "from-pink-600 to-purple-600", link: "https://www.instagram.com/neurixfeed?igsh=cGJtcDEzZHBjOGw" },
-                { name: "Official Email", desc: "Direct inquiry line for partnerships and technical collaboration.", icon: <Mail className="w-6 h-6" />, color: "from-blue-500 to-indigo-600", link: "mailto:neurixt@gmail.com" },
+                { name: "Official Email", desc: "Direct inquiry line for partnerships and technical collaboration.", icon: <Mail className="w-6 h-6" />, color: "from-yellow-500 to-indigo-600", link: "mailto:neurixt@gmail.com" },
               ].map((hub, i) => (
                 <motion.a
                   key={hub.name}
@@ -1037,7 +1102,7 @@ export default function App() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ delay: i * 0.1 }}
-                  className="group relative h-full flex flex-col p-8 rounded-[2.5rem] bg-blue-950/40 border border-white/5 hover:border-yellow-500/40 transition-all duration-500 shadow-2xl overflow-hidden"
+                  className="group relative h-full flex flex-col p-8 rounded-[2.5rem] bg-blue-800/40 border border-white/5 hover:border-yellow-500/40 transition-all duration-500 shadow-2xl overflow-hidden"
                 >
                   {/* Background Glow */}
                   <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${hub.color} opacity-[0.03] group-hover:opacity-20 blur-[40px] transition-opacity duration-500`} />
@@ -1066,9 +1131,9 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              className="mt-20 p-1 rounded-[3rem] bg-gradient-to-r from-blue-600/20 via-yellow-400/30 to-blue-600/20"
+              className="mt-20 p-1 rounded-[3rem] bg-gradient-to-r from-yellow-600/20 via-yellow-400/30 to-yellow-600/20"
             >
-              <div className="bg-blue-950 rounded-[calc(3rem-4px)] px-8 py-10 text-center flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
+              <div className="bg-blue-900 rounded-[calc(3rem-4px)] px-8 py-10 text-center flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
                 <div className="flex items-center gap-6">
                   <div className="w-16 h-16 rounded-full bg-yellow-400/10 flex items-center justify-center border border-yellow-400/20">
                     <Globe className="w-8 h-8 text-yellow-400 animate-pulse" />
@@ -1090,8 +1155,8 @@ export default function App() {
 
         {/* CTA */}
         <section className="py-20 md:py-32 px-4 md:px-6">
-          <div className="max-w-5xl mx-auto rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-blue-600 to-yellow-400 p-0.5 md:p-1">
-            <div className="bg-blue-950 rounded-[1.9rem] md:rounded-[2.9rem] p-8 md:p-24 text-center">
+          <div className="max-w-5xl mx-auto rounded-[2rem] md:rounded-[3rem] bg-gradient-to-br from-yellow-600 to-yellow-400 p-0.5 md:p-1">
+            <div className="bg-blue-900 rounded-[1.9rem] md:rounded-[2.9rem] p-8 md:p-24 text-center">
               <h3 className="text-3xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight">
                 "Your Hand, <span className="text-yellow-400">Your World</span>"
               </h3>

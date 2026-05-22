@@ -21,7 +21,7 @@ export const RoadmapNugget = React.memo(({ title, data, icon: Icon, color, delay
       className="relative w-full max-w-[340px]"
     >
       <div className={`p-0.5 rounded-[2.5rem] bg-gradient-to-br from-white/10 to-transparent border border-white/5 hover:from-${color}/30 transition-all duration-500 shadow-2xl`}>
-        <div className="bg-zinc-950/80 backdrop-blur-xl p-6 rounded-[calc(2.5rem-2px)] relative overflow-hidden group">
+        <div className="bg-blue-950/80 backdrop-blur-xl p-6 rounded-[calc(2.5rem-2px)] relative overflow-hidden group">
           {/* Neurix Branding */}
           <div className="absolute top-4 right-6 text-[7px] font-black tracking-[0.6em] text-white/10 uppercase group-hover:text-yellow-400/20 transition-colors">NEURIX</div>
           
