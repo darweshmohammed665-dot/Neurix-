@@ -9,6 +9,8 @@ import { LoadingScreen } from './components/LoadingScreen';
 import { NeurixLogo } from './components/NeurixLogo';
 import { RoadmapNugget } from './components/RoadmapNugget';
 import { MemberProfileModal } from './components/MemberProfileModal';
+import { Interactive3DObject } from './components/Interactive3DObject';
+import { LiveGestureDemo } from './components/LiveGestureDemo';
 import { 
   Cpu, 
   Layers, 
@@ -97,6 +99,7 @@ const OBJECTIVES = [
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedMember, setSelectedMember] = useState<typeof TEAM_MEMBERS[0] | null>(null);
+  const [presentationStage, setPresentationStage] = useState<'hook' | 'problem' | 'solution'>('hook');
 
   const teamData = useMemo(() => {
     const leader = TEAM_MEMBERS.find(m => m.id === 1) || null;
@@ -174,38 +177,70 @@ export default function App() {
           <div className="flex items-center gap-3 shrink-0 relative group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
             <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-32 h-16 bg-yellow-500/5 blur-[20px] rounded-full pointer-events-none group-hover:bg-yellow-500/10 transition-colors duration-500" />
             <NeurixLogo className="w-8 h-8 md:w-10 md:h-10 relative z-10 drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] transition-transform duration-500 group-hover:scale-105" />
+            
+            {/* Staggered Animated Character Blend next to Logo */}
             <motion.div 
-              initial={{ y: -160, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 120, 
-                damping: 8, 
-                mass: 0.9,
-                delay: 0.85 
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.08,
+                    delayChildren: 0.3
+                  }
+                }
               }}
-              className="text-left relative z-10 pb-0.5 mt-1"
+              className="flex items-center relative z-10 select-none pb-0.5 mt-1"
             >
-              <h1 className="font-bold text-xl tracking-[0.2em] leading-none text-white transition-colors duration-500 group-hover:text-yellow-300">
-                NEURIX
-              </h1>
-              <p className="text-[7px] md:text-[8px] text-yellow-300/80 tracking-[0.4em] font-black uppercase mt-1">Project 2026</p>
+              {"NEURIX".split("").map((char, index) => (
+                <motion.span
+                  key={index}
+                  variants={{
+                    hidden: { y: -80, opacity: 0, scale: 0.5 },
+                    visible: { 
+                      y: 0, 
+                      opacity: 1, 
+                      scale: 1,
+                      transition: {
+                        type: "spring",
+                        stiffness: 150,
+                        damping: 10,
+                        mass: 0.8
+                      }
+                    }
+                  }}
+                  className="font-black text-xl md:text-2xl tracking-[0.02em] text-transparent bg-clip-text bg-gradient-to-b from-slate-200 via-slate-500 to-yellow-500 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                >
+                  {char}
+                </motion.span>
+              ))}
+              
+              <motion.span 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 0.7, x: 0 }}
+                transition={{ delay: 1.2, duration: 0.6 }}
+                className="ml-2.5 text-[7px] md:text-[8px] text-yellow-300 font-black tracking-[0.25em] uppercase mt-1 hidden sm:inline-block border-l border-white/20 pl-2.5"
+              >
+                Project 2026
+              </motion.span>
             </motion.div>
           </div>
-          <nav className="flex flex-row items-center justify-end gap-6 md:gap-10 overflow-x-auto no-scrollbar shrink-0">
-            <a href="#about" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">About</a>
-            <a href="#core-concept" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">Concept</a>
-            <a href="#objectives" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Objectives</a>
-            <a href="#architecture" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">Stack</a>
-            <a href="#roadmap" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap hidden sm:block">Matrix</a>
-            <a href="#contact-hub" className="text-[11px] md:text-sm font-semibold tracking-wide text-slate-400 hover:text-yellow-400 transition-colors whitespace-nowrap">Contact</a>
+          <nav className="flex flex-row items-center justify-end gap-5 md:gap-7 overflow-x-auto no-scrollbar shrink-0">
+            <a href="#contact-hub" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-yellow-400 hover:text-yellow-250 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Connect</a>
+            <a href="#live-demo-section" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-emerald-400 hover:text-emerald-350 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Live Demo</a>
+            <a href="#roadmap" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-yellow-400 hover:text-yellow-250 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Matrix</a>
+            <a href="#architecture" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-yellow-400 hover:text-yellow-250 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Stack</a>
+            <a href="#objectives" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-yellow-400 hover:text-yellow-250 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Objectives</a>
+            <a href="#core-concept" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-yellow-400 hover:text-yellow-250 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">Concept</a>
+            <a href="#about" className="text-[11px] md:text-xs font-black uppercase tracking-widest text-yellow-400 hover:text-yellow-250 transition-colors whitespace-nowrap drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]">About</a>
           </nav>
         </div>
       </header>
 
       <div className="flex-grow">
         {/* Hero Section */}
-        <section className="relative pt-12 md:pt-20 pb-24 md:pb-32 overflow-hidden px-6 lg:px-16 w-full">
+        <section className="relative pt-12 md:pt-20 pb-20 md:pb-28 overflow-hidden px-6 lg:px-16 w-full bg-gradient-to-b from-blue-950 via-blue-900 to-blue-950 border-b border-white/5">
           {/* Subtle Animated Background */}
           <div className="absolute inset-0 pointer-events-none z-0">
             <motion.div 
@@ -218,91 +253,171 @@ export default function App() {
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               className="absolute bottom-[-10%] right-[10%] w-[40%] h-[60%] bg-gradient-to-t from-yellow-700/10 to-transparent blur-[100px] rounded-full transform rotate-45"
             />
-            <motion.div 
-              animate={{ opacity: [0.1, 0.3, 0.1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-[0.15]"
-            />
           </div>
 
-          <div className="w-full xl:pl-8 flex flex-col items-center md:items-start text-center md:text-left relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-4xl w-full"
-            >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border-2 border-yellow-400/50 hover:border-yellow-300/80 text-yellow-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
-                </span>
-                Active Project
-              </div>
-              <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 md:mb-10 leading-[1.05] md:leading-[1.05]">
-                Integrated <br className="hidden md:block"/>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600 drop-shadow-sm">Interactive</span> <br className="hidden md:block"/>
-                System.
-              </h2>
-              <p className="text-lg md:text-xl text-slate-300/80 font-medium mb-10 md:mb-12 leading-relaxed max-w-2xl mx-auto md:mx-0">
-                Developing the next generation of tangible interaction. Bringing your hand into your world with seamless sensor integration and advanced embedded logic.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-6 items-center justify-center md:justify-start">
-                <button className="w-full sm:w-auto overflow-hidden relative group bg-white hover:bg-slate-50 text-blue-950 px-10 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:shadow-[0_0_60px_rgba(255,191,0,0.3)] hover:scale-105 active:scale-95 border border-transparent hover:border-yellow-400/50">
-                  <span className="relative z-10">Explore Project</span>
-                  <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-100 to-yellow-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </button>
-                <div className="flex items-center gap-5 px-4 text-slate-400">
-                  <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-white/5 backdrop-blur-sm group-hover:border-yellow-500/50 transition-colors">
-                    <Zap className="w-5 h-5 text-yellow-300" />
-                  </div>
-                  <div className="text-left border-l border-white/10 pl-5">
-                    <p className="text-[10px] uppercase font-black tracking-widest text-slate-500 mb-1">Initiated</p>
-                    <p className="font-mono text-slate-200 text-sm md:text-base font-semibold">2026.02.11</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-          
-          <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[45%] h-auto hidden lg:block z-0 pr-12">
-            <motion.div
-              initial={{ opacity: 0, x: 50, scale: 0.9 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-yellow-500/10 blur-[100px] rounded-full scale-110" />
-              <motion.img 
-                src="/workspace.jpg" 
-                alt="Neurix Interactive Table Concept"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "https://images.unsplash.com/photo-1614729939124-032f0b56c9ce?auto=format&fit=crop&q=80&w=1200"; // A gold/dark dramatic hardware-ish vibe
-                }}
-                animate={{ 
-                  x: [-15, 15, -15],
-                  y: [-10, 10, -10],
-                  rotate: [-1, 1, -1]
-                }}
-                transition={{ 
-                  duration: 8, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-                className="relative z-10 w-full h-auto rounded-[2rem] border border-yellow-400/50 shadow-[0_0_30px_rgba(255,215,0,0.15)] shadow-[0_20px_50px_rgba(245,158,11,0.15)] backdrop-blur-sm transition-all duration-700"
-              />
-              
-              {/* Floating UI Elements decoration */}
-              <motion.div 
-                animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute -top-10 -left-10 w-32 h-32 bg-yellow-400/10 blur-[40px] rounded-full"
-              />
-            </motion.div>
+          <div className="max-w-7xl mx-auto relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Box: Stage-Based Texts */}
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+              <AnimatePresence mode="wait">
+                {presentationStage === 'hook' && (
+                  <motion.div
+                    key="stage-hook"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full"
+                  >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border-2 border-yellow-400/50 text-yellow-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+                      </span>
+                      INTRODUCING • THE HOOK
+                    </div>
+                    
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 text-white leading-tight">
+                      NEURIX PROJECT <br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-250 via-yellow-400 to-yellow-600 drop-shadow">Interactive Air Control</span>
+                    </h2>
+                    
+                    <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto lg:lg:mx-0">
+                      Developing the next generation of touchless, in-the-air handheld control. Interact with digital objects in 3D physics engines with zero physical surface contact or mice, powered by high-precision optical AI key-joint tracking.
+                    </p>
+
+                    <p className="text-[11px] font-mono text-slate-400 uppercase tracking-widest mb-8">
+                      Hover mouse inside the logo area on the right to interact in real-time.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+                      <button 
+                        onClick={() => setPresentationStage('problem')}
+                        className="w-full sm:w-auto overflow-hidden relative group bg-gradient-to-r from-yellow-500 to-yellow-400 text-blue-950 px-10 py-4 rounded-2xl font-black text-base transition-all flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(234,179,8,0.25)] hover:shadow-[0_0_50px_rgba(234,179,8,0.45)] hover:scale-105 active:scale-95"
+                      >
+                        <span className="relative z-10">Start Journey</span>
+                        <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                      </button>
+                      
+                      <div className="flex items-center gap-3 text-slate-400 pl-4 border-l border-white/10">
+                        <Zap className="w-5 h-5 text-yellow-400 animate-pulse" />
+                        <span className="text-xs font-mono tracking-wide">Touchless Gesture Controller</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+
+                {presentationStage === 'problem' && (
+                  <motion.div
+                    key="stage-problem"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full"
+                  >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border-2 border-red-500/50 text-red-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
+                      ⚠️ THE CHALLENGE • THE PROBLEM
+                    </div>
+                    
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 text-red-400 leading-tight">
+                      CAD Learning Curves<br />
+                      <span className="text-white">& 3D Printing Material Waste</span>
+                    </h2>
+                    
+                    <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-6 max-w-2xl mx-auto lg:lg:mx-0">
+                      Children and makers face high cognitive barriers mastering spatial 3D axes on traditional CAD platforms. This complexity results in structural model defects, failed 3D prints, and severe material waste in training labs.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 text-left max-w-xl">
+                      <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10">
+                        <p className="text-red-400 font-bold text-sm mb-1">Stiff Traditional Inputs</p>
+                        <p className="text-xs text-slate-400 font-sans">Standard computer mice and hotkeys fail to map intuitive, mid-air human hand ergonomics in three-dimensional space.</p>
+                      </div>
+                      <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10">
+                        <p className="text-red-400 font-bold text-sm mb-1">Failed 3D Print Rates</p>
+                        <p className="text-xs text-slate-400 font-sans">Over 40% of novice CAD projects fail at print time due to dimensional misalignment and inaccurate size constraints.</p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+                      <button 
+                        onClick={() => setPresentationStage('solution')}
+                        className="w-full sm:w-auto bg-white text-blue-950 px-8 py-3.5 rounded-2xl font-black text-sm transition-all hover:bg-slate-100 hover:scale-105 active:scale-95 shadow-lg"
+                      >
+                        Explore Hardware Solution
+                      </button>
+                      <button 
+                        onClick={() => setPresentationStage('hook')}
+                        className="text-slate-400 hover:text-white px-6 py-3 text-xs uppercase font-bold tracking-widest transition-colors"
+                      >
+                        Back
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {presentationStage === 'solution' && (
+                  <motion.div
+                    key="stage-solution"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 30 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full"
+                  >
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border-2 border-emerald-500/50 text-emerald-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
+                      💡 TECHNICAL SYSTEM • THE SOLUTION
+                    </div>
+                    
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 text-white leading-tight">
+                      The Open-Source Stack<br />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-emerald-400 drop-shadow">Exploded Technology Stack</span>
+                    </h2>
+                    
+                    <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-6 max-w-2xl mx-auto lg:lg:mx-0">
+                      We engineered a cohesive systems stack that unifies frontends and custom microcontrol sensors. It maps handheld vectors directly in the air, instantly converting coordinates to minimize faults and guarantee printability.
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 text-center text-xs font-bold">
+                      <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                        <span className="block text-yellow-300 mb-1">React + Vite</span>
+                        <span className="text-slate-400 font-mono text-[10px]">Frontend UI Workspace</span>
+                      </div>
+                      <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                        <span className="block text-sky-400 mb-1">MediaPipe Core</span>
+                        <span className="text-slate-400 font-mono text-[10px]">Optical Hand Tracking</span>
+                      </div>
+                      <div className="p-3 bg-white/5 border border-white/10 rounded-xl">
+                        <span className="block text-emerald-400 mb-1">ESP32 + Hardware</span>
+                        <span className="text-slate-400 font-mono text-[10px]">Depth Micro-Sensor Unit</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+                      <a 
+                        href="#live-demo-section"
+                        className="w-full sm:w-auto bg-gradient-to-r from-yellow-500 to-yellow-600 text-blue-950 px-8 py-3.5 rounded-2xl font-black text-sm transition-all hover:scale-105 active:scale-95 text-center shadow-lg"
+                      >
+                        Launch Live Simulation
+                      </a>
+                      <button 
+                        onClick={() => setPresentationStage('hook')}
+                        className="text-slate-400 hover:text-white px-6 py-3 text-xs uppercase font-bold tracking-widest transition-colors"
+                      >
+                        Reset Journey
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Right Box: Dynamic 3D SVG Object with camera zoom effects */}
+            <div className="lg:col-span-5 flex items-center justify-center relative min-h-[460px]">
+              <Interactive3DObject stage={presentationStage} />
+            </div>
+
           </div>
         </section>
 
@@ -638,59 +753,20 @@ export default function App() {
           </div>
         </section>
 
-        {/* Real-World Application */}
-        <section className="py-24 px-6 border-y border-white/5 bg-blue-800/30">
+        {/* Real-World Application & The Live Demo */}
+        <section id="live-demo-section" className="py-24 px-6 border-y border-white/5 bg-blue-850/50">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h3 className="text-3xl md:text-5xl font-bold mb-4">Practical Application</h3>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-500/10 border-2 border-yellow-400/50 text-yellow-400 text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
+                🚀 EXPERIMENTAL INTERFACE • THE LIVE DEMO
+              </div>
+              <h3 className="text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter text-white">Live Workspace Simulation</h3>
               <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                Applying the interactive system concept to a real use case: 3D Design for beginners.
+                Interact with the geometric coordinates and virtual spatial camera matrices below. This simulated environment showcases the capabilities of the NEURIX system to process and manipulate models instantly with mid-air handheld gestures.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-red-500/5 border border-red-500/10 p-8 rounded-3xl">
-                <h4 className="text-red-400 font-bold text-xl mb-4 flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-red-500" />
-                  The Problem
-                </h4>
-                <ul className="space-y-4 text-slate-300">
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 mt-1">×</span>
-                    Beginners and children struggle with complex 3D design tools.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 mt-1">×</span>
-                    Printing offices often receive incorrect or incomplete files.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-red-500 mt-1">×</span>
-                    Lack of understanding regarding design dimensions required for 3D printing.
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="bg-green-500/5 border border-green-500/10 p-8 rounded-3xl">
-                <h4 className="text-green-400 font-bold text-xl mb-4 flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  Our Initial Solution
-                </h4>
-                <ul className="space-y-4 text-slate-300">
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Simplified 3D design environment using touchless interaction.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Select ready-made models and modify them using intuitive gesture-based interaction.
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <span className="text-green-500 mt-1">✓</span>
-                    Ensure basic printability conditions automatically to reduce errors.
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <LiveGestureDemo />
           </div>
         </section>
 
