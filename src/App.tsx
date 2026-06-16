@@ -78,22 +78,61 @@ const TEAM_MEMBERS = [
   { id: 22, name: "Abdelrahman Emad", role: "Research Support", team: "Presentation", category: "Research" },
 ];
 
-const OBJECTIVES = [
-  {
-    title: "Innovative Solutions",
-    description: "Developing smart, cost-effective solutions using Embedded Systems to push the boundaries of interaction.",
-    icon: <Cpu className="w-8 h-8 text-yellow-400" />
-  },
-  {
-    title: "Integration",
-    description: "Merging hardware and software to create a highly interactive and automated system that bridges the physical and digital worlds.",
-    icon: <Layers className="w-8 h-8 text-yellow-400" />
-  },
-  {
-    title: "Practical Impact",
-    description: "Utilizing IoT and AI technologies to solve real-world challenges efficiently with high-tech sensors.",
-    icon: <Zap className="w-8 h-8 text-yellow-400" />
-  }
+const OBJECTIVE_PAGES = [
+  // Page 1: Core Technologies (التقنيات الأساسية)
+  [
+    {
+      title: "Interactive Embedded",
+      description: "Developing intelligent, cost-effective solutions using modern dual-core microcontrollers to push interactive boundaries.",
+      icon: <Cpu className="w-8 h-8 text-yellow-500 shadow-amber-500/20" />
+    },
+    {
+      title: "Unified HW/SW Linkage",
+      description: "Merging secure firmware layers with responsive graphic layouts to design a highly automated and fast command system.",
+      icon: <Layers className="w-8 h-8 text-yellow-500 shadow-amber-500/20" />
+    },
+    {
+      title: "Low-Latency Signal",
+      description: "Designing direct hardware interrupts and optimized serial protocols to reliably transmit multi-sensor signals.",
+      icon: <Zap className="w-8 h-8 text-yellow-500 shadow-amber-500/20" />
+    }
+  ],
+  // Page 2: Advanced Features (الميزات المتقدمة)
+  [
+    {
+      title: "Gesture & Vision",
+      description: "Utilizing dynamic computer vision algorithms via OpenCV interfaces to interpret and execute actions in human real-time.",
+      icon: <BrainCircuit className="w-8 h-8 text-cyan-400 animate-pulse" />
+    },
+    {
+      title: "Waveform Oscilloscope",
+      description: "Rendering high-fidelity, dual-channel visual plots representing active output pin values and physical signals.",
+      icon: <CircuitBoard className="w-8 h-8 text-cyan-400" />
+    },
+    {
+      title: "Synaptic Connectome",
+      description: "Generating random neural node mappings in response to mouse movements, synced to cozy client-side audio synth nodes.",
+      icon: <Microchip className="w-8 h-8 text-cyan-400" />
+    }
+  ],
+  // Page 3: Long-Term Vision (الرؤية والخطط المستقبلية)
+  [
+    {
+      title: "Systematic Research",
+      description: "Structuring academic studies on gesture latency matrices, user hand-interaction ergonomic models, and tech comfort index.",
+      icon: <GraduationCap className="w-8 h-8 text-emerald-400" />
+    },
+    {
+      title: "Universal Portability",
+      description: "Compiling core desktop console controllers to multi-platform web frameworks, preparing for cloud-native MCU commands.",
+      icon: <Smartphone className="w-8 h-8 text-emerald-400" />
+    },
+    {
+      title: "Global Collaboration",
+      description: "Expanding collaborative pipelines with global labs and industrial manufacturers to commercialize the Neurix stack by late Q3.",
+      icon: <Globe className="w-8 h-8 text-emerald-400 animate-spin" style={{ animationDuration: '12s' }} />
+    }
+  ]
 ];
 
 export default function App() {
@@ -102,6 +141,24 @@ export default function App() {
   const [presentationStage, setPresentationStage] = useState<'hook' | 'problem' | 'solution'>('hook');
   const [currentPage, setCurrentPage] = useState<'home' | 'matrix' | 'livedemo' | 'connect'>('home');
   const [activeDemoTab, setActiveDemoTab] = useState<'signal' | 'synaptic'>('signal');
+
+  const [currentObjectivePage, setCurrentObjectivePage] = useState(0);
+  const [timerResetKey, setTimerResetKey] = useState(0);
+
+  React.useEffect(() => {
+    if (isLoading) return;
+    
+    const interval = setInterval(() => {
+      setCurrentObjectivePage(prev => (prev + 1) % 3);
+    }, 5500); // stay for 5.5 seconds on each page
+    
+    return () => clearInterval(interval);
+  }, [isLoading, timerResetKey]);
+
+  const handlePageSelect = (pageIndex: number) => {
+    setCurrentObjectivePage(pageIndex);
+    setTimerResetKey(prev => prev + 1);
+  };
 
   const teamData = useMemo(() => {
     const leader = TEAM_MEMBERS.find(m => m.id === 1) || null;
@@ -546,34 +603,70 @@ export default function App() {
         {/* Strategic Goals / Objectives Section */}
         <section id="objectives-section" className="py-24 md:py-32 px-6 bg-dark-charcoal relative overflow-hidden border-t border-phosphor/15">
           <div className="max-w-7xl mx-auto relative z-10">
-            <div className="mb-16 md:mb-24 text-center">
+            <div className="mb-16 md:mb-20 text-center">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-phosphor/10 border border-phosphor/30 text-phosphor text-[10px] font-mono font-black uppercase tracking-widest mb-6">
                 Strategic Goals
               </div>
               <h3 className="text-4xl md:text-6xl font-display font-black mb-6 tracking-tight text-white uppercase">Project Objectives</h3>
-              <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-sans">The technological drive behind our embedded hardware implementations.</p>
+              <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-sans">
+                The technological drive behind our embedded hardware implementations.
+              </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-              {OBJECTIVES.map((obj, i) => (
+            <div className="relative min-h-[460px] md:min-h-[340px] flex flex-col justify-between">
+              <AnimatePresence mode="wait">
                 <motion.div
-                  key={obj.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.15, duration: 0.6 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  className="group relative p-8 md:p-10 rounded-none bg-dark-obsidian border border-phosphor/15 hover:border-phosphor transition-all duration-500 overflow-hidden"
+                  key={currentObjectivePage}
+                  initial={{ opacity: 0, scale: 0.98, x: 20 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.98, x: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
                 >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-phosphor opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform origin-left scale-x-0 group-hover:scale-x-100" />
-                  
-                  <div className="mb-8 p-4 w-16 h-16 flex items-center justify-center rounded-none bg-phosphor/5 border border-phosphor/10 group-hover:border-phosphor/40 group-hover:bg-phosphor/10 transition-colors shadow-lg">
-                    {obj.icon}
-                  </div>
-                  <h4 className="text-2xl font-mono font-bold mb-4 text-white group-hover:text-phosphor transition-colors uppercase">{obj.title}</h4>
-                  <p className="text-sm md:text-base text-slate-400 leading-relaxed font-sans">
-                    {obj.description}
-                  </p>
+                  {OBJECTIVE_PAGES[currentObjectivePage].map((obj, i) => (
+                    <div
+                      key={obj.title}
+                      className="group relative p-8 md:p-10 rounded-none bg-dark-obsidian border border-phosphor/15 hover:border-phosphor transition-all duration-500 overflow-hidden flex flex-col h-full shadow-[0_15px_35px_rgba(0,0,0,0.5)]"
+                    >
+                      <div className="absolute top-0 left-0 w-full h-1 bg-phosphor opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform origin-left scale-x-0 group-hover:scale-x-100" />
+                      
+                      <div className="mb-8 p-4 w-16 h-16 flex items-center justify-center rounded-none bg-phosphor/5 border border-phosphor/10 group-hover:border-phosphor/40 group-hover:bg-phosphor/10 transition-colors shadow-lg shrink-0">
+                        {obj.icon}
+                      </div>
+                      <h4 className="text-2xl font-mono font-bold mb-4 text-white group-hover:text-phosphor transition-colors uppercase select-none">{obj.title}</h4>
+                      <p className="text-sm md:text-base text-slate-400 leading-relaxed font-sans flex-grow">
+                        {obj.description}
+                      </p>
+                    </div>
+                  ))}
                 </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Dynamic Instagram-style Progress Dots / Bars */}
+            <div className="flex justify-center items-center gap-4 mt-16 pb-2">
+              {[0, 1, 2].map((idx) => (
+                <button
+                  key={idx}
+                  onClick={() => handlePageSelect(idx)}
+                  className="group flex flex-col items-center gap-2 cursor-pointer focus:outline-none"
+                  aria-label={`Go to page ${idx + 1}`}
+                >
+                  <div className="relative w-24 h-1 bg-phosphor/20 overflow-hidden transition-colors group-hover:bg-phosphor/40">
+                    {currentObjectivePage === idx && (
+                      <motion.div
+                        key={`progress-${idx}-${timerResetKey}`}
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 5.5, ease: "linear" }}
+                        className="absolute top-0 left-0 w-full h-full bg-phosphor origin-left"
+                      />
+                    )}
+                  </div>
+                  <span className={`text-[10px] font-mono font-black tracking-widest ${currentObjectivePage === idx ? 'text-phosphor' : 'text-slate-500 group-hover:text-slate-300'} transition-colors mt-0.5`}>
+                    0{idx + 1}
+                  </span>
+                </button>
               ))}
             </div>
           </div>

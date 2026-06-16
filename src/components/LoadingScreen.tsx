@@ -19,30 +19,53 @@ const NEURIX_LETTERS: LetterConfig[] = [
 ];
 
 export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  const [landedIndices, setLendedIndices] = useState<number[]>([]);
+  const [fallingIndex, setFallingIndex] = useState<number | null>(null);
+  const [landedIndices, setLandedIndices] = useState<number[]>([]);
   const [completeSequence, setCompleteSequence] = useState(false);
 
-  // Stagger letter landing
+  // Sequential cascading letter drop
   useEffect(() => {
-    NEURIX_LETTERS.forEach((_, index) => {
-      const delayTime = (index * 260) + 400; // time it takes for letter to hit ground
-      const timer = setTimeout(() => {
-        setLendedIndices(prev => [...prev, index]);
-      }, delayTime);
+    let timers: NodeJS.Timeout[] = [];
 
-      return () => clearTimeout(timer);
-    });
+    // Starting delay before first letter drops
+    const startTimer = setTimeout(() => {
+      setFallingIndex(0);
 
-    // Complete loader sequence
-    const completeTimer = setTimeout(() => {
-      setCompleteSequence(true);
+      const triggerNext = (currentIndex: number) => {
+        if (currentIndex >= NEURIX_LETTERS.length) return;
 
-      // Trigger actual viewport exit
-      setTimeout(onComplete, 1400);
-    }, (NEURIX_LETTERS.length * 270) + 900);
+        // The current letter takes 700ms to arrive on the landing pad
+        const landTimer = setTimeout(() => {
+          setLandedIndices(prev => [...prev, currentIndex]);
+          
+          if (currentIndex + 1 < NEURIX_LETTERS.length) {
+            // Next letter instantly starts descending
+            setFallingIndex(currentIndex + 1);
+            triggerNext(currentIndex + 1);
+          } else {
+            // All letters landed!
+            setFallingIndex(null);
+            
+            // Wait slightly after the last landing for stabilization, then initiate the transition out
+            const finalizeTimer = setTimeout(() => {
+              setCompleteSequence(true);
+              const exitTimer = setTimeout(onComplete, 1400);
+              timers.push(exitTimer);
+            }, 900);
+            timers.push(finalizeTimer);
+          }
+        }, 700);
+
+        timers.push(landTimer);
+      };
+
+      triggerNext(0);
+    }, 600);
+
+    timers.push(startTimer);
 
     return () => {
-      clearTimeout(completeTimer);
+      timers.forEach(t => clearTimeout(t));
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -105,6 +128,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         <div className="flex items-center justify-center gap-1.5 sm:gap-4 md:gap-6 relative py-12 px-6">
           {NEURIX_LETTERS.map((letter, index) => {
             const hasLanded = landedIndices.includes(index);
+            const isFalling = fallingIndex === index;
             
             return (
               <div key={index} className="relative flex flex-col items-center h-28 sm:h-44 justify-end">
@@ -112,87 +136,149 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 {/* Volumetric ambient golden backlight bubble behind landed letters */}
                 <AnimatePresence>
                   {hasLanded && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.4 }}
-                      animate={{ opacity: [0, 0.45, 0.3], scale: [0.4, 1.25, 1] }}
-                      transition={{ duration: 1.4, ease: "easeOut" }}
-                      className="absolute w-24 h-24 sm:w-36 sm:h-36 bg-[radial-gradient(circle,_rgba(234,147,8,0.22)_0%,_transparent_70%)] rounded-full blur-xl pointer-events-none -translate-y-10"
-                    />
+                    <>
+                      {/* Permanent soft undulating golden glow */}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.3 }}
+                        animate={{ 
+                          opacity: [0, 0.6, 0.38, 0.6], 
+                          scale: [0.3, 1.3, 1.08, 1.3] 
+                        }}
+                        transition={{
+                          opacity: { repeat: Infinity, duration: 4.2, ease: "easeInOut" },
+                          scale: { repeat: Infinity, duration: 4.8, ease: "easeInOut" }
+                        }}
+                        className="absolute w-24 h-24 sm:w-36 sm:h-36 bg-[radial-gradient(circle,_rgba(255,165,0,0.28)_0%,_transparent_75%)] rounded-full blur-2xl pointer-events-none -translate-y-10"
+                      />
+
+                      {/* Laser Pillar of light shooting down behind the letter */}
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: [0, 0.4, 0.15], height: ["0vh", "100vh"] }}
+                        transition={{ duration: 0.9, ease: "easeOut" }}
+                        className="absolute bottom-0 w-[1px] bg-gradient-to-t from-[#ea9308] via-[#ea9308]/20 to-transparent pointer-events-none blur-[0.5px]"
+                      />
+                    </>
                   )}
                 </AnimatePresence>
 
                 {/* The Falling Letter Particle */}
                 <motion.div
-                  initial={{ y: -750, opacity: 0, scale: 0.15, rotateY: 180, rotateZ: -40, skewX: -15 }}
-                  animate={hasLanded ? {
-                    y: [0, -18, 0],
-                    rotateY: [0, 14, -14, 0],
-                    rotateZ: [0, 2, -2, 0],
-                    scale: [1, 1.06, 0.98, 1],
-                    opacity: 1
-                  } : {
-                    y: 0,
-                    opacity: 1,
-                    scale: 1,
-                    rotateY: 0,
-                    rotateZ: 0,
-                    skewX: 0
-                  }}
-                  transition={hasLanded ? {
-                    y: {
-                      repeat: Infinity,
-                      duration: 3,
-                      ease: "easeInOut",
-                    },
-                    rotateY: {
-                      repeat: Infinity,
-                      duration: 4.5,
-                      ease: "easeInOut",
-                    },
-                    rotateZ: {
-                      repeat: Infinity,
-                      duration: 3.8,
-                      ease: "easeInOut",
-                    },
-                    scale: {
-                      repeat: Infinity,
-                      duration: 3.2,
-                      ease: "easeInOut",
-                    }
-                  } : {
-                    type: "spring",
-                    stiffness: 120,
-                    damping: 10,
-                    mass: 0.85,
-                    delay: index * 0.24, // staggered beautiful delays
-                  }}
+                  initial={{ y: -950, opacity: 0, scaleY: 2.2, scaleX: 0.5, rotate: -25 }}
+                  animate={
+                    hasLanded
+                      ? {
+                          y: [0, 18, -12, 6, -2, 0],
+                          scaleY: [0.45, 1.25, 0.9, 1.05, 1],
+                          scaleX: [1.55, 0.8, 1.1, 0.95, 1],
+                          rotate: [12, -6, 3, -1, 0],
+                          opacity: 1,
+                        }
+                      : isFalling
+                      ? {
+                          y: 0,
+                          opacity: 1,
+                          scaleY: 1.8,
+                          scaleX: 0.7,
+                          rotate: -15,
+                        }
+                      : {
+                          y: -950,
+                          opacity: 0,
+                          scaleY: 2.2,
+                          scaleX: 0.5,
+                          rotate: -25,
+                        }
+                  }
+                  transition={
+                    hasLanded
+                      ? {
+                          duration: 0.85,
+                          ease: "easeOut",
+                        }
+                      : isFalling
+                      ? {
+                          duration: 0.7, // Matches the timeout exactly
+                          ease: "easeIn", // Real-world acceleration physics
+                        }
+                      : {
+                          duration: 0.2,
+                        }
+                  }
                   className="relative z-10 select-none"
                 >
-                  <span 
-                    className={`text-[13vw] sm:text-[10vw] md:text-8xl lg:text-9xl font-display font-black block tracking-normal transition-all duration-700 ${
-                      hasLanded 
-                        ? 'text-transparent bg-clip-text bg-gradient-to-b from-[#fffef5] via-[#ea9308] to-[#ab5a00]' 
-                        : 'text-phosphor/15'
-                    }`}
-                    style={hasLanded ? {
-                      filter: 'drop-shadow(0 0 10px rgba(255,191,0,0.85)) drop-shadow(0 0 30px rgba(234,147,8,0.55))'
-                    } : undefined}
+                  {/* Infinite independent float/breathe layer when landed */}
+                  <motion.div
+                    animate={hasLanded ? {
+                      y: [0, -8, 0],
+                      scale: [1, 1.03, 0.98, 1],
+                      rotateY: [0, 8, -8, 0],
+                    } : {}}
+                    transition={hasLanded ? {
+                      y: {
+                        repeat: Infinity,
+                        duration: 3 + index * 0.35,
+                        ease: "easeInOut",
+                        delay: 0.85,
+                      },
+                      scale: {
+                        repeat: Infinity,
+                        duration: 3.4 + index * 0.4,
+                        ease: "easeInOut",
+                        delay: 0.85,
+                      },
+                      rotateY: {
+                        repeat: Infinity,
+                        duration: 4.2 + index * 0.5,
+                        ease: "easeInOut",
+                        delay: 0.85,
+                      }
+                    } : {}}
+                    className="relative flex items-center justify-center"
                   >
-                    {letter.char}
-                  </span>
+                    <span 
+                      className={`text-[13vw] sm:text-[10vw] md:text-8xl lg:text-9xl font-display font-black block tracking-normal transition-all duration-700 ${
+                        hasLanded 
+                          ? 'text-transparent bg-clip-text bg-gradient-to-b from-[#fffef5] via-[#ea9308] to-[#ab5a00]' 
+                          : 'text-phosphor/15'
+                      }`}
+                      style={hasLanded ? {
+                        filter: 'drop-shadow(0 0 10px rgba(255,191,0,0.85)) drop-shadow(0 0 30px rgba(234,147,8,0.55))'
+                      } : undefined}
+                    >
+                      {letter.char}
+                    </span>
 
-                  {/* High voltage shockwave ring emitted exactly on impact */}
-                  <AnimatePresence>
-                    {hasLanded && (
-                      <motion.div
-                        initial={{ scale: 0.3, opacity: 1 }}
-                        animate={{ scale: 2.2, opacity: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 1.0, ease: "easeOut" }}
-                        className="absolute inset-0 rounded-full border-2 border-[#ea9308] shadow-[0_0_20px_rgba(234,147,8,0.4)] pointer-events-none z-0"
-                      />
-                    )}
-                  </AnimatePresence>
+                    {/* Exploding vector sparks on impact */}
+                    {hasLanded && Array.from({ length: 8 }).map((_, sparkIdx) => {
+                      const angle = (sparkIdx * 360) / 8;
+                      const radians = (angle * Math.PI) / 180;
+                      const targetX = Math.cos(radians) * 65;
+                      const targetY = Math.sin(radians) * 65;
+                      return (
+                        <motion.div
+                          key={sparkIdx}
+                          initial={{ x: 0, y: 0, opacity: 1, scale: 0.8 }}
+                          animate={{ x: targetX, y: targetY, opacity: 0, scale: 0.1 }}
+                          transition={{ duration: 0.95, ease: "easeOut" }}
+                          className="absolute w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#ffd700] to-[#ffaa00] blur-[0.5px] shadow-[0_0_8px_#ffd700] pointer-events-none"
+                        />
+                      );
+                    })}
+
+                    {/* High voltage shockwave ring emitted exactly on impact */}
+                    <AnimatePresence>
+                      {hasLanded && (
+                        <motion.div
+                          initial={{ scale: 0.3, opacity: 1 }}
+                          animate={{ scale: 2.2, opacity: 0 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 1.0, ease: "easeOut" }}
+                          className="absolute inset-0 rounded-full border-2 border-[#ea9308] shadow-[0_0_20px_rgba(234,147,8,0.4)] pointer-events-none z-0"
+                        />
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
                 </motion.div>
 
                 {/* Reactive Landing platform pedestal */}
