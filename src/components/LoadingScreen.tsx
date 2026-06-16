@@ -1,187 +1,202 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { ShieldCheck } from 'lucide-react';
 
-const SYSTEM_LOGS = [
-  "Initializing neural pathways...",
-  "Calibrating tactile sensors...",
-  "Syncing IoT mesh network...",
-  "Loading embedded logic kernels...",
-  "Establishing secure handwave link...",
-  "Optimizing interface responsiveness...",
-  "Systems operational. Welcome to NEURIX."
+interface LetterConfig {
+  char: string;
+  label: string;
+  description: string;
+  glow: string;
+}
+
+const NEURIX_LETTERS: LetterConfig[] = [
+  { char: 'N', label: 'NEURAL_KERNEL', description: 'Synaptic artificial core allocation initialized.', glow: 'shadow-blue-500/50 text-blue-400' },
+  { char: 'E', label: 'EMBEDDED_FPGA', description: 'Register mapping on gate-array channels active.', glow: 'shadow-indigo-500/50 text-indigo-400' },
+  { char: 'U', label: 'UNIVERSAL_BUS', description: 'Inter-Integrated multi-device controller loaded.', glow: 'shadow-cyan-500/50 text-cyan-400' },
+  { char: 'R', label: 'RESONANCE_DSP', description: 'Harmonic oscillator filters online at zero-latency.', glow: 'shadow-amber-500/50 text-phosphor' },
+  { char: 'I', label: 'INTERFACE_MCU', description: 'Analog interface sensory drivers linked.', glow: 'shadow-teal-500/50 text-teal-400' },
+  { char: 'X', label: 'XTENSIBLE_SYS', description: 'Central matrix synchronization successful.', glow: 'shadow-emerald-500/50 text-emerald-400' }
 ];
 
 export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0);
-  const [logIndex, setLogIndex] = useState(0);
+  const [landedIndices, setLendedIndices] = useState<number[]>([]);
+  const [completeSequence, setCompleteSequence] = useState(false);
 
+  // Stagger letter landing
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => {
-            onComplete();
-          }, 300);
-          return 100;
-        }
-        return prev + Math.floor(Math.random() * 12) + 8;
-      });
-    }, 25);
+    NEURIX_LETTERS.forEach((_, index) => {
+      const delayTime = (index * 260) + 400; // time it takes for letter to hit ground
+      const timer = setTimeout(() => {
+        setLendedIndices(prev => [...prev, index]);
+      }, delayTime);
 
-    return () => clearInterval(timer);
+      return () => clearTimeout(timer);
+    });
+
+    // Complete loader sequence
+    const completeTimer = setTimeout(() => {
+      setCompleteSequence(true);
+
+      // Trigger actual viewport exit
+      setTimeout(onComplete, 1400);
+    }, (NEURIX_LETTERS.length * 270) + 900);
+
+    return () => {
+      clearTimeout(completeTimer);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    const logInterval = setInterval(() => {
-      setLogIndex((prev) => (prev < SYSTEM_LOGS.length - 1 ? prev + 1 : prev));
-    }, 600);
-    return () => clearInterval(logInterval);
   }, []);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[200] bg-black flex flex-col items-center justify-center font-mono overflow-hidden"
-      exit={{ opacity: 0, scale: 1.1 }}
-      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className="fixed inset-0 z-[200] bg-[#03081e] flex flex-col items-center justify-between font-sans overflow-hidden text-slate-300 select-none pb-12 pt-16"
+      exit={{ opacity: 0, filter: "brightness(0.2) blur(12px)", scale: 1.04 }}
+      transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
     >
-      {/* Background Effect - Removed Grid as requested */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,102,255,0.15)_0%,transparent_100%)]" />
+      {/* Background visual layers: Futuristic grid, matrix points and vignette */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+        <div className="w-full h-full bg-[radial-gradient(rgba(30,58,138,0.3)_1.5px,transparent_1.5px)] bg-[size:36px_36px] opacity-25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020514] via-transparent to-[#020514] opacity-80" />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center w-full max-w-md px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12 text-center"
-        >
-          <div className="flex flex-col items-center justify-center gap-6 mb-4">
-            <div className="relative">
-              {/* Wrapping rings */}
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-20px] border-2 border-dashed border-blue-500/30 rounded-full"
-              />
-              <motion.div 
-                animate={{ rotate: -360 }}
-                transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-10px] border border-dotted border-yellow-400/30 rounded-full"
-              />
-              
-              <motion.div 
-                animate={{ rotateY: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                style={{ willChange: "transform", transformStyle: "preserve-3d" }}
-                className="w-24 h-24 border-2 border-blue-500 rounded-3xl flex items-center justify-center relative shadow-[0_0_50px_rgba(0,119,255,0.4)] bg-black z-10 transform-gpu"
-              >
-                 <motion.div 
-                   animate={{ rotate: 360 }}
-                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                   style={{ willChange: "transform" }}
-                   className="absolute inset-[-8px] border-2 border-t-yellow-400 border-r-transparent border-b-yellow-400 border-l-transparent rounded-[2rem] shadow-[0_0_15px_rgba(255,215,0,0.4)] transform-gpu" 
-                 />
-                 <span className="text-white text-4xl font-bold drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">N</span>
-              </motion.div>
-            </div>
+      {/* Decorative top scope labels */}
+      <div className="relative z-10 w-full max-w-7xl px-8 flex justify-between items-center text-[10px] font-mono tracking-[0.2em] text-slate-500 uppercase">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-phosphor/70 animate-ping" />
+          <span>SYS_BOOT // COGNITIVE_RAMP_DEPROY</span>
+        </div>
+        <div>
+          <span>ADDRESS_REG: 0x00F7A59D</span>
+        </div>
+      </div>
 
-            <div className="relative mt-8 group flex justify-center items-center">
-              {/* Yellow Beam Effect emitting from the text */}
-              <div className="absolute inset-0 flex items-center justify-center -z-10 pointer-events-none">
-                <motion.div 
-                  className="w-[150%] h-[150px] bg-yellow-400/30 blur-[50px]"
-                  animate={{ opacity: [0.2, 0.7, 0.2], scale: [0.9, 1.1, 0.9] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                />
-                {/* Horizontal light ray */}
-                <motion.div 
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[2px] bg-gradient-to-r from-transparent via-yellow-300 to-transparent blur-[1px]"
-                  animate={{ opacity: [0, 0.8, 0], width: ["0%", "250%", "0%"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                />
-                {/* Vertical light ray */}
-                <motion.div 
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[2px] bg-gradient-to-b from-transparent via-yellow-300 to-transparent blur-[1px]"
-                  animate={{ opacity: [0, 0.5, 0], height: ["0%", "200px", "0%"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                />
-              </div>
+      {/* CENTERPIECE: Cinematic Letter-Drop Scene */}
+      <div className="relative z-10 flex flex-col items-center justify-center my-auto">
+        
+        {/* Holographic floor landing target grid */}
+        <div className="absolute bottom-[-50px] left-1/2 -translate-x-1/2 w-[90vw] max-w-4xl h-8 bg-gradient-to-t from-phosphor/5 to-transparent blur-md rounded-full pointer-events-none opacity-40" />
 
-              <div className="flex font-bold text-white relative z-10 uppercase text-4xl md:text-5xl my-4">
-                {"NEURIX".split('').map((letter, i) => (
-                  <motion.span
-                    key={i}
-                    initial={{ opacity: 0, y: "-100vh" }}
+        {/* Dynamic drop letters assembly row */}
+        <div className="flex items-center justify-center gap-1.5 sm:gap-4 md:gap-6 relative py-12 px-6">
+          {NEURIX_LETTERS.map((letter, index) => {
+            const hasLanded = landedIndices.includes(index);
+            
+            return (
+              <div key={index} className="relative flex flex-col items-center h-28 sm:h-44 justify-end">
+                {/* The Falling Letter Particle */}
+                <motion.div
+                  initial={{ y: -650, opacity: 0, scale: 0.2 }}
+                  animate={{ 
+                    y: 0, 
+                    opacity: 1, 
+                    scale: 1,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 110,
+                    damping: 10,
+                    mass: 0.9,
+                    delay: index * 0.24, // staggered beautiful delays
+                  }}
+                  className="relative z-10 select-none"
+                >
+                  <span className={`text-[13vw] sm:text-[10vw] md:text-8xl lg:text-9xl font-display font-medium block tracking-normal transition-all duration-500 ${
+                    hasLanded 
+                      ? 'text-white font-black drop-shadow-[0_0_25px_rgba(255,159,0,0.5)]' 
+                      : 'text-phosphor/20'
+                  }`}>
+                    {letter.char}
+                  </span>
+
+                  {/* High voltage shockwave ring emitted exactly on impact */}
+                  <AnimatePresence>
+                    {hasLanded && (
+                      <motion.div
+                        initial={{ scale: 0.3, opacity: 1 }}
+                        animate={{ scale: 1.8, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className={`absolute inset-0 rounded-full border border-phosphor pointer-events-none z-0`}
+                      />
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+
+                {/* Reactive Landing platform pedestal */}
+                <div className="absolute bottom-[-10px] flex flex-col items-center">
+                  <motion.div 
                     animate={{ 
-                      opacity: 1, 
-                      y: 0,
-                      textShadow: ["0 0 0px #ffd700", "0 0 25px #ffd700", "0 0 10px #ffd700"]
+                      scaleX: hasLanded ? [0.2, 1.2, 1] : 0.2,
+                      opacity: hasLanded ? 0.8 : 0.1
                     }}
-                    transition={{
-                      y: {
-                        duration: 1.2,
-                        delay: i * 0.15,
-                        type: "spring",
-                        bounce: 0.5,
-                      },
-                      opacity: {
-                        duration: 0.3,
-                        delay: i * 0.15
-                      },
-                      textShadow: {
-                        duration: 2,
-                        delay: (i * 0.15) + 1.2,
-                        repeat: Infinity,
-                        repeatType: "reverse"
-                      }
-                    }}
-                    className="mx-[0.15em] inline-block"
-                  >
-                    {letter}
-                  </motion.span>
-                ))}
+                    transition={{ duration: 0.4 }}
+                    className={`h-0.5 w-10 sm:w-16 bg-gradient-to-r from-transparent via-phosphor to-transparent`}
+                  />
+                  
+                  {/* Miniature landed module confirmation label */}
+                  <span className={`text-[7px] font-mono tracking-wider transition-all duration-300 mt-2 ${
+                    hasLanded ? 'text-phosphor/90 font-bold' : 'text-slate-700'
+                  }`}>
+                    {hasLanded ? `CH_${index}` : 'OFFLINE'}
+                  </span>
+                </div>
               </div>
-            </div>
-          </div>
-          <p className="text-blue-400 text-[10px] tracking-[0.6em] uppercase mt-6 font-bold">Initializing Bio-Logic Matrix</p>
-        </motion.div>
+            );
+          })}
+        </div>
 
-        <div className="w-full bg-blue-900/20 border border-blue-500/30 h-1.5 rounded-full overflow-hidden mb-4 p-[1px]">
+        {/* Glow Fusion light blast overlay */}
+        <AnimatePresence>
+          {completeSequence && (
+            <motion.div
+              initial={{ opacity: 0, scaleY: 0 }}
+              animate={{ opacity: [0, 0.45, 0], scaleY: [0, 1.3, 0] }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none z-20 blur-sm"
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Detailed real-time calibration subtitle feedback logs */}
+        <div className="h-10 mt-12 flex flex-col items-center justify-center font-mono text-[10px] tracking-widest uppercase transition-all duration-500">
+          {completeSequence ? (
+            <motion.div 
+              animate={{ scale: [1, 1.03, 1] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+              className="flex items-center gap-2 text-emerald-400 font-bold"
+            >
+              <ShieldCheck className="w-4 h-4 text-emerald-400 animate-pulse" />
+              <span>COGNITIVE REGISTER FUSION STATUS [100% NOMINAL]</span>
+            </motion.div>
+          ) : landedIndices.length > 0 ? (
+            <div className="text-slate-400 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-phosphor animate-ping" />
+              <span>STABILIZING {NEURIX_LETTERS[Math.min(landedIndices.length - 1, 5)].label} ...</span>
+            </div>
+          ) : (
+            <span className="text-slate-650 animate-pulse">LOCKING CORE PLL CLOCK ALIGNMENT...</span>
+          )}
+        </div>
+      </div>
+
+      {/* BOTTOM AREA: Minimal Ambient loading progress bar */}
+      <div className="relative z-10 w-full max-w-xl px-8 font-mono mt-8">
+        {/* Global Loading Bar representation */}
+        <div className="w-full bg-[#070e2b] border border-phosphor/15 h-2 p-0.5 rounded-full overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-blue-600 to-yellow-400 rounded-full"
             initial={{ width: "0%" }}
-            animate={{ width: `${progress}%` }}
+            animate={{ width: completeSequence ? "100%" : `${(landedIndices.length / NEURIX_LETTERS.length) * 100}%` }}
+            className="h-full bg-gradient-to-r from-phosphor to-[#ff5f00]"
+            transition={{ ease: "easeInOut" }}
           />
         </div>
-
-        <div className="flex justify-between w-full mb-8">
-          <span className="text-[10px] text-blue-500 uppercase tracking-widest font-bold">Initializing Systems</span>
-          <span className="text-sm text-yellow-400 font-bold">{progress}%</span>
-        </div>
-
-        <div className="h-6 w-full text-center overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={logIndex}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-[10px] text-slate-500 uppercase tracking-widest leading-loose"
-            >
-              {SYSTEM_LOGS[logIndex]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
       </div>
 
-      {/* Pulsing Scanline */}
-      <motion.div 
-        animate={{ y: ["0vh", "100vh"] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-        style={{ willChange: "transform" }}
-        className="absolute top-0 left-0 w-full h-px bg-blue-500/30 shadow-[0_0_20px_rgba(0,102,255,0.5)] z-20 pointer-events-none transform-gpu"
+      {/* Cinematic sweeping horizontal radar scanning line */}
+      <motion.div
+        animate={{ y: ["-15vh", "115vh"] }}
+        transition={{ duration: 4.8, repeat: Infinity, ease: "linear" }}
+        className="absolute top-0 left-0 w-full h-0.5 bg-phosphor/25 shadow-[0_0_25px_rgba(255,159,0,0.5)] z-20 pointer-events-none"
       />
     </motion.div>
   );

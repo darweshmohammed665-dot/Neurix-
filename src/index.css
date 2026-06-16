@@ -1,12 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --color-yellow-300: #fff700;
-  --color-yellow-400: #ffd700;
-  --color-yellow-500: #ffaa00;
+  --font-sans: "Share Tech Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-phosphor: #ff9f00;
+  --color-phosphor-glow: #ff5f00;
+  --color-phosphor-dim: #995c00;
+  --color-dark-obsidian: #03081e;
+  --color-dark-charcoal: #070e2b;
+  --color-dark-iron: #0c153d;
 }
 
 @layer base {
@@ -15,14 +20,49 @@
   }
   
   body {
-    @apply bg-blue-900 text-slate-100;
+    @apply bg-dark-obsidian text-slate-300 font-sans tracking-wide antialiased overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255, 159, 0, 0.035) 1px, transparent 0),
+      linear-gradient(rgba(7, 14, 43, 0.4) 1px, transparent 0);
+    background-size: 24px 24px, 100% 4px;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-display;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-normal text-white;
   }
 }
 
+/* Custom visual effects for Cyber-Industrial texture */
+.cyan-glow-text {
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+.amber-phosphor-glow {
+  text-shadow: 0 0 12px rgba(255, 159, 0, 0.6), 0 0 2px rgba(255, 159, 0, 0.8);
+}
+
+.amber-phosphor-box-glow {
+  box-shadow: 0 0 20px rgba(255, 159, 0, 0.15), inset 0 0 10px rgba(255, 159, 0, 0.05);
+}
+
+.amber-phosphor-border {
+  border-color: rgba(255, 159, 0, 0.25);
+}
+
+.amber-phosphor-border:hover {
+  border-color: rgba(255, 159, 0, 0.6);
+}
+
+.warning-stripe-bg {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 159, 0, 0.1),
+    rgba(255, 159, 0, 0.1) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
 .markdown-body {
-  @apply text-slate-300 leading-relaxed;
+  @apply text-slate-300 leading-relaxed font-sans;
 }
