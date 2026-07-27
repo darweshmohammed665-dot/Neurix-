@@ -9,9 +9,9 @@
   --color-phosphor: #ff9f00;
   --color-phosphor-glow: #ff5f00;
   --color-phosphor-dim: #995c00;
-  --color-dark-obsidian: #03081e;
-  --color-dark-charcoal: #070e2b;
-  --color-dark-iron: #0c153d;
+  --color-dark-obsidian: #081838;
+  --color-dark-charcoal: #0f2552;
+  --color-dark-iron: #18356e;
 }
 
 @layer base {
@@ -20,10 +20,10 @@
   }
   
   body {
-    @apply bg-dark-obsidian text-slate-300 font-sans tracking-wide antialiased overflow-x-hidden;
+    @apply bg-dark-obsidian text-slate-200 font-sans tracking-wide antialiased overflow-x-hidden;
     background-image: 
-      radial-gradient(circle at 1px 1px, rgba(255, 159, 0, 0.035) 1px, transparent 0),
-      linear-gradient(rgba(7, 14, 43, 0.4) 1px, transparent 0);
+      radial-gradient(circle at 1px 1px, rgba(56, 189, 248, 0.1) 1px, transparent 0),
+      linear-gradient(rgba(15, 37, 82, 0.4) 1px, transparent 0);
     background-size: 24px 24px, 100% 4px;
   }
 
