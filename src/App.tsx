@@ -710,15 +710,23 @@ export default function App() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentObjectivePage}
-                  initial={{ opacity: 0, scale: 0.98, x: 20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  exit={{ opacity: 0, scale: 0.98, x: -20 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
                   className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
                 >
                   {OBJECTIVE_PAGES[currentObjectivePage].map((obj, i) => (
-                    <div
+                    <motion.div
                       key={obj.title}
+                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -25, scale: 0.95, filter: "blur(4px)" }}
+                      transition={{ 
+                        duration: 0.45, 
+                        delay: i * 0.08, 
+                        ease: [0.22, 1, 0.36, 1] 
+                      }}
                       className="group relative p-8 md:p-10 rounded-none bg-dark-obsidian border border-phosphor/15 hover:border-phosphor transition-all duration-500 overflow-hidden flex flex-col h-full shadow-[0_15px_35px_rgba(0,0,0,0.5)]"
                     >
                       <div className="absolute top-0 left-0 w-full h-1 bg-phosphor opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform origin-left scale-x-0 group-hover:scale-x-100" />
@@ -730,7 +738,7 @@ export default function App() {
                       <p className="text-sm md:text-base text-slate-400 leading-relaxed font-sans flex-grow">
                         {obj.description}
                       </p>
-                    </div>
+                    </motion.div>
                   ))}
                 </motion.div>
               </AnimatePresence>
