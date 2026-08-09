@@ -183,7 +183,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       onPointerMove={(e) => {
         mousePosRef.current = { x: e.clientX, y: e.clientY };
       }}
-      className="fixed inset-0 z-[200] bg-[#081838] flex flex-col items-center justify-between font-sans overflow-hidden text-slate-300 select-none pb-12 pt-16 cursor-pointer"
+      className="fixed inset-0 z-[200] bg-[#081838] flex flex-col items-center justify-between font-sans overflow-hidden text-slate-300 select-none pb-6 pt-4 sm:pt-8 sm:pb-8 cursor-pointer"
       animate={{ opacity: completeSequence ? 0 : 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
@@ -200,22 +200,22 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#051129] via-transparent to-[#051129] opacity-80" />
       </div>
 
-      {/* Decorative top header */}
-      <div className="relative z-10 w-full max-w-7xl px-8 flex justify-between items-center text-[10px] font-mono tracking-[0.2em] text-slate-500 uppercase">
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-phosphor/70 animate-ping" />
-          <span>NEURIX SYSTEM ACTIVE • TOUCH ANYWHERE TO SKIP</span>
+      {/* Decorative top header - single line compact */}
+      <div className="relative z-10 w-full max-w-7xl px-4 sm:px-8 flex justify-between items-center text-[10px] font-mono tracking-wider text-slate-400 uppercase">
+        <div className="flex items-center gap-2 truncate">
+          <span className="w-1.5 h-1.5 rounded-full bg-phosphor/70 animate-ping shrink-0" />
+          <span className="truncate">NEURIX SYSTEM • TOUCH TO SKIP</span>
         </div>
-        <div className="hidden sm:flex items-center gap-5">
-          <span className="flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-[#ea9308]" /> MCU_OK</span>
-          <span className="flex items-center gap-1.5"><Radio className="w-3.5 h-3.5 text-cyan-400" /> SYNCED</span>
-          <span className="flex items-center gap-1.5"><Network className="w-3.5 h-3.5 text-emerald-400 animate-pulse" /> FAST_LOAD</span>
+        <div className="hidden sm:flex items-center gap-4 shrink-0">
+          <span className="flex items-center gap-1"><Cpu className="w-3 h-3 text-[#ea9308]" /> MCU_OK</span>
+          <span className="flex items-center gap-1"><Radio className="w-3 h-3 text-cyan-400" /> SYNCED</span>
+          <span className="flex items-center gap-1"><Network className="w-3 h-3 text-emerald-400 animate-pulse" /> FAST_LOAD</span>
         </div>
       </div>
 
-      {/* CENTERPIECE: Stylish Individual Falling Letter-Drop Scene */}
-      <div className="relative z-10 flex flex-col items-center justify-center my-auto">
-        <div className="flex items-center justify-center gap-1 sm:gap-4 md:gap-6 relative py-8 sm:py-12 px-2 sm:px-6 w-full max-w-full overflow-hidden">
+      {/* CENTERPIECE: Individual Falling Letter-Drop Scene - Positioned Higher */}
+      <div className="relative z-10 flex flex-col items-center justify-center my-auto pt-2 sm:pt-4">
+        <div className="flex items-center justify-center gap-1 sm:gap-3 md:gap-5 relative py-4 sm:py-8 px-2 sm:px-6 w-full max-w-full overflow-hidden">
           {NEURIX_LETTERS.map((letter, index) => {
             const hasLanded = landedIndices.includes(index);
             
@@ -342,13 +342,13 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
             />
           </div>
 
-          <div className="flex items-center justify-between w-full text-slate-400 font-bold pt-1">
-            <div className="flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-              <span>
+          <div className="flex items-center justify-between w-full text-slate-300 font-bold pt-1 gap-3">
+            <div className="flex items-center gap-1.5 shrink-0 text-[10px] sm:text-[11px]">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 animate-pulse shrink-0" />
+              <span className="truncate">
                 {landedIndices.length === NEURIX_LETTERS.length 
-                  ? 'NEURIX SYSTEM ONLINE' 
-                  : `LOADING MODULE ${landedIndices.length}/6`}
+                  ? 'NEURIX ONLINE' 
+                  : `LOADING ${landedIndices.length}/6`}
               </span>
             </div>
             
@@ -357,7 +357,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 e.stopPropagation();
                 triggerInstantExit();
               }}
-              className="px-3 py-1 rounded bg-phosphor/20 hover:bg-phosphor/30 text-phosphor border border-phosphor/40 text-[10px] font-mono font-bold tracking-wider transition-all hover:scale-105 active:scale-95 shadow-lg shadow-phosphor/10 cursor-pointer"
+              className="px-4 py-2 sm:px-5 sm:py-2.5 rounded bg-phosphor/25 hover:bg-phosphor/35 text-phosphor border border-phosphor/50 text-[11px] font-mono font-black tracking-wider transition-all hover:scale-[1.03] active:scale-95 shadow-lg shadow-phosphor/15 cursor-pointer shrink-0"
             >
               CONTINUE TO APP →
             </button>
