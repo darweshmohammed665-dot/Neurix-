@@ -39,7 +39,9 @@ import {
   Code,
   CircuitBoard,
   RefreshCw,
-  CheckCircle2
+  CheckCircle2,
+  Menu,
+  X
 } from 'lucide-react';
 
 const TEAM_MEMBERS = [
@@ -146,6 +148,24 @@ export default function App() {
 
   const [currentObjectivePage, setCurrentObjectivePage] = useState(0);
   const [timerResetKey, setTimerResetKey] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const scrollToSection = (id: string) => {
+    if (id === 'hero-section') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        const headerOffset = 80;
+        const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - headerOffset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
 
   React.useEffect(() => {
     if (isLoading) return;
@@ -287,39 +307,69 @@ export default function App() {
               </motion.span>
             </motion.div>
           </div>
-          <nav className="flex flex-row items-center justify-end gap-3 md:gap-5 overflow-x-auto no-scrollbar shrink-0">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex flex-row items-center justify-end gap-5 shrink-0">
             {[
-              { id: 'hero-section', label: 'Home', colorClass: 'text-phosphor hover:text-white' },
-              { id: 'about-concept', label: 'Concept', colorClass: 'text-phosphor hover:text-white' },
-              { id: 'roadmap', label: 'The Team', colorClass: 'text-phosphor hover:text-white' },
-              { id: 'live-demo-section', label: 'Diagnostics', colorClass: 'text-phosphor font-black hover:text-white' },
-              { id: 'contact-hub', label: 'Connect', colorClass: 'text-phosphor hover:text-white' },
+              { id: 'hero-section', label: 'Home' },
+              { id: 'about-concept', label: 'Concept' },
+              { id: 'roadmap', label: 'The Team' },
+              { id: 'live-demo-section', label: 'Diagnostics' },
+              { id: 'contact-hub', label: 'Connect' },
             ].map((page) => (
               <button
                 key={page.id}
-                onClick={() => {
-                  if (page.id === 'hero-section') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  } else {
-                    const el = document.getElementById(page.id);
-                    if (el) {
-                      const headerOffset = 80;
-                      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-                      const offsetPosition = elementPosition - headerOffset;
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                      });
-                    }
-                  }
-                }}
-                className="text-[11px] md:text-xs font-black uppercase tracking-widest transition-all relative py-1 px-1 shrink-0 text-phosphor hover:text-white border-b-2 border-transparent hover:border-phosphor/20"
+                onClick={() => scrollToSection(page.id)}
+                className="text-xs font-black uppercase tracking-widest transition-all relative py-1 px-1.5 shrink-0 text-phosphor hover:text-white border-b-2 border-transparent hover:border-phosphor/20 cursor-pointer"
               >
                 {page.label}
               </button>
             ))}
           </nav>
+
+          {/* Mobile Menu Toggle Button */}
+          <div className="flex md:hidden items-center shrink-0">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2.5 text-phosphor hover:text-white bg-dark-charcoal border border-phosphor/30 rounded-none focus:outline-none cursor-pointer flex items-center justify-center"
+              aria-label="Toggle Mobile Menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5 text-phosphor" /> : <Menu className="w-5 h-5 text-phosphor" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Slide-down Navigation Drawer */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="md:hidden border-t border-phosphor/20 bg-dark-charcoal/95 backdrop-blur-md px-4 py-3 space-y-2 font-mono"
+            >
+              {[
+                { id: 'hero-section', label: 'Home' },
+                { id: 'about-concept', label: 'Concept' },
+                { id: 'roadmap', label: 'The Team' },
+                { id: 'live-demo-section', label: 'Diagnostics' },
+                { id: 'contact-hub', label: 'Connect' },
+              ].map((page) => (
+                <button
+                  key={page.id}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    scrollToSection(page.id);
+                  }}
+                  className="w-full text-left py-3 px-4 text-phosphor font-black text-xs uppercase tracking-widest bg-dark-obsidian/80 border border-phosphor/20 hover:bg-phosphor hover:text-dark-obsidian transition-all flex items-center justify-between cursor-pointer"
+                >
+                  <span>{page.label}</span>
+                  <span className="text-[10px] opacity-60">&gt;</span>
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Persistent Non-Intrusive Letter Upload & System Status Bar */}
@@ -374,7 +424,7 @@ export default function App() {
               transition={{ duration: 0.4 }}
             >
               {/* Hero Section */}
-              <section className="relative pt-24 pb-28 md:pt-36 md:pb-40 overflow-hidden px-6 lg:px-16 w-full bg-dark-obsidian border-b border-phosphor/10">
+              <section className="relative pt-12 pb-16 sm:pt-24 sm:pb-28 md:pt-36 md:pb-40 overflow-hidden px-4 sm:px-6 lg:px-16 w-full bg-dark-obsidian border-b border-phosphor/10">
                 {/* Subtle Animated Background */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,159,0,0.04),transparent)]" />
@@ -391,12 +441,12 @@ export default function App() {
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ duration: 1, type: 'spring' }}
-                    className="mb-10"
+                    className="mb-6 sm:mb-10"
                   >
-                    <NeurixLogo className="w-56 h-56" />
+                    <NeurixLogo className="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56" />
                   </motion.div>
 
-                  <h2 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4 text-white uppercase italic">
+                  <h2 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter mb-4 text-white uppercase italic">
                     NEURIX PROJECT
                   </h2>
                   
@@ -988,9 +1038,9 @@ export default function App() {
                     onClick={() => setSelectedMember(teamData.leader)}
                     className="relative p-0.5 rounded-none bg-phosphor/20 hover:bg-phosphor cursor-pointer group transition-all"
                   >
-                    <div className="bg-dark-charcoal px-16 py-10 rounded-none text-center min-w-[320px] border border-phosphor/30 shadow-[0_0_40px_rgba(255,159,0,0.15)]">
-                      <Hexagon className="w-12 h-12 text-phosphor mx-auto mb-4 group-hover:rotate-180 transition-transform duration-1000" />
-                      <h4 className="text-3xl font-mono font-black tracking-tighter text-white uppercase">{teamData.leader?.name}</h4>
+                    <div className="bg-dark-charcoal px-6 sm:px-16 py-8 sm:py-10 rounded-none text-center w-full max-w-sm border border-phosphor/30 shadow-[0_0_40px_rgba(255,159,0,0.15)]">
+                      <Hexagon className="w-10 h-10 sm:w-12 sm:h-12 text-phosphor mx-auto mb-4 group-hover:rotate-180 transition-transform duration-1000" />
+                      <h4 className="text-2xl sm:text-3xl font-mono font-black tracking-tighter text-white uppercase">{teamData.leader?.name}</h4>
                       <p className="text-xs font-mono font-black text-phosphor uppercase tracking-[0.3em] mt-2">{teamData.leader?.role}</p>
                     </div>
                   </motion.div>
@@ -1000,15 +1050,15 @@ export default function App() {
                 </div>
 
                 {/* 2. Level 2: Project Management / Technical Lead (Mohamed Asem) */}
-                <div className="relative mb-24 flex flex-col items-center">
+                <div className="relative mb-24 flex flex-col items-center w-full px-4">
                   <motion.div 
                     whileHover={{ scale: 1.05 }}
                     onClick={() => setSelectedMember(teamData.deputy)}
-                    className="relative p-0.5 rounded-none bg-phosphor/20 hover:bg-phosphor cursor-pointer group transition-all"
+                    className="relative p-0.5 rounded-none bg-phosphor/20 hover:bg-phosphor cursor-pointer group transition-all w-full max-w-[280px]"
                   >
-                    <div className="bg-dark-charcoal px-12 py-8 rounded-none text-center min-w-[280px] border border-phosphor/30 shadow-[0_4px_25px_rgba(0,0,0,0.6)]">
-                      <Microchip className="w-8 h-8 text-phosphor mx-auto mb-3" />
-                      <h4 className="text-2xl font-mono font-black tracking-tighter text-white uppercase">{teamData.deputy?.name}</h4>
+                    <div className="bg-dark-charcoal px-6 sm:px-12 py-6 sm:py-8 rounded-none text-center w-full border border-phosphor/30 shadow-[0_4px_25px_rgba(0,0,0,0.6)]">
+                      <Microchip className="w-7 h-7 sm:w-8 sm:h-8 text-phosphor mx-auto mb-3" />
+                      <h4 className="text-xl sm:text-2xl font-mono font-black tracking-tighter text-white uppercase">{teamData.deputy?.name}</h4>
                       <p className="text-[10px] font-mono font-black text-phosphor uppercase tracking-widest mt-1">{teamData.deputy?.role}</p>
                     </div>
                   </motion.div>

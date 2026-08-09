@@ -215,12 +215,12 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
 
       {/* CENTERPIECE: Stylish Individual Falling Letter-Drop Scene */}
       <div className="relative z-10 flex flex-col items-center justify-center my-auto">
-        <div className="flex items-center justify-center gap-1.5 sm:gap-4 md:gap-6 relative py-12 px-6">
+        <div className="flex items-center justify-center gap-1 sm:gap-4 md:gap-6 relative py-8 sm:py-12 px-2 sm:px-6 w-full max-w-full overflow-hidden">
           {NEURIX_LETTERS.map((letter, index) => {
             const hasLanded = landedIndices.includes(index);
             
             return (
-              <div key={index} className="relative flex flex-col items-center h-28 sm:h-40 justify-end min-w-[36px] sm:min-w-[64px]">
+              <div key={index} className="relative flex flex-col items-center h-20 sm:h-40 justify-end min-w-[28px] sm:min-w-[64px]">
                 {/* Vertical Falling Trajectory Light Beam */}
                 <AnimatePresence>
                   {hasLanded && (
@@ -254,7 +254,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                   className="relative z-10 select-none"
                 >
                   <span 
-                    className={`text-[13vw] sm:text-[10vw] md:text-8xl lg:text-9xl font-display font-black block tracking-normal transition-colors duration-300 ${
+                    className={`text-[10vw] sm:text-[10vw] md:text-8xl lg:text-9xl font-display font-black block tracking-normal transition-colors duration-300 ${
                       hasLanded 
                         ? 'text-transparent bg-clip-text bg-gradient-to-b from-[#ffffff] via-[#f59e0b] to-[#b45309]' 
                         : 'text-slate-700/30'

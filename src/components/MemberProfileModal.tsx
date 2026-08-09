@@ -23,14 +23,14 @@ export const MemberProfileModal = React.memo(({ member, onClose }: MemberProfile
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="relative w-full max-w-2xl bg-dark-charcoal border-2 border-phosphor/30 rounded-none overflow-hidden shadow-[0_0_60px_rgba(255,159,0,0.15)]"
+            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-dark-charcoal border-2 border-phosphor/30 rounded-none shadow-[0_0_60px_rgba(255,159,0,0.15)]"
           >
             {/* Warning stripes at the top of modal */}
             <div className="w-full h-1.5 bg-[repeating-linear-gradient(45deg,#ff9f00,#ff9f00_10px,#0e0f15_10px,#0e0f15_20px)] border-b border-phosphor/20" />
 
             <div className="absolute inset-0 opacity-[0.02] warning-stripe-bg pointer-events-none" />
             
-            <div className="relative p-8 md:p-12 font-sans">
+            <div className="relative p-6 sm:p-8 md:p-12 font-sans">
               <button 
                 onClick={onClose}
                 className="absolute top-6 right-6 w-10 h-10 bg-dark-obsidian border border-phosphor/20 flex items-center justify-center text-phosphor hover:bg-phosphor hover:text-dark-obsidian hover:border-transparent transition-all z-20 cursor-pointer"
