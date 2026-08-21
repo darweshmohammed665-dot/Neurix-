@@ -53,10 +53,10 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
       {/* 1. Dark Neon Ambient Lighting & Radial Beacons */}
       <motion.div
         style={{ y: bgGlowY, scale: bgGlowScale }}
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[550px] bg-gradient-to-b from-[#ff9f00]/15 via-[#ffd700]/10 to-transparent rounded-full blur-[120px] pointer-events-none z-0"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[550px] bg-gradient-to-b from-[#38BDF8]/15 via-[#38BDF8]/10 to-transparent rounded-full blur-[120px] pointer-events-none z-0"
       />
-      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-[#0f2552]/80 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 -right-48 w-96 h-96 bg-[#ff9f00]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-[#111827]/80 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 -right-48 w-96 h-96 bg-[#38BDF8]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* 2. Interactive Dark Neon Floor Grid (Scroll & Perspective Shift) */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,215,0,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,215,0,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_35%,#000_70%,transparent_100%)] pointer-events-none" />
@@ -71,15 +71,15 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
           initial={{ opacity: 0, y: -25, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-3 px-4 py-2 bg-[#0f2552]/80 border border-[#ffd700]/40 rounded-full text-xs font-semibold uppercase tracking-[0.25em] mb-8 backdrop-blur-md shadow-[0_0_25px_rgba(255,215,0,0.2)] group hover:border-[#ffd700] transition-colors"
+          className="inline-flex items-center gap-3 px-4 py-2 bg-[#111827]/80 border border-[#38BDF8]/40 rounded-full text-xs font-semibold uppercase tracking-[0.25em] mb-8 backdrop-blur-md shadow-[0_0_25px_rgba(255,215,0,0.2)] group hover:border-[#38BDF8] transition-colors"
         >
           <span className="flex h-2.5 w-2.5 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ffd700] opacity-80" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ffd700]" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#38BDF8] opacity-80" />
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#38BDF8]" />
           </span>
-          <span className="text-[#ffd700] font-bold">NEXT-GEN SPATIAL ARCHITECTURE</span>
+          <span className="text-[#38BDF8] font-bold">NEXT-GEN SPATIAL ARCHITECTURE</span>
           <span className="w-1.5 h-1.5 rounded-full bg-slate-500" />
-          <span className="text-slate-300">ESP32 + OPENCV AI</span>
+          <span className="text-[#9CA3AF]">ESP32 + OPENCV AI</span>
         </motion.div>
 
         {/* 🌟 KINETIC GOLDEN "NEWREKS" SHOWCASE 🌟 */}
@@ -89,7 +89,7 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
           className="relative my-2 cursor-pointer group"
         >
           {/* Subtle Golden Halo Backlight */}
-          <div className="absolute -inset-8 bg-gradient-to-r from-[#ffd700]/0 via-[#ffd700]/25 to-[#ffd700]/0 blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <div className="absolute -inset-8 bg-gradient-to-r from-[#38BDF8]/0 via-[#38BDF8]/25 to-[#38BDF8]/0 blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
           {/* Letter by Letter Floating Animated Word */}
           <motion.div 
@@ -131,7 +131,7 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
                     delay: index * 0.2,
                     ease: 'easeInOut',
                   }}
-                  className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-t from-[#ffd700] via-[#fff4b8] to-transparent pointer-events-none blur-[1px]"
+                  className="absolute inset-0 text-transparent bg-clip-text bg-gradient-to-t from-[#38BDF8] via-[#F9FAFB4b8] to-transparent pointer-events-none blur-[1px]"
                 >
                   {letter}
                 </motion.span>
@@ -144,11 +144,11 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-2 flex items-center justify-center gap-3 text-sm sm:text-lg font-display uppercase tracking-[0.35em] text-[#ffd700]"
+            className="mt-2 flex items-center justify-center gap-3 text-sm sm:text-lg font-display uppercase tracking-[0.35em] text-[#38BDF8]"
           >
-            <span className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#ffd700]" />
-            <span className="font-bold drop-shadow-[0_0_10px_#ffd700]">TOUCHLESS SPATIAL INTERFACE</span>
-            <span className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#ffd700]" />
+            <span className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#38BDF8]" />
+            <span className="font-bold drop-shadow-[0_0_10px_#38BDF8]">TOUCHLESS SPATIAL INTERFACE</span>
+            <span className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#38BDF8]" />
           </motion.div>
         </div>
 
@@ -157,9 +157,9 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg sm:text-2xl text-slate-300 font-sans font-light tracking-wide max-w-3xl leading-relaxed mt-6 mb-10"
+          className="text-lg sm:text-2xl text-[#9CA3AF] font-sans font-light tracking-wide max-w-3xl leading-relaxed mt-6 mb-10"
         >
-          An ultra-responsive neural gesture engine fusing <span className="text-white font-medium">dual-core 240MHz hardware</span>, real-time optical vision pipelines, and low-latency acoustic feedback.
+          An ultra-responsive neural gesture engine fusing <span className="text-[#F9FAFB] font-medium">dual-core 240MHz hardware</span>, real-time optical vision pipelines, and low-latency acoustic feedback.
         </motion.p>
 
         {/* Action CTAs: High Contrast Dark Neon Buttons */}
@@ -171,18 +171,18 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
         >
           <button
             onClick={() => onNavigateSection('roadmap')}
-            className="px-8 sm:px-10 py-4 bg-gradient-to-r from-[#ffd700] via-[#ff9f00] to-[#f59e0b] hover:from-white hover:to-slate-100 text-[#081838] font-black text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_30px_rgba(255,215,0,0.45)] hover:shadow-[0_0_45px_rgba(255,215,0,0.7)] hover:-translate-y-1 cursor-pointer flex items-center gap-3 rounded-none border border-[#fff4b8]"
+            className="px-8 sm:px-10 py-4 bg-gradient-to-r from-[#38BDF8] via-[#38BDF8] to-[#f59e0b] hover:from-[#F9FAFB] hover:to-slate-100 text-[#0B0F19] font-black text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_30px_rgba(255,215,0,0.45)] hover:shadow-[0_0_45px_rgba(255,215,0,0.7)] hover:-translate-y-1 cursor-pointer flex items-center gap-3 rounded-none border border-[#F9FAFB4b8]"
           >
-            <Users className="w-4 h-4 text-[#081838]" />
+            <Users className="w-4 h-4 text-[#0B0F19]" />
             <span>Interactive Team Network</span>
             <ArrowRight className="w-4 h-4" />
           </button>
 
           <button
             onClick={() => onNavigateSection('live-demo-section')}
-            className="px-8 sm:px-10 py-4 bg-[#0f2552]/80 hover:bg-[#0f2552] border-2 border-[#ffd700]/50 hover:border-[#ffd700] text-white font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(255,215,0,0.25)] hover:-translate-y-1 cursor-pointer flex items-center gap-3"
+            className="px-8 sm:px-10 py-4 bg-[#111827]/80 hover:bg-[#111827] border-2 border-[#38BDF8]/50 hover:border-[#38BDF8] text-[#F9FAFB] font-bold text-sm uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(255,215,0,0.25)] hover:-translate-y-1 cursor-pointer flex items-center gap-3"
           >
-            <Activity className="w-4 h-4 text-[#ffd700]" />
+            <Activity className="w-4 h-4 text-[#38BDF8]" />
             <span>Live System Diagnostics</span>
           </button>
         </motion.div>
@@ -205,18 +205,18 @@ export const NeurixHero: React.FC<NeurixHeroProps> = ({ onNavigateSection }) => 
               <motion.div
                 key={idx}
                 whileHover={{ y: -6, borderColor: 'rgba(255,215,0,0.8)' }}
-                className="p-5 bg-gradient-to-b from-[#0f2552]/80 to-[#081838]/90 border border-[#ffd700]/20 text-left transition-all duration-300 shadow-lg group backdrop-blur-sm"
+                className="p-5 bg-gradient-to-b from-[#111827]/80 to-[#0B0F19]/90 border border-[#38BDF8]/20 text-left transition-all duration-300 shadow-lg group backdrop-blur-sm"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-widest font-mono">
+                  <span className="text-[10px] text-[#9CA3AF] uppercase tracking-widest font-mono">
                     {item.label}
                   </span>
-                  <Icon className="w-4 h-4 text-[#ffd700] group-hover:scale-110 transition-transform" />
+                  <Icon className="w-4 h-4 text-[#38BDF8] group-hover:scale-110 transition-transform" />
                 </div>
-                <p className="text-base sm:text-lg font-black font-display text-white group-hover:text-[#ffd700] transition-colors">
+                <p className="text-base sm:text-lg font-black font-display text-[#F9FAFB] group-hover:text-[#38BDF8] transition-colors">
                   {item.value}
                 </p>
-                <p className="text-[11px] text-[#ffd700]/80 font-mono mt-0.5">
+                <p className="text-[11px] text-[#38BDF8]/80 font-mono mt-0.5">
                   {item.sub}
                 </p>
               </motion.div>

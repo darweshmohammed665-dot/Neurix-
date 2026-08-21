@@ -29,7 +29,7 @@ export const DarkNeonCursorSpotlight: React.FC = () => {
           translateX: '-50%',
           translateY: '-50%',
         }}
-        className="w-[500px] h-[500px] rounded-full bg-gradient-to-r from-[#ffd700]/8 via-[#ff9f00]/5 to-cyan-500/5 blur-[100px] pointer-events-none"
+        className="w-[500px] h-[500px] rounded-full bg-gradient-to-r from-[#38BDF8]/8 via-[#38BDF8]/5 to-cyan-500/5 blur-[100px] pointer-events-none"
       />
     </div>
   );

@@ -50,13 +50,13 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
               className="absolute left-0 w-1/2 h-full pointer-events-auto overflow-hidden"
               style={{
                 transformOrigin: 'left center',
-                background: 'radial-gradient(circle at 100% 50%, #FFDF00 0%, #D4AF37 50%, #996515 90%, #4A3500 100%)',
+                background: 'radial-gradient(circle at 100% 50%, #38BDF8 0%, #0ea5e9 50%, #0284c7 90%, #0369a1 100%)',
                 borderRight: '1px solid rgba(0,0,0,0.8)',
                 boxShadow: 'inset -20px 0 40px rgba(0,0,0,0.5)',
                 zIndex: 10,
               }}
             >
-              <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#FFF8DC_1.5px,transparent_1.5px)] [background-size:20px_20px] pointer-events-none" />
+              <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#e0f2fe_1.5px,transparent_1.5px)] [background-size:20px_20px] pointer-events-none" />
             </motion.div>
 
             {/* الصفحة/الباب الأيمن - كحلي (Navy Blue) مع تفاصيل بسيطة */}
@@ -72,7 +72,7 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
               className="absolute right-0 w-1/2 h-full pointer-events-auto overflow-hidden"
               style={{
                 transformOrigin: 'right center',
-                background: 'radial-gradient(circle at 0% 50%, #0f2552 0%, #081838 60%, #040c1c 100%)',
+                background: 'radial-gradient(circle at 0% 50%, #111827 0%, #0B0F19 60%, #0B0F19 100%)',
                 borderLeft: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: 'inset 20px 0 40px rgba(0,0,0,0.7)',
                 zIndex: 10,
@@ -104,7 +104,7 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
                     }}
                     className="text-6xl sm:text-8xl md:text-[9rem] lg:text-[12rem] font-black tracking-tight"
                     style={{
-                      color: '#FFFFFF', // لون أبيض ساطع ليظهر بقوة على الذهبي والكحلي
+                      color: '#F9FAFBFFF', // لون أبيض ساطع ليظهر بقوة على الذهبي والكحلي
                       textShadow: '0 10px 30px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.4)',
                     }}
                   >
@@ -120,9 +120,9 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
               animate={{ opacity: [0, 0.5, 1], height: ['0%', '50%', '100%'] }}
               exit={{ opacity: 0, transition: { duration: 0.4 } }}
               transition={{ duration: 2.3, ease: "easeIn" }}
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 bg-white z-20 pointer-events-none"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 bg-[#F9FAFB] z-20 pointer-events-none"
               style={{
-                boxShadow: '0 0 30px 10px rgba(255,255,255,0.8), 0 0 60px 20px #FFDF00',
+                boxShadow: '0 0 30px 10px rgba(255,255,255,0.8), 0 0 60px 20px #38BDF8',
               }}
             />
           </>

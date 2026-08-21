@@ -11,6 +11,7 @@ import { SynapticMindLink } from './components/SynapticMindLink';
 import { LiveGestureDemo } from './components/LiveGestureDemo';
 import { TelemetryChannelGrid } from './components/TelemetryChannelGrid';
 import { TeamMatrixSection } from './components/TeamMatrixSection';
+import { FutureWorkSection } from './components/FutureWorkSection';
 import { MemberProfileModal } from './components/MemberProfileModal';
 import { NeurixFooter } from './components/NeurixFooter';
 import { TeamMember } from './types';
@@ -32,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#081838] text-slate-100 selection:bg-[#ffd700]/30 selection:text-white relative matrix-grid-pattern overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-[#0B0F19] text-[#F9FAFB] selection:bg-[#38BDF8]/30 selection:text-[#F9FAFB] relative matrix-grid-pattern overflow-x-hidden font-sans">
       
       {/* 1. Cinematic "New Tricks" Gold Background Video Animation on Open */}
       {showGoldIntro && (
@@ -80,6 +81,9 @@ export default function App() {
 
         {/* Team Org Chart Matrix */}
         <TeamMatrixSection onSelectMember={(member) => setSelectedMember(member)} />
+        
+        {/* Future Work Section */}
+        <FutureWorkSection />
 
       </main>
 

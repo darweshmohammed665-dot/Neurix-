@@ -24,14 +24,14 @@ export const DarkNeonIntroReveal: React.FC = () => {
             filter: 'blur(12px)',
             transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } 
           }}
-          className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-[#081838] overflow-hidden"
+          className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center bg-[#0B0F19] overflow-hidden"
         >
           {/* Expanding Neon Energy Rings */}
           <motion.div
             initial={{ scale: 0.2, opacity: 0 }}
             animate={{ scale: [0.2, 1.8, 3.5], opacity: [0, 0.8, 0] }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="absolute w-[400px] h-[400px] rounded-full border-2 border-[#ffd700] shadow-[0_0_80px_rgba(255,215,0,0.8)]"
+            className="absolute w-[400px] h-[400px] rounded-full border-2 border-[#38BDF8] shadow-[0_0_80px_rgba(255,215,0,0.8)]"
           />
 
           <motion.div
@@ -50,12 +50,12 @@ export const DarkNeonIntroReveal: React.FC = () => {
           >
             {/* Glowing Golden Geometric 'N' Symbol */}
             <div className="relative w-20 h-20 mb-4">
-              <div className="absolute inset-0 bg-[#ffd700]/30 rounded-2xl blur-xl animate-pulse" />
-              <svg viewBox="0 0 100 100" fill="none" className="w-full h-full drop-shadow-[0_0_20px_#ffd700]">
-                <rect x="10" y="10" width="80" height="80" rx="16" stroke="#FFD700" strokeWidth="4" fill="#081838" />
-                <path d="M 28 72 L 28 28 L 38 28 L 38 72 Z" fill="#FFD700" />
-                <path d="M 36 28 L 64 68 L 64 74 L 54 74 L 28 34 L 28 28 Z" fill="#FFA500" />
-                <path d="M 62 72 L 62 28 L 72 28 L 72 72 Z" fill="#FFD700" />
+              <div className="absolute inset-0 bg-[#38BDF8]/30 rounded-2xl blur-xl animate-pulse" />
+              <svg viewBox="0 0 100 100" fill="none" className="w-full h-full drop-shadow-[0_0_20px_#38BDF8]">
+                <rect x="10" y="10" width="80" height="80" rx="16" stroke="#38BDF8" strokeWidth="4" fill="#0B0F19" />
+                <path d="M 28 72 L 28 28 L 38 28 L 38 72 Z" fill="#38BDF8" />
+                <path d="M 36 28 L 64 68 L 64 74 L 54 74 L 28 34 L 28 28 Z" fill="#38BDF8" />
+                <path d="M 62 72 L 62 28 L 72 28 L 72 72 Z" fill="#38BDF8" />
               </svg>
             </div>
 
@@ -63,7 +63,7 @@ export const DarkNeonIntroReveal: React.FC = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.25, duration: 0.4 }}
-              className="text-xs font-mono font-bold tracking-[0.4em] text-[#ffd700] uppercase"
+              className="text-xs font-mono font-bold tracking-[0.4em] text-[#38BDF8] uppercase"
             >
               NEURIX // INITIALIZING
             </motion.p>
@@ -74,7 +74,7 @@ export const DarkNeonIntroReveal: React.FC = () => {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: [0, 1.2, 0], opacity: [0, 1, 0] }}
             transition={{ duration: 0.75, ease: 'easeInOut' }}
-            className="absolute h-0.5 w-full bg-gradient-to-r from-transparent via-[#ffd700] to-transparent shadow-[0_0_20px_#ffd700]"
+            className="absolute h-0.5 w-full bg-gradient-to-r from-transparent via-[#38BDF8] to-transparent shadow-[0_0_20px_#38BDF8]"
           />
         </motion.div>
       )}

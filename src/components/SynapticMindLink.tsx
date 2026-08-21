@@ -16,7 +16,7 @@ export const SynapticMindLink: React.FC = () => {
   const waveFrequencies = {
     theta: { base: 6, label: 'Theta Band (4-8 Hz)', color: 'text-indigo-400' },
     alpha: { base: 10, label: 'Alpha Band (8-13 Hz)', color: 'text-cyan-400' },
-    beta: { base: 20, label: 'Beta Band (13-30 Hz)', color: 'text-[#ff9f00]' },
+    beta: { base: 20, label: 'Beta Band (13-30 Hz)', color: 'text-[#38BDF8]' },
     gamma: { base: 40, label: 'Gamma Band (30-80 Hz)', color: 'text-emerald-400' },
   };
 
@@ -102,7 +102,7 @@ export const SynapticMindLink: React.FC = () => {
 
         const currentRadius = p.radius + Math.sin(p.pulse) * 1.5;
 
-        ctx.fillStyle = '#ff9f00';
+        ctx.fillStyle = '#38BDF8';
         ctx.beginPath();
         ctx.arc(p.x, p.y, currentRadius, 0, Math.PI * 2);
         ctx.fill();
@@ -133,7 +133,7 @@ export const SynapticMindLink: React.FC = () => {
     <section
       ref={containerRef}
       id="showcase"
-      className="py-28 px-4 sm:px-6 lg:px-8 border-b border-[#ff9f00]/15 bg-[#0f2552]/40 font-mono relative overflow-hidden"
+      className="py-28 px-4 sm:px-6 lg:px-8 border-b border-[#38BDF8]/15 bg-[#111827]/40 font-mono relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -146,15 +146,15 @@ export const SynapticMindLink: React.FC = () => {
           className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0f2552] border border-[#ff9f00]/30 text-[#ff9f00] text-[11px] font-bold uppercase tracking-widest mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#111827] border border-[#38BDF8]/30 text-[#38BDF8] text-[11px] font-bold uppercase tracking-widest mb-3">
               <Brain className="w-3.5 h-3.5" />
               <span>Resonant Sensory Loop</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black font-display text-white tracking-tight uppercase">
-              Neurix Synaptic <span className="text-[#ff9f00] amber-phosphor-glow">Link Sandbox</span>
+            <h2 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] tracking-tight uppercase">
+              Neurix Synaptic <span className="text-[#38BDF8] amber-phosphor-glow">Link Sandbox</span>
             </h2>
           </div>
-          <p className="text-slate-400 max-w-md text-sm font-sans leading-relaxed">
+          <p className="text-[#9CA3AF] max-w-md text-sm font-sans leading-relaxed">
             Real-time sensory feedback generator linking optical hand motion states to resonant audio synthesis and spatial matrices.
           </p>
         </motion.div>
@@ -165,38 +165,38 @@ export const SynapticMindLink: React.FC = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-[#081838] border border-[#ff9f00]/30 p-6 md:p-8 shadow-2xl relative"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-[#0B0F19] border border-[#38BDF8]/30 p-6 md:p-8 shadow-2xl relative"
         >
           {/* Left: Canvas Neural Connectome */}
           <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#ff9f00]/15">
-                <span className="text-xs text-slate-400 font-bold uppercase flex items-center gap-2">
-                  <Activity className="w-3.5 h-3.5 text-[#ff9f00]" />
+              <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#38BDF8]/15">
+                <span className="text-xs text-[#9CA3AF] font-bold uppercase flex items-center gap-2">
+                  <Activity className="w-3.5 h-3.5 text-[#38BDF8]" />
                   Neural Topology Mapping (30 Nodes Active)
                 </span>
-                <span className="text-[10px] px-2 py-0.5 bg-[#0f2552] text-[#ff9f00] font-mono">
+                <span className="text-[10px] px-2 py-0.5 bg-[#111827] text-[#38BDF8] font-mono">
                   {waveFrequencies[waveType].label}
                 </span>
               </div>
 
-              <div className="relative h-64 bg-[#0f2552]/40 border border-[#ff9f00]/20 overflow-hidden mb-4">
+              <div className="relative h-64 bg-[#111827]/40 border border-[#38BDF8]/20 overflow-hidden mb-4">
                 <canvas ref={canvasRef} className="w-full h-full" />
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400 pt-2 border-t border-[#ff9f00]/15">
-              <span>Oscillator Pitch: <strong className="text-white">{freq} Hz</strong></span>
-              <span>Harmonic Phase: <strong className="text-[#ff9f00]">Synchronous</strong></span>
+            <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-[#9CA3AF] pt-2 border-t border-[#38BDF8]/15">
+              <span>Oscillator Pitch: <strong className="text-[#F9FAFB]">{freq} Hz</strong></span>
+              <span>Harmonic Phase: <strong className="text-[#38BDF8]">Synchronous</strong></span>
             </div>
           </div>
 
           {/* Right: Controls & DSP Oscillator */}
-          <div className="lg:col-span-5 bg-[#0f2552]/60 border border-[#ff9f00]/20 p-6 flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-[#111827]/60 border border-[#38BDF8]/20 p-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-base font-bold text-white uppercase flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#ff9f00]" />
+                <h3 className="text-base font-bold text-[#F9FAFB] uppercase flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#38BDF8]" />
                   DSP Tone Generator
                 </h3>
                 
@@ -205,8 +205,8 @@ export const SynapticMindLink: React.FC = () => {
                   onClick={toggleAudio}
                   className={`px-3 py-1.5 border text-xs font-bold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all ${
                     isAudioEnabled
-                      ? 'bg-[#ff9f00] text-[#081838] border-[#ff9f00] shadow-[0_0_15px_rgba(255,159,0,0.5)]'
-                      : 'bg-[#081838] text-slate-400 border-slate-700 hover:text-white hover:border-[#ff9f00]/50'
+                      ? 'bg-[#38BDF8] text-[#0B0F19] border-[#38BDF8] shadow-[0_0_15px_rgba(255,159,0,0.5)]'
+                      : 'bg-[#0B0F19] text-[#9CA3AF] border-slate-700 hover:text-[#F9FAFB] hover:border-[#38BDF8]/50'
                   }`}
                 >
                   {isAudioEnabled ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -216,7 +216,7 @@ export const SynapticMindLink: React.FC = () => {
 
               {/* Wave Selection Pills */}
               <div className="space-y-2 mb-6">
-                <label className="text-[11px] text-slate-400 uppercase font-bold">
+                <label className="text-[11px] text-[#9CA3AF] uppercase font-bold">
                   Resonance Band Selection
                 </label>
                 <div className="grid grid-cols-2 gap-2">
@@ -229,8 +229,8 @@ export const SynapticMindLink: React.FC = () => {
                       }}
                       className={`p-2.5 text-xs text-left border uppercase font-bold transition-all cursor-pointer ${
                         waveType === band
-                          ? 'bg-[#ff9f00] text-[#081838] border-[#ff9f00]'
-                          : 'bg-[#081838] text-slate-300 border-[#ff9f00]/20 hover:border-[#ff9f00]/60'
+                          ? 'bg-[#38BDF8] text-[#0B0F19] border-[#38BDF8]'
+                          : 'bg-[#0B0F19] text-[#9CA3AF] border-[#38BDF8]/20 hover:border-[#38BDF8]/60'
                       }`}
                     >
                       {band}
@@ -242,8 +242,8 @@ export const SynapticMindLink: React.FC = () => {
               {/* Frequency Range Slider */}
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
-                  <span className="text-slate-400 uppercase">Frequency Modulation</span>
-                  <span className="text-[#ff9f00] font-bold">{freq} Hz</span>
+                  <span className="text-[#9CA3AF] uppercase">Frequency Modulation</span>
+                  <span className="text-[#38BDF8] font-bold">{freq} Hz</span>
                 </div>
                 <input
                   type="range"
@@ -252,12 +252,12 @@ export const SynapticMindLink: React.FC = () => {
                   step="5"
                   value={freq}
                   onChange={(e) => handleFreqChange(Number(e.target.value))}
-                  className="w-full accent-[#ff9f00] bg-[#081838] cursor-pointer"
+                  className="w-full accent-[#38BDF8] bg-[#0B0F19] cursor-pointer"
                 />
               </div>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-[#ff9f00]/15 text-[11px] text-slate-400">
+            <div className="mt-6 pt-4 border-t border-[#38BDF8]/15 text-[11px] text-[#9CA3AF]">
               <p>Generates low-latency sensory sound feedback models directly in browser via Web Audio API.</p>
             </div>
 
