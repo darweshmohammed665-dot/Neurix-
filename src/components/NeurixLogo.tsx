@@ -1,69 +1,96 @@
 import React from 'react';
-import { motion } from 'motion/react';
 
-export const NeurixLogo = React.memo(({ className = "w-10 h-10" }: { className?: string }) => (
-  <motion.div 
-    className={`relative ${className}`}
-    variants={{
-      hover: { 
-        scale: 1.1,
-        rotateY: 360,
-      }
-    }}
-    whileHover="hover"
-    transition={{
-      rotateY: { duration: 1.5, ease: "easeInOut" },
-      scale: { duration: 0.4 }
-    }}
-    style={{ transformStyle: "preserve-3d", perspective: "1000px" }}
-  >
-      <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_12px_rgba(255,159,0,0.6)]">
+interface NeurixLogoProps {
+  className?: string;
+  glow?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export const NeurixLogo: React.FC<NeurixLogoProps> = ({ 
+  className = 'w-10 h-10', 
+  glow = true 
+}) => {
+  return (
+    <div className={`relative flex items-center justify-center shrink-0 ${className} group`}>
+      {/* Dynamic Golden Neon Radiance Aura */}
+      {glow && (
+        <>
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#ff9f00]/40 via-[#ffd700]/30 to-[#ffa500]/20 rounded-xl blur-md group-hover:blur-lg transition-all duration-300 pointer-events-none" />
+          <div className="absolute -inset-1 bg-[#ff9f00]/20 rounded-xl blur-sm animate-pulse pointer-events-none" />
+        </>
+      )}
+
+      {/* Unified Glowing Geometric 'N' Shield */}
+      <svg
+        viewBox="0 0 100 100"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full relative z-10 drop-shadow-[0_0_12px_rgba(255,215,0,0.7)]"
+      >
         <defs>
-          <linearGradient id="logoGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#ff5f00">
-               <animate attributeName="stop-color" values="#ff5f00;#ff9f00;#ffbf00;#ff5f00" dur="4s" repeatCount="indefinite" />
-            </stop>
-            <stop offset="50%" stopColor="#ffbf00">
-               <animate attributeName="stop-color" values="#ffbf00;#ff5f00;#ff9f00;#ffbf00" dur="4s" repeatCount="indefinite" />
-            </stop>
-            <stop offset="100%" stopColor="#ff9f00">
-               <animate attributeName="stop-color" values="#ff9f00;#ffbf00;#ff5f00;#ff9f00" dur="4s" repeatCount="indefinite" />
-            </stop>
+          {/* Radiant Golden Metallic Gradient */}
+          <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFF9E6" />
+            <stop offset="30%" stopColor="#FFD700" />
+            <stop offset="70%" stopColor="#FF9F00" />
+            <stop offset="100%" stopColor="#D97706" />
           </linearGradient>
-        </defs>
-        {/* Outer abstract shape */}
-        <motion.path 
-          d="M20,30 L50,10 L80,30 L80,70 L50,90 L20,70 Z" 
-          fill="none" 
-          stroke="url(#logoGradient)" 
-          strokeWidth="2.5"
-          initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.6 }}
-          transition={{ duration: 2.5, repeat: Infinity, repeatType: "reverse" }}
-        />
-        {/* The 'N' structure */}
-        <path 
-          d="M35,65 L35,35 L65,65 L65,35" 
-          fill="none" 
-          stroke="url(#logoGradient)" 
-          strokeWidth="6.5" 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-        />
-        {/* Neural points */}
-        <motion.circle 
-          cx="35" cy="35" r="3" fill="#ffbf00"
-          animate={{ scale: [1, 1.6, 1], opacity: [0.8, 1, 0.8] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-        <motion.circle 
-          cx="65" cy="65" r="3" fill="#ff5f00"
-          animate={{ scale: [1, 1.6, 1], opacity: [0.8, 1, 0.8] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-        />
-      </svg>
-      <div className="absolute inset-0 bg-phosphor/20 blur-xl rounded-full -z-10 animate-pulse" />
-  </motion.div>
-));
 
-NeurixLogo.displayName = 'NeurixLogo';
+          {/* Core Neon Glow Filter */}
+          <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        {/* Outer Dark Neon Shield Frame */}
+        <rect
+          x="8"
+          y="8"
+          width="84"
+          height="84"
+          rx="18"
+          fill="#081838"
+          stroke="url(#goldGradient)"
+          strokeWidth="3.5"
+          className="transition-all duration-300"
+        />
+
+        {/* Corner Neon Accent Marks */}
+        <path d="M 18 28 L 18 18 L 28 18" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 82 28 L 82 18 L 72 18" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 18 72 L 18 82 L 28 82" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 82 72 L 82 82 L 72 82" stroke="#FFD700" strokeWidth="2.5" strokeLinecap="round" />
+
+        {/* Glowing Geometric Unified 'N' Symbol */}
+        <g filter="url(#neonGlow)">
+          {/* Left Vertical Pillar */}
+          <path
+            d="M 28 72 L 28 28 L 38 28 L 38 72 Z"
+            fill="url(#goldGradient)"
+          />
+
+          {/* Dynamic Diagonal Sliced Stem */}
+          <path
+            d="M 36 28 L 64 68 L 64 74 L 54 74 L 28 34 L 28 28 Z"
+            fill="url(#goldGradient)"
+            opacity="0.95"
+          />
+
+          {/* Right Vertical Pillar */}
+          <path
+            d="M 62 72 L 62 28 L 72 28 L 72 72 Z"
+            fill="url(#goldGradient)"
+          />
+
+          {/* Inner Light Core Nodes */}
+          <circle cx="28" cy="28" r="3" fill="#FFFFFF" />
+          <circle cx="72" cy="72" r="3" fill="#FFFFFF" />
+          <circle cx="50" cy="50" r="2.5" fill="#FFFBEB" />
+        </g>
+      </svg>
+    </div>
+  );
+};
+
+export default NeurixLogo;

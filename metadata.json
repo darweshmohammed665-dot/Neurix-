@@ -1,6 +1,8 @@
 {
-  "name": "Neurix - Project 2026",
-  "description": "Integrated Interactive Hardware-Software System for Tangible Interaction",
+  "name": "Neurix",
+  "description": "NEURIX — Touchless Spatial Interface and Embedded IoT Architecture portal with interactive real-time telemetry, gesture vision, and synaptic link simulations.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

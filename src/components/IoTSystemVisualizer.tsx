@@ -1,200 +1,177 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Cpu, Terminal, Sliders } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Cpu, Zap, Activity, Radio, Terminal, Settings, CheckCircle2 } from 'lucide-react';
 
-interface IoTSystemVisualizerProps {
-  stage: 'hook' | 'problem' | 'solution';
-}
+export const IoTSystemVisualizer: React.FC = () => {
+  const containerRef = useRef<HTMLElement | null>(null);
+  const [selectedBus, setSelectedBus] = useState<'UART' | 'I2C' | 'SPI' | 'ADC'>('UART');
 
-export const IoTSystemVisualizer: React.FC<IoTSystemVisualizerProps> = ({ stage }) => {
-  const [activePin, setActivePin] = useState<number | null>(null);
-  const [voltage, setVoltage] = useState<number>(3.3);
-  const [logMessages, setLogMessages] = useState<string[]>([]);
-  const [isTransmitting] = useState<boolean>(true);
+  const busData = {
+    UART: {
+      name: 'UART Protocol Controller (TXD0 / RXD0)',
+      pins: ['GPIO 43 (U0TXD)', 'GPIO 44 (U0RXD)'],
+      baud: '115200 Baud / 8-N-1',
+      description: 'Asynchronous serial link streaming telemetry frames directly to the desktop diagnostics suite.',
+      status: 'TRANSMITTING',
+      rate: '11.5 KB/s',
+    },
+    I2C: {
+      name: 'Inter-Integrated Circuit Bus (SDA / SCL)',
+      pins: ['GPIO 8 (SDA)', 'GPIO 9 (SCL)'],
+      baud: '400 kHz Fast Mode',
+      description: 'Multi-device sensory controller polling 6-axis IMU sensors and environmental digital registers.',
+      status: 'ACTIVE_POLL',
+      rate: '48.2 KB/s',
+    },
+    SPI: {
+      name: 'Serial Peripheral Interface (MOSI / MISO / SCK)',
+      pins: ['GPIO 11 (MOSI)', 'GPIO 13 (MISO)', 'GPIO 12 (SCK)', 'GPIO 10 (CS)'],
+      baud: '20.0 MHz High Speed',
+      description: 'Ultra-low latency pipe pushing display framebuffers and high-rate DSP buffer exchanges.',
+      status: 'BURST_MODE',
+      rate: '2.4 MB/s',
+    },
+    ADC: {
+      name: 'Analog-to-Digital Converter (12-bit SAR)',
+      pins: ['GPIO 1 (ADC1_CH0)', 'GPIO 2 (ADC1_CH1)', 'GPIO 3 (ADC1_CH2)'],
+      baud: '2 Msps Sampling Rate',
+      description: 'High-precision sensory line sampling raw voltage potential from physical touchless transducers.',
+      status: 'SAMPLING',
+      rate: '3.3V Max',
+    },
+  };
 
-  // Auto generate serial logs to represent active communication
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (isTransmitting) {
-        const timestamp = new Date().toLocaleTimeString();
-        const pins = [12, 14, 27, 33];
-        const randomPin = pins[Math.floor(Math.random() * pins.length)];
-        const packetSize = Math.floor(Math.random() * 64) + 16;
-        const msg = `[${timestamp}] DE-REG OUT: ${packetSize} Bytes -> Serial Register Pin IO${randomPin} (V: ${(Math.random() * 0.4 + 2.9).toFixed(2)}V)`;
-        setLogMessages(prev => [msg, ...prev.slice(0, 15)]);
-      }
-    }, 1500);
-
-    return () => clearInterval(timer);
-  }, [isTransmitting]);
+  const currentBus = busData[selectedBus];
 
   return (
-    <div className="relative w-full aspect-square max-w-[450px] mx-auto flex flex-col justify-between p-6 bg-dark-charcoal backdrop-blur-md rounded-none border-2 border-phosphor/25 shadow-[0_20px_50px_rgba(0,0,0,0.6)] amber-phosphor-box-glow">
-      
-      {/* Background glow effects */}
-      <div 
-        className={`absolute inset-0 blur-[80px] opacity-10 transition-colors duration-1000 pointer-events-none ${
-          stage === 'problem' ? 'bg-red-600' : 'bg-phosphor'
-        }`} 
-      />
+    <section
+      ref={containerRef}
+      id="architecture-section"
+      className="py-28 px-4 sm:px-6 lg:px-8 border-b border-[#ff9f00]/15 bg-[#081838] font-mono relative overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        {/* Header with Scroll Animation */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.7 }}
+          className="text-center max-w-3xl mx-auto mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0f2552] border border-[#ff9f00]/30 text-[#ff9f00] text-[11px] font-bold uppercase tracking-widest mb-3">
+            <Cpu className="w-3.5 h-3.5" />
+            <span>Hardware Register Matrix</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-black font-display text-white tracking-tight uppercase">
+            Embedded <span className="text-[#ff9f00] amber-phosphor-glow">IoT Controller</span>
+          </h2>
+          <p className="text-slate-400 mt-3 text-sm font-sans">
+            Direct silicon bus multiplexing and hardware signal serialization for the Neurix spatial transceiver.
+          </p>
+        </motion.div>
 
-      {/* Title Header */}
-      <div className="flex items-center justify-between border-b border-phosphor/10 pb-4 mb-4 relative z-10 font-mono">
-        <div className="flex items-center gap-2">
-          <Cpu className="w-5 h-5 text-phosphor animate-pulse" />
-          <p className="text-xs font-bold text-slate-350 uppercase tracking-widest">ESP32 Core Registrator</p>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="relative flex h-2 w-2">
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isTransmitting ? 'bg-phosphor' : 'bg-red-400'}`} />
-            <span className={`relative inline-flex rounded-full h-2 w-2 ${isTransmitting ? 'bg-phosphor' : 'bg-red-500'}`} />
-          </span>
-          <span className="text-[9px] text-phosphor/60 uppercase font-black">
-            {isTransmitting ? 'SERIAL_LIVE' : 'SERIAL_IDLE'}
-          </span>
-        </div>
-      </div>
+        {/* Interactive Bus Visualizer Box with Scroll-Triggered Reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-[#0f2552]/80 border border-[#ff9f00]/30 p-6 md:p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden"
+        >
+          {/* Subtle Top Phosphor Scanline */}
+          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#ff9f00] to-transparent animate-pulse" />
 
-      <AnimatePresence mode="wait">
-        {stage === 'hook' && (
-          <motion.div
-            key="sys-hook"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            className="flex-grow flex flex-col justify-between"
-          >
-            {/* Embedded Microcontroller Block Graphic */}
-            <div className="bg-dark-obsidian p-4 border border-phosphor/15 relative overflow-hidden flex-grow flex flex-col justify-center gap-4">
-              <div className="grid grid-cols-4 gap-2">
-                {[12, 14, 27, 33, 4, 15, 16, 17].map((pin) => (
-                  <button
-                    key={pin}
-                    onClick={() => {
-                      setActivePin(pin);
-                      setVoltage(Math.random() > 0.5 ? 3.3 : 0.0);
-                      setLogMessages(prev => [`[${new Date().toLocaleTimeString()}] USER INTERRUPT: Core Pin IO${pin} set to ${(Math.random() > 0.5 ? 3.3 : 0.0)}V`, ...prev]);
-                    }}
-                    className={`p-2 rounded-none border font-mono text-[10px] font-bold text-center transition-all cursor-pointer ${
-                      activePin === pin
-                        ? 'bg-phosphor text-dark-obsidian border-phosphor shadow-[0_0_12px_rgba(255,159,0,0.5)]'
-                        : 'bg-dark-charcoal border-phosphor/10 text-phosphor/60 hover:bg-phosphor/5'
-                    }`}
-                  >
-                    IO{pin}
-                  </button>
-                ))}
-              </div>
-
-              {/* Central Microcontroller Block Core */}
-              <div className="border border-dashed border-phosphor/30 p-4 bg-phosphor/[0.02] flex flex-col items-center">
-                <p className="font-bold text-xs text-phosphor uppercase tracking-wider mb-1">Tensilica Dual-Core core</p>
-                <div className="flex gap-4 font-mono text-[9px] text-slate-500">
-                  <span>Freq: 240MHz</span>
-                  <span>SRAM: 520KB</span>
-                </div>
-                <div className="mt-3 flex items-center gap-1.5 text-[10px] text-phosphor/80 bg-dark-charcoal border border-phosphor/20 py-1 px-3 rounded-none">
-                  <Sliders className="w-3.5 h-3.5" />
-                  <span>Click Pin to generate ISR event</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 p-3 rounded-none bg-dark-obsidian font-mono text-[10px] text-slate-400 flex justify-between items-center border border-phosphor/10">
-              <span>REGISTER_BUS: <b className="text-phosphor">ACTIVE CHANNEL A</b></span>
-              <span>FEED VOLTS: <b className="text-phosphor">{voltage.toFixed(1)} V</b></span>
-            </div>
-          </motion.div>
-        )}
-
-        {stage === 'problem' && (
-          <motion.div
-            key="sys-problem"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            className="flex-grow flex flex-col justify-between"
-          >
-            {/* Debugging challenges visual */}
-            <div className="bg-dark-obsidian p-5 border border-red-500/20 flex-grow flex flex-col justify-center gap-4">
-              <div className="p-3.5 bg-red-500/5 border border-red-500/30 rounded-none relative overflow-hidden">
-                <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                <h6 className="text-[11px] font-mono font-black text-red-500 uppercase tracking-widest mb-1">DATA PACKAGE STRIP OVERFLOW</h6>
-                <p className="text-[10px] text-slate-405 leading-normal">
-                  Standard asynchronous print loops drop up to 45% of hardware pin interrupts, blinding local debuggers to physical capacitor glitches.
-                </p>
-              </div>
-
-              {/* Chaotic unformatted stream mock */}
-              <div className="p-3.5 bg-black rounded-none font-mono text-[8px] text-red-500 opacity-60 h-28 overflow-hidden select-none space-y-1">
-                <div>[CRIT_MEM] OVERFLOW RES_REG 0x3FFA92 - HIGH DROPOUT VALUE DETECTED</div>
-                <div>[ISR_FAIL] SPI BUFFER DE-SYNC AT INTERRUPT BOUND IO33</div>
-                <div>[WARN] VOLT_STABILITY pin IO12 DROPPED BELOW INTERRUPT V_MIN: 1.15V</div>
-                <div>[SYS_WARN] LOG DEQUEUE DELAY EXCEEDS 400MS (SYSTEM UNSTABLE)</div>
-              </div>
-            </div>
-
-            <div className="mt-4 p-3 rounded-none bg-red-950/20 border border-red-500/20 font-mono text-[10px] text-red-400 flex justify-between items-center">
-              <span>CONTROLLER: <b className="text-red-500 font-bold uppercase animate-pulse">DE-SYNCED</b></span>
-              <span>PACKET ERROR: <b className="text-red-500 text-xs font-bold">42.80%</b></span>
-            </div>
-          </motion.div>
-        )}
-
-        {stage === 'solution' && (
-          <motion.div
-            key="sys-solution"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            className="flex-grow flex flex-col justify-between"
-          >
-            {/* Solutions schematic block diagram */}
-            <div className="bg-dark-obsidian p-4 border border-phosphor/20 flex-grow flex flex-col justify-center gap-3">
-              <div className="space-y-2">
-                {[
-                  { level: "A", title: "Web Telemetry Panel", desc: "Phosphor-level rendering matrices and signal plots.", color: "border-phosphor bg-phosphor/5 text-phosphor" },
-                  { level: "B", title: "Wi-Fi Socket Pipeline", desc: "Non-blocking high-frequency buffering loops.", color: "border-phosphor bg-phosphor/5 text-phosphor" },
-                  { level: "C", title: "Physical ESP32 Board Network", desc: "Low-overhead ISR firmware gates and analog DAC registers.", color: "border-phosphor bg-phosphor/5 text-phosphor" }
-                ].map((item) => (
-                  <div key={item.level} className={`p-2.5 rounded-none border ${item.color} flex items-start gap-3`}>
-                    <div className="w-5 h-5 rounded-none border flex items-center justify-center text-[10px] font-black shrink-0 border-phosphor">
-                      {item.level}
-                    </div>
-                    <div>
-                      <h6 className="font-bold text-[11px] uppercase tracking-wide">{item.title}</h6>
-                      <p className="text-[9px] text-slate-400 mt-0.5 leading-tight">{item.desc}</p>
-                    </div>
+          {/* Left Column: Bus Selector */}
+          <div className="lg:col-span-4 space-y-3">
+            <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-2">
+              // Select Active Bus Protocol
+            </p>
+            {(['UART', 'I2C', 'SPI', 'ADC'] as const).map((bus) => {
+              const isSelected = selectedBus === bus;
+              return (
+                <button
+                  key={bus}
+                  onClick={() => setSelectedBus(bus)}
+                  className={`w-full p-4 text-left border transition-all duration-200 cursor-pointer flex items-center justify-between group ${
+                    isSelected
+                      ? 'bg-[#ff9f00] text-[#081838] border-[#ff9f00] font-bold shadow-[0_0_20px_rgba(255,159,0,0.35)] translate-x-1'
+                      : 'bg-[#081838]/70 border-[#ff9f00]/20 text-slate-300 hover:border-[#ff9f00]/60 hover:text-white'
+                  }`}
+                >
+                  <div>
+                    <span className="text-sm tracking-wider uppercase flex items-center gap-2">
+                      {bus} Pipeline
+                    </span>
+                    <p className={`text-[10px] ${isSelected ? 'text-[#081838]/80 font-medium' : 'text-slate-400'}`}>
+                      {busData[bus].pins.length} Signal Lines Active
+                    </p>
                   </div>
-                ))}
+                  <span className={`text-xs px-2 py-0.5 font-mono transition-colors ${isSelected ? 'bg-[#081838] text-[#ff9f00]' : 'bg-[#0f2552] text-slate-300'}`}>
+                    {busData[bus].status}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Right Column: Active Bus Diagnostic Inspector */}
+          <div className="lg:col-span-8 bg-[#081838] border border-[#ff9f00]/20 p-6 flex flex-col justify-between relative">
+            <div>
+              <div className="flex flex-wrap items-center justify-between pb-4 border-b border-[#ff9f00]/15 gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-white uppercase">{currentBus.name}</h3>
+                  <p className="text-xs text-[#ff9f00] font-mono mt-0.5">{currentBus.baud}</p>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1 bg-[#0f2552] border border-emerald-500/40 text-emerald-400 text-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span>STREAM: {currentBus.rate}</span>
+                </div>
+              </div>
+
+              <p className="text-slate-300 text-sm font-sans mt-4 leading-relaxed">
+                {currentBus.description}
+              </p>
+
+              {/* Pin Map Visualization */}
+              <div className="mt-6">
+                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                  <Activity className="w-3.5 h-3.5 text-[#ff9f00]" />
+                  <span>Mapped Microcontroller GPIO Channels:</span>
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {currentBus.pins.map((pin) => (
+                    <motion.div
+                      key={pin}
+                      whileHover={{ scale: 1.02 }}
+                      className="p-3 bg-[#0f2552]/60 border border-[#ff9f00]/20 hover:border-[#ff9f00]/60 flex items-center justify-between transition-colors"
+                    >
+                      <span className="text-xs text-white font-mono">{pin}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 bg-[#ff9f00]/10 text-[#ff9f00] font-mono font-semibold">
+                        3.3V TTL
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
 
-            <div className="mt-4 p-3 rounded-none bg-phosphor/5 border border-phosphor/20 font-mono text-[10px] text-phosphor flex justify-between items-center">
-              <span>CONTROLLER: <b className="text-phosphor font-bold">CALIBRATED</b></span>
-              <span>PACKAGE ERROR: <b className="text-phosphor">0.02%</b></span>
+            {/* Signal Oscilloscope Simulation Bar */}
+            <div className="mt-6 pt-4 border-t border-[#ff9f00]/15 flex items-center justify-between text-xs text-slate-400">
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                Logic Clock Sync: LOCKED (240.000 MHz)
+              </span>
+              <span className="text-[#ff9f00]">Latency: ~0.42 ms</span>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Real-time Serial activity monitor bar */}
-      <div className="mt-4 border-t border-phosphor/10 pt-3">
-        <div className="flex items-center gap-2 mb-1.5 font-mono">
-          <Terminal className="w-3.5 h-3.5 text-phosphor" />
-          <span className="text-[9px] uppercase font-black text-slate-500">Live UART Diagnostic Line</span>
-        </div>
-        <div className="bg-dark-obsidian border border-phosphor/10 rounded-none py-1.5 px-3 h-14 overflow-y-auto no-scrollbar font-mono text-[8px] text-slate-400 select-none space-y-1">
-          {logMessages.length === 0 ? (
-            <div className="text-slate-650">Awaiting UART signal packet broadcasts...</div>
-          ) : (
-            logMessages.slice(0, 2).map((log, idx) => (
-              <div key={idx} className="truncate text-phosphor/75">{log}</div>
-            ))
-          )}
-        </div>
+          </div>
+
+        </motion.div>
+
       </div>
-
-    </div>
+    </section>
   );
 };
+
+export default IoTSystemVisualizer;

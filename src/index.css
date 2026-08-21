@@ -1,44 +1,56 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Share Tech Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-display: "Syne", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
+  --font-sans: "Plus Jakarta Sans", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", "Courier New", monospace;
   
   --color-phosphor: #ff9f00;
-  --color-phosphor-glow: #ff5f00;
-  --color-phosphor-dim: #995c00;
   --color-dark-obsidian: #081838;
   --color-dark-charcoal: #0f2552;
-  --color-dark-iron: #18356e;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   
   body {
-    @apply bg-dark-obsidian text-slate-200 font-sans tracking-wide antialiased overflow-x-hidden;
+    background-color: #081838;
+    color: #e2e8f0;
+    overflow-x: hidden;
     background-image: 
-      radial-gradient(circle at 1px 1px, rgba(56, 189, 248, 0.1) 1px, transparent 0),
-      linear-gradient(rgba(15, 37, 82, 0.4) 1px, transparent 0);
-    background-size: 24px 24px, 100% 4px;
+      radial-gradient(circle at 50% 0%, rgba(255, 159, 0, 0.08) 0%, transparent 60%),
+      radial-gradient(circle at 85% 30%, rgba(15, 37, 82, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 15% 70%, rgba(255, 159, 0, 0.05) 0%, transparent 55%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-normal text-white;
+    font-family: 'Space Grotesk', 'Outfit', sans-serif;
   }
 }
 
-/* Custom visual effects for Cyber-Industrial texture */
-.cyan-glow-text {
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
-}
-
+/* Custom Phosphor & Retro-Futuristic Glow Effects */
 .amber-phosphor-glow {
   text-shadow: 0 0 12px rgba(255, 159, 0, 0.6), 0 0 2px rgba(255, 159, 0, 0.8);
+}
+
+.golden-neon-text {
+  background: linear-gradient(135deg, #FFF6D6 0%, #FFD700 30%, #FFA500 70%, #E68A00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 35px rgba(255, 165, 0, 0.3));
+}
+
+.golden-glow-box {
+  box-shadow: 0 0 30px rgba(255, 175, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.08);
+}
+
+.dark-neon-border {
+  border-color: rgba(255, 195, 0, 0.4);
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.2);
 }
 
 .amber-phosphor-box-glow {
@@ -49,20 +61,47 @@
   border-color: rgba(255, 159, 0, 0.25);
 }
 
-.amber-phosphor-border:hover {
-  border-color: rgba(255, 159, 0, 0.6);
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #ff9f00, #fbbf24, #f59e0b, #ff9f00);
+  background-size: 300% 100%;
+  animation: progressGlow 4s ease infinite;
+  transform-origin: 0%;
+  z-index: 100;
+  box-shadow: 0 0 14px rgba(255, 159, 0, 0.8), 0 0 28px rgba(245, 158, 11, 0.4);
 }
 
-.warning-stripe-bg {
-  background: repeating-linear-gradient(
-    -45deg,
-    rgba(255, 159, 0, 0.1),
-    rgba(255, 159, 0, 0.1) 10px,
-    transparent 10px,
-    transparent 20px
-  );
+@keyframes progressGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-.markdown-body {
-  @apply text-slate-300 leading-relaxed font-sans;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #081838;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 159, 0, 0.3);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 159, 0, 0.6);
+}
+
+/* Grid Matrix Overlay */
+.matrix-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 159, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 159, 0, 0.04) 1px, transparent 1px);
 }
