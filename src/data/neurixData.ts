@@ -17,7 +17,7 @@ export const loadingLetters: LoadingLetter[] = [
     char: 'U',
     label: 'UNIVERSAL_BUS',
     description: 'Inter-Integrated multi-device controller loaded.',
-    glow: 'shadow-cyan-500/50 text-cyan-400',
+    glow: 'shadow-cyan-500/50 text-amber-400',
   },
   {
     char: 'R',

@@ -16,7 +16,7 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
     { id: 'hero-section', label: 'Home' },
     { id: 'about-concept', label: 'Concept' },
     { id: 'roadmap', label: 'The Team' },
-    { id: 'live-demo-section', label: 'Diagnostics' },
+    { id: 'live-demo-section', label: 'Project' },
     { id: 'contact-hub', label: 'Connect' },
   ];
 
@@ -49,7 +49,7 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
     <header
       className={`fixed top-0 left-0 right-0 z-40 font-mono transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#0B0F19]/90 backdrop-blur-md border-b border-[#38BDF8]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
+          ? 'bg-[#0F172A]/90 backdrop-blur-md border-b border-[#FBBF24]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
@@ -63,10 +63,10 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
           <NeurixLogo className="w-10 h-10" glow />
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-black font-display tracking-tight text-[#F9FAFB] group-hover:text-[#38BDF8] transition-colors flex items-center">
+              <span className="text-2xl font-black font-display tracking-tight text-[#F9FAFB] group-hover:text-[#FBBF24] transition-colors flex items-center">
                 <span className="golden-neon-text">NEURIX</span>
               </span>
-              <span className="px-2 py-0.5 text-[9px] font-bold bg-[#38BDF8]/15 border border-[#38BDF8]/40 text-[#38BDF8] uppercase tracking-wider">
+              <span className="px-2 py-0.5 text-[9px] font-bold bg-[#FBBF24]/15 border border-[#FBBF24]/40 text-[#FBBF24] uppercase tracking-wider">
                 CORE
               </span>
             </div>
@@ -77,7 +77,7 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-[#111827]/70 p-1.5 border border-[#38BDF8]/20">
+        <nav className="hidden md:flex items-center gap-1 bg-[#1E293B]/70 p-1.5 border border-[#FBBF24]/20">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
@@ -86,8 +86,8 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
                 onClick={() => handleLinkClick(link.id)}
                 className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
                   isActive
-                    ? 'bg-[#38BDF8] text-[#0B0F19] shadow-[0_0_12px_rgba(255,159,0,0.4)]'
-                    : 'text-[#9CA3AF] hover:text-[#38BDF8] hover:bg-[#38BDF8]/10'
+                    ? 'bg-[#FBBF24] text-[#0F172A] shadow-[0_0_12px_rgba(217,119,6,0.4)]'
+                    : 'text-[#9CA3AF] hover:text-[#FBBF24] hover:bg-[#FBBF24]/10'
                 }`}
               >
                 {link.label}
@@ -101,25 +101,20 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
           {onReplayIntro && (
             <button
               onClick={onReplayIntro}
-              title="Play Gold Intro Video"
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#111827] hover:bg-[#38BDF8] hover:text-[#0B0F19] border border-[#38BDF8]/50 text-[#38BDF8] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_12px_rgba(255,215,0,0.2)] cursor-pointer group"
+              title="Play Intro Video"
+              className="flex items-center gap-2 px-3 py-1.5 bg-[#1E293B] hover:bg-[#FBBF24] hover:text-[#0F172A] border border-[#FBBF24]/50 text-[#FBBF24] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_12px_rgba(251,191,36,0.05)] cursor-pointer group"
             >
-              <span className="w-2 h-2 rounded-full bg-[#38BDF8] group-hover:bg-[#0B0F19] animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#FBBF24] group-hover:bg-[#0F172A] animate-ping" />
               <span>Play Intro</span>
             </button>
           )}
 
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#111827]/80 border border-[#38BDF8]/30 text-[11px] text-[#9CA3AF]">
-            <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-            <span className="text-emerald-400 font-bold">UART: 115.2k</span>
-          </div>
-
           <button
             onClick={() => handleLinkClick('live-demo-section')}
-            className="flex items-center gap-2 px-4 py-2 bg-[#38BDF8] hover:bg-[#F9FAFB] text-[#0B0F19] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(255,159,0,0.3)] cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-[#FBBF24] hover:bg-[#F9FAFB] text-[#0F172A] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(251,191,36,0.3)] cursor-pointer"
           >
             <Activity className="w-3.5 h-3.5" />
-            <span>Launch Diagnostics</span>
+            <span>View Project</span>
           </button>
         </div>
 
@@ -127,7 +122,7 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
         <div className="flex items-center md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 border border-[#38BDF8]/30 bg-[#111827] text-[#38BDF8] hover:text-[#F9FAFB] transition-colors cursor-pointer"
+            className="p-2 border border-[#FBBF24]/30 bg-[#1E293B] text-[#FBBF24] hover:text-[#F9FAFB] transition-colors cursor-pointer"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -136,12 +131,12 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
 
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-[#0B0F19] border-b border-[#38BDF8]/30 px-6 py-6 space-y-4">
+        <div className="md:hidden bg-[#0F172A] border-b border-[#FBBF24]/30 px-6 py-6 space-y-4">
           {navLinks.map((link) => (
             <button
               key={link.id}
               onClick={() => handleLinkClick(link.id)}
-              className="w-full text-left px-4 py-3 border border-[#38BDF8]/20 bg-[#111827]/50 text-slate-200 hover:text-[#38BDF8] hover:border-[#38BDF8] text-sm uppercase tracking-wider font-semibold transition-colors"
+              className="w-full text-left px-4 py-3 border border-[#FBBF24]/20 bg-[#1E293B]/50 text-slate-200 hover:text-[#FBBF24] hover:border-[#FBBF24] text-sm uppercase tracking-wider font-semibold transition-colors"
             >
               {link.label}
             </button>
@@ -152,16 +147,16 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
                 onReplayIntro();
                 setIsMobileMenuOpen(false);
               }}
-              className="w-full text-left px-4 py-3 border border-[#38BDF8]/50 bg-[#111827] text-[#38BDF8] text-sm uppercase tracking-wider font-bold"
+              className="w-full text-left px-4 py-3 border border-[#FBBF24]/50 bg-[#1E293B] text-[#FBBF24] text-sm uppercase tracking-wider font-bold"
             >
-              Play Gold Intro Video
+              Play Intro Video
             </button>
           )}
           <button
             onClick={() => handleLinkClick('live-demo-section')}
-            className="w-full mt-4 py-3 bg-[#38BDF8] text-[#0B0F19] font-bold text-center uppercase tracking-wider text-xs shadow-md"
+            className="w-full mt-4 py-3 bg-[#FBBF24] text-[#0F172A] font-bold text-center uppercase tracking-wider text-xs shadow-md"
           >
-            Launch Diagnostics
+            View Project
           </button>
         </div>
       )}

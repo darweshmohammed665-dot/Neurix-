@@ -56,15 +56,15 @@ export const ScrollEffects: React.FC = () => {
     <>
       {/* 1. Animated Top Scroll Progress Bar with Dark Neon golden glow */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#38BDF8] via-[#38BDF8] to-cyan-400 z-50 origin-left shadow-[0_0_15px_#38BDF8]"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#FBBF24] via-[#FBBF24] to-cyan-400 z-50 origin-left shadow-[0_0_15px_#FBBF24]"
         style={{ scaleX }}
       />
 
       {/* 2. Floating Side Section Telemetry Indicator (Desktop) */}
       <div className="fixed right-4 top-1/2 -translate-y-1/2 z-30 hidden xl:flex flex-col items-end gap-3 pointer-events-auto font-mono">
-        <div className="p-2.5 bg-[#0B0F19]/85 backdrop-blur-md border border-[#38BDF8]/30 shadow-2xl flex flex-col gap-2.5">
-          <div className="text-[9px] text-[#9CA3AF] font-bold uppercase tracking-wider pb-1.5 border-b border-[#38BDF8]/20 text-center flex items-center justify-center gap-1">
-            <Radio className="w-2.5 h-2.5 text-[#38BDF8] animate-pulse" />
+        <div className="p-2.5 bg-[#0F172A]/85 backdrop-blur-md border border-[#FBBF24]/30 shadow-2xl flex flex-col gap-2.5">
+          <div className="text-[9px] text-[#9CA3AF] font-bold uppercase tracking-wider pb-1.5 border-b border-[#FBBF24]/20 text-center flex items-center justify-center gap-1">
+            <Radio className="w-2.5 h-2.5 text-[#FBBF24] animate-pulse" />
             <span>NAV</span>
           </div>
 
@@ -78,15 +78,15 @@ export const ScrollEffects: React.FC = () => {
                 className="group relative flex items-center justify-end cursor-pointer"
               >
                 {/* Tooltip on hover */}
-                <span className="absolute right-7 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 bg-[#111827] border border-[#38BDF8]/50 text-[10px] text-[#F9FAFB] whitespace-nowrap pointer-events-none shadow-lg">
+                <span className="absolute right-7 opacity-0 group-hover:opacity-100 transition-all duration-200 px-2 py-0.5 bg-[#1E293B] border border-[#FBBF24]/50 text-[10px] text-[#F9FAFB] whitespace-nowrap pointer-events-none shadow-lg">
                   {sec.name}
                 </span>
 
                 <div
                   className={`transition-all duration-300 flex items-center gap-1.5 ${
                     isActive
-                      ? 'w-16 px-2 py-1 bg-[#38BDF8] text-[#0B0F19] font-bold text-[10px]'
-                      : 'w-2 h-2 rounded-full bg-slate-600 group-hover:bg-[#38BDF8]/60'
+                      ? 'w-16 px-2 py-1 bg-[#FBBF24] text-[#0F172A] font-bold text-[10px]'
+                      : 'w-2 h-2 rounded-full bg-slate-600 group-hover:bg-[#FBBF24]/60'
                   }`}
                 >
                   {isActive && <span>{sec.label}</span>}
@@ -105,15 +105,8 @@ export const ScrollEffects: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-6 right-6 z-40 flex items-center gap-3 p-2 bg-[#0B0F19]/95 backdrop-blur-xl border border-[#38BDF8]/50 shadow-[0_0_35px_rgba(255,215,0,0.25)] font-mono"
+            className="fixed bottom-6 right-6 z-40 flex items-center gap-3 p-2 bg-[#0F172A]/95 backdrop-blur-xl border border-[#FBBF24]/50 shadow-[0_0_35px_rgba(251,191,36,0.25)] font-mono"
           >
-            {/* Live Active Section Tracker */}
-            <div className="hidden sm:flex items-center gap-2 pl-2 pr-3 py-1 bg-[#111827] border border-[#38BDF8]/30 text-[11px]">
-              <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-ping" />
-              <span className="text-[#9CA3AF]">LOC:</span>
-              <span className="text-[#38BDF8] font-bold">{currentSection}</span>
-            </div>
-
             {/* Circular Percentage Indicator */}
             <div className="relative w-9 h-9 flex items-center justify-center">
               <svg className="w-9 h-9 transform -rotate-90" viewBox="0 0 36 36">
@@ -125,7 +118,7 @@ export const ScrollEffects: React.FC = () => {
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
                 <path
-                  className="text-[#38BDF8] transition-all duration-150"
+                  className="text-[#FBBF24] transition-all duration-150"
                   strokeDasharray={`${scrollPercentage}, 100`}
                   strokeWidth="3.5"
                   strokeLinecap="round"
@@ -134,7 +127,7 @@ export const ScrollEffects: React.FC = () => {
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
               </svg>
-              <span className="absolute text-[10px] font-mono font-bold text-[#38BDF8]">
+              <span className="absolute text-[10px] font-mono font-bold text-[#FBBF24]">
                 {scrollPercentage}%
               </span>
             </div>
@@ -143,7 +136,7 @@ export const ScrollEffects: React.FC = () => {
             <button
               onClick={scrollToTop}
               title="Return to System Nexus"
-              className="p-2 bg-gradient-to-r from-[#38BDF8] to-[#38BDF8] hover:from-[#F9FAFB] hover:to-slate-200 text-[#0B0F19] font-black transition-all cursor-pointer shadow-[0_0_15px_rgba(255,215,0,0.4)] group"
+              className="p-2 bg-gradient-to-r from-[#FBBF24] to-[#FBBF24] hover:from-[#F9FAFB] hover:to-slate-200 text-[#0F172A] font-black transition-all cursor-pointer shadow-[0_0_15px_rgba(251,191,36,0.1)] group"
             >
               <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform" />
             </button>

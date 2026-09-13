@@ -13,28 +13,28 @@ export const RoadmapNugget: React.FC = () => {
 
   const pillars = [
     {
-      title: 'Interactive Embedded Systems',
+      title: 'Hardware Integration',
       description: 'Developing intelligent, low-latency firmware kernels using modern dual-core microcontrollers to push physical control loops to sub-millisecond responsiveness.',
-      icon: <Cpu className="w-7 h-7 text-[#38BDF8]" />,
-      accent: 'border-[#38BDF8]/30 hover:border-[#38BDF8]',
-      glow: 'group-hover:shadow-[0_0_30px_rgba(255,159,0,0.25)]',
-      tags: ['ESP32-S3', 'FreeRTOS', 'SPI / I2C', 'Direct Register Access'],
+      icon: <Cpu className="w-7 h-7 text-[#FBBF24]" />,
+      accent: 'border-[#FBBF24]/30 hover:border-[#FBBF24]',
+      glow: 'group-hover:shadow-[0_0_30px_rgba(251,191,36,0.25)]',
+      tags: ['Processing', 'Low Latency', 'Physical Control'],
     },
     {
-      title: 'Gesture & Optical Computer Vision',
-      description: 'Utilizing dynamic computer vision algorithms via OpenCV interfaces to interpret and execute spatial commands in human-computer interaction fields.',
-      icon: <Eye className="w-7 h-7 text-cyan-400" />,
-      accent: 'border-cyan-500/30 hover:border-cyan-400',
-      glow: 'group-hover:shadow-[0_0_30px_rgba(34,211,238,0.25)]',
-      tags: ['OpenCV', 'Hand Pose Landmarks', 'Coordinate Matrix', '60 FPS Tracking'],
+      title: 'Optical Tracking',
+      description: 'Utilizing dynamic computer vision algorithms via advanced interfaces to interpret and execute spatial commands in human-computer interaction fields.',
+      icon: <Eye className="w-7 h-7 text-amber-400" />,
+      accent: 'border-amber-500/30 hover:border-amber-400',
+      glow: 'group-hover:shadow-[0_0_30px_rgba(251,191,36,0.25)]',
+      tags: ['Vision', 'Spatial Commands', '60 FPS Tracking'],
     },
     {
-      title: 'Systematic Academic Research',
-      description: 'Structuring rigorous academic studies on gesture latency matrices, user hand-interaction ergonomic models, and edge computing efficiency.',
+      title: 'System Evaluation',
+      description: 'Structuring rigorous academic studies on gesture latency matrices, user hand-interaction ergonomic models, and computing efficiency.',
       icon: <BookOpen className="w-7 h-7 text-emerald-400" />,
       accent: 'border-emerald-500/30 hover:border-emerald-400',
       glow: 'group-hover:shadow-[0_0_30px_rgba(52,211,153,0.25)]',
-      tags: ['Latency Benchmarks', 'HCI Ergonomics', 'Statistical Logs', 'Comparative Study'],
+      tags: ['Latency Benchmarks', 'Ergonomics', 'User Testing'],
     },
   ];
 
@@ -42,10 +42,10 @@ export const RoadmapNugget: React.FC = () => {
     <section
       ref={containerRef}
       id="about-concept"
-      className="py-28 px-4 sm:px-6 lg:px-8 border-y border-[#38BDF8]/15 bg-[#0B0F19]/80 font-mono relative overflow-hidden"
+      className="py-28 px-4 sm:px-6 lg:px-8 border-y border-[#FBBF24]/15 bg-[#0F172A]/80 font-mono relative overflow-hidden"
     >
       {/* Background Subtle Laser Lines */}
-      <div className="absolute inset-0 bg-[radial-gradient(#38BDF8_1px,transparent_1px)] [background-size:24px_24px] opacity-5 pointer-events-none" />
+      
 
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -58,12 +58,12 @@ export const RoadmapNugget: React.FC = () => {
           className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#111827] border border-[#38BDF8]/30 text-[#38BDF8] text-[11px] font-bold uppercase tracking-widest mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1E293B] border border-[#FBBF24]/30 text-[#FBBF24] text-[11px] font-bold uppercase tracking-widest mb-3">
               <CircuitBoard className="w-3.5 h-3.5" />
               <span>System Core Architecture</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] tracking-tight uppercase">
-              Core Engineering <span className="text-[#38BDF8] amber-phosphor-glow">Pillars</span>
+              Core Engineering <span className="text-[#FBBF24] amber-phosphor-glow">Pillars</span>
             </h2>
           </div>
           <p className="text-[#9CA3AF] max-w-md text-sm font-sans leading-relaxed">
@@ -81,11 +81,11 @@ export const RoadmapNugget: React.FC = () => {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ delay: idx * 0.18, duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className={`p-8 bg-[#111827]/80 border ${pillar.accent} ${pillar.glow} transition-all duration-300 relative group flex flex-col justify-between shadow-xl backdrop-blur-sm`}
+              className={`p-8 bg-[#1E293B]/80 border ${pillar.accent} ${pillar.glow} transition-all duration-300 relative group flex flex-col justify-between shadow-xl backdrop-blur-sm`}
             >
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <div className="p-3 bg-[#0B0F19] border border-[#38BDF8]/30 group-hover:scale-110 transition-transform">
+                  <div className="p-3 bg-[#0F172A] border border-[#FBBF24]/30 group-hover:scale-110 transition-transform">
                     {pillar.icon}
                   </div>
                   <span className="text-[10px] text-[#9CA3AF] font-mono">
@@ -93,7 +93,7 @@ export const RoadmapNugget: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold font-display text-[#F9FAFB] mb-3 group-hover:text-[#38BDF8] transition-colors">
+                <h3 className="text-xl font-bold font-display text-[#F9FAFB] mb-3 group-hover:text-[#FBBF24] transition-colors">
                   {pillar.title}
                 </h3>
                 <p className="text-[#9CA3AF] text-sm font-sans leading-relaxed mb-6">
@@ -101,11 +101,11 @@ export const RoadmapNugget: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#38BDF8]/10 flex flex-wrap gap-2">
+              <div className="pt-4 border-t border-[#FBBF24]/10 flex flex-wrap gap-2">
                 {pillar.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="text-[10px] px-2 py-1 bg-[#0B0F19] border border-[#38BDF8]/20 text-[#9CA3AF] group-hover:border-[#38BDF8]/40 transition-colors"
+                    className="text-[10px] px-2 py-1 bg-[#0F172A] border border-[#FBBF24]/20 text-[#9CA3AF] group-hover:border-[#FBBF24]/40 transition-colors"
                   >
                     {tag}
                   </span>

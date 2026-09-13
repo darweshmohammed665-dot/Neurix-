@@ -15,25 +15,25 @@ export const NeurixLogo: React.FC<NeurixLogoProps> = ({
       {/* Dynamic Golden Neon Radiance Aura */}
       {glow && (
         <>
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#38BDF8]/40 via-[#38BDF8]/30 to-[#38BDF8]/20 rounded-xl blur-md group-hover:blur-lg transition-all duration-300 pointer-events-none" />
-          <div className="absolute -inset-1 bg-[#38BDF8]/20 rounded-xl blur-sm animate-pulse pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#FBBF24]/40 via-[#FBBF24]/30 to-[#FBBF24]/20 rounded-xl blur-md group-hover:blur-lg transition-all duration-300 pointer-events-none" />
+          <div className="absolute -inset-1 bg-[#FBBF24]/20 rounded-xl blur-sm animate-pulse pointer-events-none" />
         </>
       )}
 
-      {/* Unified Glowing Geometric 'N' Shield */}
+      {/* Unified Glowing Geometric 'U' Shield */}
       <svg
         viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full relative z-10 drop-shadow-[0_0_12px_rgba(255,215,0,0.7)]"
+        className="w-full h-full relative z-10 drop-shadow-[0_0_12px_rgba(251,191,36,0.7)]"
       >
         <defs>
-          {/* Radiant Golden Metallic Gradient */}
+          {/* Radiant Metallic Gradient */}
           <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#F9FAFB9E6" />
-            <stop offset="30%" stopColor="#38BDF8" />
-            <stop offset="70%" stopColor="#38BDF8" />
-            <stop offset="100%" stopColor="#D97706" />
+            <stop offset="0%" stopColor="#FEF3C7" />
+            <stop offset="30%" stopColor="#FBBF24" />
+            <stop offset="70%" stopColor="#FBBF24" />
+            <stop offset="100%" stopColor="#B45309" />
           </linearGradient>
 
           {/* Core Neon Glow Filter */}
@@ -50,17 +50,17 @@ export const NeurixLogo: React.FC<NeurixLogoProps> = ({
           width="84"
           height="84"
           rx="18"
-          fill="#0B0F19"
+          fill="#0F172A"
           stroke="url(#goldGradient)"
           strokeWidth="3.5"
           className="transition-all duration-300"
         />
 
         {/* Corner Neon Accent Marks */}
-        <path d="M 18 28 L 18 18 L 28 18" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 82 28 L 82 18 L 72 18" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 18 72 L 18 82 L 28 82" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 82 72 L 82 82 L 72 82" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 18 28 L 18 18 L 28 18" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 82 28 L 82 18 L 72 18" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 18 72 L 18 82 L 28 82" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M 82 72 L 82 82 L 72 82" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
 
         {/* Glowing Geometric Unified 'N' Symbol */}
         <g filter="url(#neonGlow)">
@@ -84,9 +84,9 @@ export const NeurixLogo: React.FC<NeurixLogoProps> = ({
           />
 
           {/* Inner Light Core Nodes */}
-          <circle cx="28" cy="28" r="3" fill="#F9FAFBFFF" />
-          <circle cx="72" cy="72" r="3" fill="#F9FAFBFFF" />
-          <circle cx="50" cy="50" r="2.5" fill="#F9FAFBBEB" />
+          <circle cx="28" cy="28" r="3" fill="#FFFFFF" />
+          <circle cx="72" cy="72" r="3" fill="#FFFFFF" />
+          <circle cx="50" cy="50" r="2.5" fill="#FFFBEB" />
         </g>
       </svg>
     </div>

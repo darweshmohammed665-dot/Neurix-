@@ -4,7 +4,7 @@ import { DarkNeonCursorSpotlight } from './components/DarkNeonCursorSpotlight';
 import { ScrollEffects } from './components/ScrollEffects';
 import { NeurixNavbar } from './components/NeurixNavbar';
 import { NeurixHero } from './components/NeurixHero';
-import { KineticScrollTicker } from './components/KineticScrollTicker';
+import { GlowingNeurixMarquee } from './components/GlowingNeurixMarquee';
 import { RoadmapNugget } from './components/RoadmapNugget';
 import { IoTSystemVisualizer } from './components/IoTSystemVisualizer';
 import { SynapticMindLink } from './components/SynapticMindLink';
@@ -33,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-[#F9FAFB] selection:bg-[#38BDF8]/30 selection:text-[#F9FAFB] relative matrix-grid-pattern overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-[#0F172A] text-[#F9FAFB] selection:bg-[#FBBF24]/30 selection:text-[#F9FAFB] relative overflow-x-hidden font-sans">
       
       {/* 1. Cinematic "New Tricks" Gold Background Video Animation on Open */}
       {showGoldIntro && (
@@ -60,24 +60,15 @@ export default function App() {
         
         {/* Hero Section */}
         <NeurixHero onNavigateSection={handleNavigateSection} />
+        {/* Glowing Scrolling Marquee */}
+        <GlowingNeurixMarquee />
 
-        {/* Kinetic Scroll-Driven Marquee Ticker */}
-        <KineticScrollTicker />
 
         {/* Engineering Pillars / About Concept */}
         <RoadmapNugget />
 
-        {/* Embedded IoT Bus Visualizer */}
-        <IoTSystemVisualizer />
-
-        {/* Synaptic Mind Link / Sensory Resonator */}
-        <SynapticMindLink />
-
-        {/* Live Diagnostics: Oscilloscope & Gesture Tracker */}
+        {/* Live Diagnostics: Oscilloscope & Gesture Tracker (Kept as project shape/demo) */}
         <LiveGestureDemo />
-
-        {/* 6-Channel Telemetry Grid */}
-        <TelemetryChannelGrid />
 
         {/* Team Org Chart Matrix */}
         <TeamMatrixSection onSelectMember={(member) => setSelectedMember(member)} />

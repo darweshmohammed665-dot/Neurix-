@@ -57,7 +57,7 @@ export const LiveGestureDemo: React.FC = () => {
       ctx.clearRect(0, 0, width, height);
 
       // Grid Lines
-      ctx.strokeStyle = 'rgba(255, 159, 0, 0.1)';
+      ctx.strokeStyle = 'rgba(217, 119, 6, 0.1)';
       ctx.lineWidth = 1;
       for (let x = 0; x < width; x += 30) {
         ctx.beginPath();
@@ -74,9 +74,9 @@ export const LiveGestureDemo: React.FC = () => {
 
       // Signal Trace
       ctx.beginPath();
-      ctx.strokeStyle = '#38BDF8';
+      ctx.strokeStyle = '#FBBF24';
       ctx.lineWidth = 2.5;
-      ctx.shadowColor = '#38BDF8';
+      ctx.shadowColor = '#FBBF24';
       ctx.shadowBlur = 8;
 
       for (let x = 0; x < width; x += 2) {
@@ -103,7 +103,7 @@ export const LiveGestureDemo: React.FC = () => {
     <section
       ref={containerRef}
       id="live-demo-section"
-      className="py-28 px-4 sm:px-6 lg:px-8 border-b border-[#38BDF8]/15 bg-[#0B0F19] font-mono relative overflow-hidden"
+      className="py-28 px-4 sm:px-6 lg:px-8 border-b border-[#FBBF24]/15 bg-[#0F172A] font-mono relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto relative z-10">
         
@@ -116,12 +116,12 @@ export const LiveGestureDemo: React.FC = () => {
           className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#111827] border border-[#38BDF8]/30 text-[#38BDF8] text-[11px] font-bold uppercase tracking-widest mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1E293B] border border-[#FBBF24]/30 text-[#FBBF24] text-[11px] font-bold uppercase tracking-widest mb-3">
               <Activity className="w-3.5 h-3.5" />
               <span>Real-Time Bench Diagnostics</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] tracking-tight uppercase">
-              Live Optical <span className="text-[#38BDF8] amber-phosphor-glow">& Gesture Engine</span>
+              Live Optical <span className="text-[#FBBF24] amber-phosphor-glow">& Gesture Engine</span>
             </h2>
           </div>
           
@@ -130,8 +130,8 @@ export const LiveGestureDemo: React.FC = () => {
               onClick={() => setIsStreaming(!isStreaming)}
               className={`px-4 py-2 border text-xs uppercase font-bold flex items-center gap-2 cursor-pointer transition-all ${
                 isStreaming
-                  ? 'bg-[#38BDF8] text-[#0B0F19] border-[#38BDF8] shadow-[0_0_15px_rgba(255,159,0,0.3)]'
-                  : 'bg-[#111827] text-[#9CA3AF] border-[#38BDF8]/30'
+                  ? 'bg-[#FBBF24] text-[#0F172A] border-[#FBBF24] shadow-[0_0_15px_rgba(217,119,6,0.3)]'
+                  : 'bg-[#1E293B] text-[#9CA3AF] border-[#FBBF24]/30'
               }`}
             >
               {isStreaming ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -166,15 +166,15 @@ export const LiveGestureDemo: React.FC = () => {
                   }}
                   className={`p-4 border transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#111827] border-[#38BDF8] shadow-[0_0_20px_rgba(255,159,0,0.25)] translate-x-1'
-                      : 'bg-[#111827]/40 border-[#38BDF8]/15 hover:border-[#38BDF8]/50'
+                      ? 'bg-[#1E293B] border-[#FBBF24] shadow-[0_0_20px_rgba(217,119,6,0.25)] translate-x-1'
+                      : 'bg-[#1E293B]/40 border-[#FBBF24]/15 hover:border-[#FBBF24]/50'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className={`text-sm font-bold ${isActive ? 'text-[#38BDF8]' : 'text-[#F9FAFB]'}`}>
+                    <span className={`text-sm font-bold ${isActive ? 'text-[#FBBF24]' : 'text-[#F9FAFB]'}`}>
                       {g.name}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 bg-[#0B0F19] border border-[#38BDF8]/20 text-[#9CA3AF]">
+                    <span className="text-[10px] font-mono px-2 py-0.5 bg-[#0F172A] border border-[#FBBF24]/20 text-[#9CA3AF]">
                       {g.keypoints}
                     </span>
                   </div>
@@ -184,7 +184,7 @@ export const LiveGestureDemo: React.FC = () => {
             })}
           </motion.div>
 
-          {/* Center / Right: Oscilloscope & Terminal Feeds */}
+          {/* Center / Right: Oscilloscope & Feeds */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -193,42 +193,22 @@ export const LiveGestureDemo: React.FC = () => {
             className="lg:col-span-8 space-y-6"
           >
             {/* Oscilloscope Panel */}
-            <div className="p-6 bg-[#111827]/70 border border-[#38BDF8]/30 shadow-xl backdrop-blur-sm">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#38BDF8]/15">
+            <div className="p-6 bg-[#1E293B]/70 border border-[#FBBF24]/30 shadow-xl backdrop-blur-sm">
+              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#FBBF24]/15">
                 <span className="text-xs font-bold text-[#F9FAFB] uppercase flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-[#38BDF8]" />
-                  Simulated Virtual Oscilloscope Channel A
+                  <Activity className="w-4 h-4 text-[#FBBF24]" />
+                  Real-Time Signal Visualizer
                 </span>
                 <div className="flex items-center gap-4 text-xs font-mono">
                   <span className="text-emerald-400">FPS: {fps}</span>
-                  <span className="text-[#38BDF8]">CONF: {confidence}%</span>
+                  <span className="text-[#FBBF24]">CONF: {confidence}%</span>
                 </div>
               </div>
 
-              <div className="h-44 bg-[#0B0F19] border border-[#38BDF8]/20 overflow-hidden relative">
+              <div className="h-44 bg-[#0F172A] border border-[#FBBF24]/20 overflow-hidden relative">
                 <canvas ref={oscCanvasRef} className="w-full h-full" />
               </div>
             </div>
-
-            {/* UART Terminal Stream */}
-            <div className="p-6 bg-[#0B0F19] border border-[#38BDF8]/30 shadow-lg">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#38BDF8]/15 text-xs">
-                <span className="font-bold text-[#F9FAFB] uppercase flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-[#38BDF8]" />
-                  UART Core Telemetry Stream
-                </span>
-                <span className="text-[#9CA3AF] font-mono">BAUD: 115200 (8-N-1)</span>
-              </div>
-
-              <div className="space-y-1.5 h-36 overflow-y-auto font-mono text-xs text-[#9CA3AF] bg-[#111827]/40 p-3 border border-[#38BDF8]/10">
-                {uartLog.map((log, i) => (
-                  <p key={i} className={i === 0 ? 'text-[#38BDF8] font-bold' : 'text-[#9CA3AF]'}>
-                    {log}
-                  </p>
-                ))}
-              </div>
-            </div>
-
           </motion.div>
 
         </div>

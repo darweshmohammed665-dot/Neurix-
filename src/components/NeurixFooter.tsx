@@ -30,7 +30,7 @@ export const NeurixFooter: React.FC = () => {
   ];
 
   return (
-    <footer id="contact-hub" className="border-t border-[#38BDF8]/20 bg-[#0B0F19] font-mono text-[#9CA3AF] relative overflow-hidden">
+    <footer id="contact-hub" className="border-t border-[#FBBF24]/20 bg-[#0F172A] font-mono text-[#9CA3AF] relative overflow-hidden">
       
       {/* 1. Connection Portal Cards with Scroll Animation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
@@ -42,12 +42,12 @@ export const NeurixFooter: React.FC = () => {
           transition={{ duration: 0.7 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#111827] border border-[#38BDF8]/30 text-[#38BDF8] text-[11px] font-bold uppercase tracking-widest mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1E293B] border border-[#FBBF24]/30 text-[#FBBF24] text-[11px] font-bold uppercase tracking-widest mb-3">
             <Globe className="w-3.5 h-3.5" />
             <span>The Connection Nexus</span>
           </div>
           <h3 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] uppercase tracking-tight">
-            // System <span className="text-[#38BDF8] amber-phosphor-glow">Portal</span>
+            // System <span className="text-[#FBBF24] amber-phosphor-glow">Portal</span>
           </h3>
           <p className="text-[#9CA3AF] text-sm font-sans mt-3">
             Bridge the gap between spatial vision and physical reality. Access our official technical repositories and direct contact channels below.
@@ -66,22 +66,22 @@ export const NeurixFooter: React.FC = () => {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ delay: idx * 0.15, duration: 0.6 }}
               whileHover={{ y: -6 }}
-              className="p-8 bg-[#111827]/70 border border-[#38BDF8]/20 hover:border-[#38BDF8] hover:shadow-[0_0_30px_rgba(255,159,0,0.25)] transition-all group flex flex-col justify-between shadow-lg"
+              className="p-8 bg-[#1E293B]/70 border border-[#FBBF24]/20 hover:border-[#FBBF24] hover:shadow-[0_0_30px_rgba(217,119,6,0.25)] transition-all group flex flex-col justify-between shadow-lg"
             >
               <div>
-                <div className="w-12 h-12 bg-[#0B0F19] border border-[#38BDF8]/30 text-[#38BDF8] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#0F172A] border border-[#FBBF24]/30 text-[#FBBF24] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   {item.icon}
                 </div>
-                <h4 className="text-xl font-bold font-display text-[#F9FAFB] group-hover:text-[#38BDF8] transition-colors flex items-center gap-2">
+                <h4 className="text-xl font-bold font-display text-[#F9FAFB] group-hover:text-[#FBBF24] transition-colors flex items-center gap-2">
                   {item.name}
-                  <ArrowUpRight className="w-4 h-4 text-[#38BDF8] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ArrowUpRight className="w-4 h-4 text-[#FBBF24] opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h4>
                 <p className="text-[#9CA3AF] text-sm font-sans mt-2 leading-relaxed">
                   {item.desc}
                 </p>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-[#38BDF8]/10 text-xs text-[#38BDF8] uppercase font-bold flex items-center gap-1">
+              <div className="mt-8 pt-4 border-t border-[#FBBF24]/10 text-xs text-[#FBBF24] uppercase font-bold flex items-center gap-1">
                 <span>Access Node</span>
                 <span>→</span>
               </div>
@@ -95,10 +95,10 @@ export const NeurixFooter: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.7 }}
-          className="p-8 bg-[#111827] border border-[#38BDF8]/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden"
+          className="p-8 bg-[#1E293B] border border-[#FBBF24]/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden"
         >
           <div className="flex items-center gap-5">
-            <div className="p-4 bg-[#0B0F19] border border-[#38BDF8]/30 text-[#38BDF8] shrink-0">
+            <div className="p-4 bg-[#0F172A] border border-[#FBBF24]/30 text-[#FBBF24] shrink-0">
               <Cpu className="w-8 h-8 animate-pulse" />
             </div>
             <div>
@@ -113,7 +113,7 @@ export const NeurixFooter: React.FC = () => {
 
           <a
             href="mailto:neurixt@gmail.com"
-            className="px-8 py-4 bg-[#38BDF8] hover:bg-[#F9FAFB] text-[#0B0F19] font-bold text-xs uppercase tracking-widest transition-all shrink-0 shadow-[0_0_20px_rgba(255,159,0,0.3)] cursor-pointer"
+            className="px-8 py-4 bg-[#FBBF24] hover:bg-[#F9FAFB] text-[#0F172A] font-bold text-xs uppercase tracking-widest transition-all shrink-0 shadow-[0_0_20px_rgba(217,119,6,0.3)] cursor-pointer"
           >
             Connect Now
           </a>
@@ -127,11 +127,11 @@ export const NeurixFooter: React.FC = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="border-t border-[#38BDF8]/15 py-16 px-4 sm:px-6 lg:px-8 bg-[#111827]/30 text-center"
+        className="border-t border-[#FBBF24]/15 py-16 px-4 sm:px-6 lg:px-8 bg-[#1E293B]/30 text-center"
       >
         <div className="max-w-4xl mx-auto">
           <h3 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] uppercase mb-4">
-            "Your Hand, <span className="text-[#38BDF8] amber-phosphor-glow">Your World</span>"
+            "Your Hand, <span className="text-[#FBBF24] amber-phosphor-glow">Your World</span>"
           </h3>
           <p className="text-[#9CA3AF] text-sm font-sans max-w-xl mx-auto leading-relaxed">
             Creating the most intuitive hardware-software ecosystem for tangible spatial human interaction and zero-latency digital control loops.
@@ -140,7 +140,7 @@ export const NeurixFooter: React.FC = () => {
       </motion.div>
 
       {/* 3. Bottom Bar */}
-      <div className="border-t border-[#38BDF8]/20 py-8 px-4 sm:px-6 lg:px-8 bg-[#0B0F19]">
+      <div className="border-t border-[#FBBF24]/20 py-8 px-4 sm:px-6 lg:px-8 bg-[#0F172A]">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           
           <div
@@ -149,7 +149,7 @@ export const NeurixFooter: React.FC = () => {
           >
             <NeurixLogo className="w-6 h-6" glow={false} />
             <div>
-              <span className="font-bold text-[#F9FAFB] group-hover:text-[#38BDF8] transition-colors">
+              <span className="font-bold text-[#F9FAFB] group-hover:text-[#FBBF24] transition-colors">
                 // NEURIX
               </span>
               <span className="text-[#9CA3AF] ml-2">
@@ -160,12 +160,12 @@ export const NeurixFooter: React.FC = () => {
 
           <div className="flex items-center gap-6 text-[#9CA3AF]">
             <span className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-[#38BDF8]" />
+              <Calendar className="w-3.5 h-3.5 text-[#FBBF24]" />
               Founded Feb 11, 2026
             </span>
             <a
               href="mailto:neurixt@gmail.com"
-              className="text-[#9CA3AF] hover:text-[#38BDF8] transition-colors"
+              className="text-[#9CA3AF] hover:text-[#FBBF24] transition-colors"
             >
               neurixt@gmail.com
             </a>

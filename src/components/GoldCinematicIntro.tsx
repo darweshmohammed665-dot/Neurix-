@@ -50,13 +50,13 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
               className="absolute left-0 w-1/2 h-full pointer-events-auto overflow-hidden"
               style={{
                 transformOrigin: 'left center',
-                background: 'radial-gradient(circle at 100% 50%, #38BDF8 0%, #0ea5e9 50%, #0284c7 90%, #0369a1 100%)',
+                background: 'radial-gradient(circle at 100% 50%, #FBBF24 0%, #D97706 50%, #B45309 90%, #78350F 100%)',
                 borderRight: '1px solid rgba(0,0,0,0.8)',
                 boxShadow: 'inset -20px 0 40px rgba(0,0,0,0.5)',
                 zIndex: 10,
               }}
             >
-              <div className="absolute inset-0 opacity-30 bg-[radial-gradient(#e0f2fe_1.5px,transparent_1.5px)] [background-size:20px_20px] pointer-events-none" />
+              
             </motion.div>
 
             {/* الصفحة/الباب الأيمن - كحلي (Navy Blue) مع تفاصيل بسيطة */}
@@ -72,15 +72,15 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
               className="absolute right-0 w-1/2 h-full pointer-events-auto overflow-hidden"
               style={{
                 transformOrigin: 'right center',
-                background: 'radial-gradient(circle at 0% 50%, #111827 0%, #0B0F19 60%, #0B0F19 100%)',
+                background: 'radial-gradient(circle at 0% 50%, #1E293B 0%, #0F172A 60%, #0F172A 100%)',
                 borderLeft: '1px solid rgba(255,255,255,0.2)',
                 boxShadow: 'inset 20px 0 40px rgba(0,0,0,0.7)',
                 zIndex: 10,
               }}
             >
               {/* تفاصيل بسيطة في اللون الكحلي: شبكة خفيفة جداً وإضاءة زرقاء خافتة */}
-              <div className="absolute inset-0 opacity-10 bg-[linear-gradient(rgba(255,255,255,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.5)_1px,transparent_1px)] [background-size:40px_40px] pointer-events-none" />
-              <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+              
+              <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
             </motion.div>
 
             {/* الحروف المتساقطة تتجمع في منتصف الشاشة (بين الذهبي والكحلي) */}
@@ -122,7 +122,7 @@ export const GoldCinematicIntro: React.FC<GoldCinematicIntroProps> = ({
               transition={{ duration: 2.3, ease: "easeIn" }}
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 bg-[#F9FAFB] z-20 pointer-events-none"
               style={{
-                boxShadow: '0 0 30px 10px rgba(255,255,255,0.8), 0 0 60px 20px #38BDF8',
+                boxShadow: '0 0 30px 10px rgba(255,255,255,0.8), 0 0 60px 20px #FBBF24',
               }}
             />
           </>

@@ -31,13 +31,13 @@ const futurePillars = [
 
 export const FutureWorkSection: React.FC = () => {
   return (
-    <section id="future-work-section" className="relative py-24 sm:py-32 overflow-hidden bg-[#0B0F19] border-t border-[#F9FAFB]/5">
+    <section id="future-work-section" className="relative py-24 sm:py-32 overflow-hidden bg-[#0F172A] border-t border-[#F9FAFB]/5">
       {/* Abstract Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-fuchsia-500/5 to-transparent blur-[100px] pointer-events-none" />
       
       {/* Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] [background-size:64px_64px] pointer-events-none" />
+      
 
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
         
@@ -49,7 +49,7 @@ export const FutureWorkSection: React.FC = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F9FAFB]/5 border border-[#F9FAFB]/10 text-[#9CA3AF] text-sm font-medium tracking-wide mb-6"
           >
-            <Rocket className="w-4 h-4 text-[#38BDF8]" />
+            <Rocket className="w-4 h-4 text-[#FBBF24]" />
             <span>Beyond The Horizon</span>
           </motion.div>
           
@@ -87,7 +87,7 @@ export const FutureWorkSection: React.FC = () => {
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${pillar.color} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl blur-xl pointer-events-none`} />
               
-              <div className={`relative h-full flex flex-col p-8 rounded-3xl bg-[#111827]/80 backdrop-blur-md border ${pillar.border} hover:border-[#F9FAFB]/20 transition-all duration-500 overflow-hidden`}>
+              <div className={`relative h-full flex flex-col p-8 rounded-3xl bg-[#1E293B]/80 backdrop-blur-md border ${pillar.border} hover:border-[#F9FAFB]/20 transition-all duration-500 overflow-hidden`}>
                 
                 {/* Minimalist Tech Lines */}
                 <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity duration-500">
@@ -100,7 +100,7 @@ export const FutureWorkSection: React.FC = () => {
                   {pillar.icon}
                 </div>
                 
-                <h3 className="text-2xl font-bold text-[#F9FAFB] tracking-tight mb-4 group-hover:text-[#38BDF8] transition-colors duration-300">
+                <h3 className="text-2xl font-bold text-[#F9FAFB] tracking-tight mb-4 group-hover:text-[#FBBF24] transition-colors duration-300">
                   {pillar.title}
                 </h3>
                 
