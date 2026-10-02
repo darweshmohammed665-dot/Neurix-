@@ -12,82 +12,77 @@ export const NeurixLogo: React.FC<NeurixLogoProps> = ({
 }) => {
   return (
     <div className={`relative flex items-center justify-center shrink-0 ${className} group`}>
-      {/* Dynamic Golden Neon Radiance Aura */}
+      {/* Dynamic Cyan Neon Radiance Aura */}
       {glow && (
         <>
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#FBBF24]/40 via-[#FBBF24]/30 to-[#FBBF24]/20 rounded-xl blur-md group-hover:blur-lg transition-all duration-300 pointer-events-none" />
-          <div className="absolute -inset-1 bg-[#FBBF24]/20 rounded-xl blur-sm animate-pulse pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#00D9FF]/40 via-[#00D9FF]/20 to-transparent rounded-full blur-xl group-hover:blur-2xl transition-all duration-500 pointer-events-none opacity-50 group-hover:opacity-80" />
+          <div className="absolute -inset-2 bg-[#00D9FF]/10 rounded-full blur-md animate-pulse pointer-events-none" />
         </>
       )}
 
-      {/* Unified Glowing Geometric 'U' Shield */}
-      <svg
-        viewBox="0 0 100 100"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full relative z-10 drop-shadow-[0_0_12px_rgba(251,191,36,0.7)]"
+      {/* Premium Programmatic SVG Logo */}
+      <svg 
+        viewBox="0 0 100 100" 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg" 
+        className="w-full h-full relative z-10 transition-transform duration-500 group-hover:scale-105 drop-shadow-[0_0_15px_rgba(0,217,255,0.2)]"
       >
         <defs>
-          {/* Radiant Metallic Gradient */}
-          <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FEF3C7" />
-            <stop offset="30%" stopColor="#FBBF24" />
-            <stop offset="70%" stopColor="#FBBF24" />
-            <stop offset="100%" stopColor="#B45309" />
+          <linearGradient id="neurixGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#00D9FF" />
+            <stop offset="50%" stopColor="#4D8DFF" />
+            <stop offset="100%" stopColor="#F2FAFF" />
           </linearGradient>
-
-          {/* Core Neon Glow Filter */}
-          <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <filter id="neurixGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
 
-        {/* Outer Dark Neon Shield Frame */}
-        <rect
-          x="8"
-          y="8"
-          width="84"
-          height="84"
-          rx="18"
-          fill="#0F172A"
-          stroke="url(#goldGradient)"
-          strokeWidth="3.5"
-          className="transition-all duration-300"
+        {/* Spatial Computing / Vision Reticle Rings */}
+        <circle cx="50" cy="50" r="46" stroke="#163247" strokeWidth="1" />
+        
+        {/* Animated Outer Tracking Ring */}
+        <circle 
+          cx="50" cy="50" r="46" 
+          stroke="#00D9FF" strokeWidth="1.5" 
+          strokeDasharray="1 12" strokeLinecap="round" 
+          className="origin-center animate-[spin_12s_linear_infinite]" 
+          opacity="0.7" 
+        />
+        
+        {/* Inner Depth Ring */}
+        <circle cx="50" cy="50" r="38" stroke="rgba(0, 217, 255, 0.08)" strokeWidth="4" />
+        
+        {/* Animated Inner Orbital Ring */}
+        <circle 
+          cx="50" cy="50" r="38" 
+          stroke="#00D9FF" strokeWidth="1" 
+          strokeDasharray="30 60" strokeLinecap="round" 
+          className="origin-center animate-[spin_8s_linear_infinite_reverse]" 
+          opacity="0.9"
         />
 
-        {/* Corner Neon Accent Marks */}
-        <path d="M 18 28 L 18 18 L 28 18" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 82 28 L 82 18 L 72 18" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 18 72 L 18 82 L 28 82" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M 82 72 L 82 82 L 72 82" stroke="#FBBF24" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Hardware Crosshairs */}
+        <path d="M50 2 L50 10 M50 90 L50 98 M2 50 L10 50 M90 50 L98 50" stroke="#163247" strokeWidth="2" strokeLinecap="round" />
 
-        {/* Glowing Geometric Unified 'N' Symbol */}
-        <g filter="url(#neonGlow)">
-          {/* Left Vertical Pillar */}
-          <path
-            d="M 28 72 L 28 28 L 38 28 L 38 72 Z"
-            fill="url(#goldGradient)"
-          />
-
-          {/* Dynamic Diagonal Sliced Stem */}
-          <path
-            d="M 36 28 L 64 68 L 64 74 L 54 74 L 28 34 L 28 28 Z"
-            fill="url(#goldGradient)"
-            opacity="0.95"
-          />
-
-          {/* Right Vertical Pillar */}
-          <path
-            d="M 62 72 L 62 28 L 72 28 L 72 72 Z"
-            fill="url(#goldGradient)"
-          />
-
-          {/* Inner Light Core Nodes */}
-          <circle cx="28" cy="28" r="3" fill="#FFFFFF" />
-          <circle cx="72" cy="72" r="3" fill="#FFFFFF" />
-          <circle cx="50" cy="50" r="2.5" fill="#FFFBEB" />
+        {/* Core 'N' Shape - Neural / Spatial Nodes */}
+        <g filter="url(#neurixGlow)">
+          {/* Left Vertical Node */}
+          <rect x="30" y="28" width="8" height="44" rx="4" fill="url(#neurixGrad)" />
+          {/* Right Vertical Node */}
+          <rect x="62" y="28" width="8" height="44" rx="4" fill="url(#neurixGrad)" />
+          {/* Data Connection Diagonal */}
+          <path d="M34 32 L66 68" stroke="url(#neurixGrad)" strokeWidth="8" strokeLinecap="round" />
+          
+          {/* Active Synaptic Processing Points */}
+          <circle cx="34" cy="28" r="2.5" fill="#F2FAFF" className="animate-pulse" />
+          <circle cx="66" cy="72" r="2.5" fill="#00D9FF" className="animate-pulse" />
         </g>
+
+        {/* Floating Tracking Point (Simulating Hand/Eye Target) */}
+        <circle cx="78" cy="22" r="3" fill="#39E58C" className="animate-pulse" filter="url(#neurixGlow)" />
+        <path d="M68 32 L78 22" stroke="#39E58C" strokeWidth="1" strokeDasharray="2 2" opacity="0.5" />
       </svg>
     </div>
   );

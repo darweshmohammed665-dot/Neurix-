@@ -1,131 +1,126 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Rocket, Cpu, Globe, Infinity as InfinityIcon, ChevronRight } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Rocket, Cpu, Globe, Infinity as InfinityIcon, ChevronRight, Zap, Target, Binary } from 'lucide-react';
 
 const futurePillars = [
   {
     id: 'pillar-1',
-    title: 'Advanced Neural Mapping',
+    title: 'Neural Mapping',
     description: 'Scaling the IoT bus to integrate multi-node sensor inputs, allowing precise real-time hand skeleton reconstruction in 3D space.',
-    icon: <Cpu className="w-6 h-6 text-indigo-400" />,
-    color: 'from-indigo-500/20 to-indigo-900/10',
-    border: 'border-indigo-500/30'
+    icon: <Binary className="w-6 h-6 text-neurix-cyan" />,
+    tag: 'MODULE v5'
   },
   {
     id: 'pillar-2',
-    title: 'Haptic Feedback Ecosystem',
+    title: 'Haptic Sync',
     description: 'Introducing ultra-low latency haptic wearables that synchronize physical sensations with spatial gesture interactions.',
-    icon: <Globe className="w-6 h-6 text-emerald-400" />,
-    color: 'from-emerald-500/20 to-emerald-900/10',
-    border: 'border-emerald-500/30'
+    icon: <Zap className="w-6 h-6 text-neurix-cyan" />,
+    tag: 'HAPTIC_BUS'
   },
   {
     id: 'pillar-3',
-    title: 'Cloud-Edge AI Synergy',
+    title: 'Edge Synergy',
     description: 'Offloading heavy neural rendering to the edge with continuous cloud syncing for personalized, adaptive gesture recognition.',
-    icon: <InfinityIcon className="w-6 h-6 text-fuchsia-400" />,
-    color: 'from-fuchsia-500/20 to-fuchsia-900/10',
-    border: 'border-fuchsia-500/30'
+    icon: <Target className="w-6 h-6 text-neurix-cyan" />,
+    tag: 'SYNERGY_CORE'
   }
 ];
 
 export const FutureWorkSection: React.FC = () => {
-  return (
-    <section id="future-work-section" className="relative py-24 sm:py-32 overflow-hidden bg-[#0F172A] border-t border-[#F9FAFB]/5">
-      {/* Abstract Background Elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-indigo-500/10 to-transparent blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-fuchsia-500/5 to-transparent blur-[100px] pointer-events-none" />
-      
-      {/* Grid Pattern */}
-      
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  });
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+  const glowY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const lineY = useTransform(scrollYProgress, [0, 1], ['-20%', '20%']);
+
+  return (
+    <section ref={containerRef} id="future-work-section" className="relative py-32 overflow-hidden bg-[#050B14]">
+      {/* Abstract Background Elements with Parallax */}
+      <motion.div 
+        style={{ y: glowY }}
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[400px] bg-neurix-cyan/5 blur-[120px] pointer-events-none" 
+      />
+      
+      {/* Decorative Parallax Line */}
+      <motion.div 
+        style={{ y: lineY }}
+        className="absolute top-1/2 right-[-5%] w-[40%] h-[1px] bg-gradient-to-l from-neurix-cyan/20 to-transparent rotate-[-45deg] pointer-events-none" 
+      />
+      
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
         
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-20">
+        <div className="max-w-3xl mb-24">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F9FAFB]/5 border border-[#F9FAFB]/10 text-[#9CA3AF] text-sm font-medium tracking-wide mb-6"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3 py-1 bg-neurix-cyan/5 border border-neurix-cyan/20 rounded-full mb-8"
           >
-            <Rocket className="w-4 h-4 text-[#FBBF24]" />
-            <span>Beyond The Horizon</span>
+            <Rocket className="w-3 h-3 text-neurix-cyan" />
+            <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neurix-cyan">Vision 2030</span>
           </motion.div>
           
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#F9FAFB] via-slate-200 to-slate-500 tracking-tight"
+            className="text-5xl lg:text-7xl font-black text-[#F2FAFF] tracking-tight leading-[0.9]"
           >
-            Future Work
+            BEYOND THE <br /> <span className="text-neurix-cyan italic">HORIZON</span>
           </motion.h2>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-6 text-lg text-[#9CA3AF] leading-relaxed font-light"
+            className="mt-8 text-xl text-[#9DB2C3] leading-relaxed font-light max-w-xl"
           >
-            Our architecture is designed for infinite scalability. We are actively researching and developing the next generation of spatial computing interfaces.
+            Neurix is not just a project; it is a continuously evolving ecosystem. Our roadmap extends into the fusion of edge computing and neural haptics.
           </motion.p>
         </div>
 
         {/* Future Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {futurePillars.map((pillar, index) => (
             <motion.div
               key={pillar.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.15 + 0.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative h-full"
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="spatial-card p-10 group"
             >
-              <div className={`absolute inset-0 bg-gradient-to-br ${pillar.color} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl blur-xl pointer-events-none`} />
-              
-              <div className={`relative h-full flex flex-col p-8 rounded-3xl bg-[#1E293B]/80 backdrop-blur-md border ${pillar.border} hover:border-[#F9FAFB]/20 transition-all duration-500 overflow-hidden`}>
-                
-                {/* Minimalist Tech Lines */}
-                <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-100 transition-opacity duration-500">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" className="text-[#F9FAFB]">
-                    <path d="M40 0L0 40M40 20L20 40M40 40L40 40" strokeWidth="1" strokeDasharray="2 4"/>
-                  </svg>
-                </div>
-
-                <div className="w-14 h-14 rounded-2xl bg-[#F9FAFB]/5 border border-[#F9FAFB]/10 flex items-center justify-center mb-6 shadow-lg shadow-black/50 group-hover:scale-110 transition-transform duration-500">
+              <div className="flex justify-between items-start mb-12">
+                <div className="p-3 bg-neurix-cyan/5 border border-neurix-cyan/10 rounded-sm group-hover:border-neurix-cyan/30 transition-colors">
                   {pillar.icon}
                 </div>
-                
-                <h3 className="text-2xl font-bold text-[#F9FAFB] tracking-tight mb-4 group-hover:text-[#FBBF24] transition-colors duration-300">
-                  {pillar.title}
-                </h3>
-                
-                <p className="text-[#9CA3AF] leading-relaxed font-light flex-grow">
-                  {pillar.description}
-                </p>
-                
-                <div className="mt-8 flex items-center text-sm font-semibold text-[#9CA3AF] group-hover:text-[#F9FAFB] transition-colors">
-                  <span>Explore Concept</span>
-                  <ChevronRight className="w-4 h-4 ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                </div>
+                <span className="text-[9px] font-mono text-white/10 uppercase tracking-widest">{pillar.tag}</span>
+              </div>
+              
+              <h3 className="text-2xl font-bold text-[#F2FAFF] tracking-tight mb-4 group-hover:text-neurix-cyan transition-colors">
+                {pillar.title}
+              </h3>
+              
+              <p className="text-[#9DB2C3] leading-relaxed font-light text-sm">
+                {pillar.description}
+              </p>
+              
+              <div className="mt-12 flex items-center justify-between">
+                <div className="h-px flex-1 bg-white/5 group-hover:bg-neurix-cyan/20 transition-colors mr-4" />
+                <ChevronRight className="w-5 h-5 text-white/10 group-hover:text-neurix-cyan transition-all group-hover:translate-x-1" />
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Vision Timeline Line */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8, duration: 1.5, ease: "easeInOut" }}
-          className="w-full h-px mt-24 bg-gradient-to-r from-transparent via-[#F9FAFB]/20 to-transparent origin-left"
-        />
-        
+        {/* System Line */}
+        <div className="mt-32 w-full h-px bg-gradient-to-r from-neurix-cyan/20 via-white/5 to-transparent" />
       </div>
     </section>
   );

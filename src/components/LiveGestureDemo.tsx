@@ -1,47 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Eye, Activity, Terminal, Radio, Play, Pause, RefreshCw, Zap, ShieldAlert } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Activity, Terminal, Play, Pause, Zap, Target, Binary, ChevronRight } from 'lucide-react';
 
 export const LiveGestureDemo: React.FC = () => {
-  const containerRef = useRef<HTMLElement | null>(null);
   const [activeGesture, setActiveGesture] = useState<string>('SWIPE_RIGHT');
   const [confidence, setConfidence] = useState<number>(98.4);
   const [fps, setFps] = useState<number>(60);
   const [isStreaming, setIsStreaming] = useState<boolean>(true);
   const [uartLog, setUartLog] = useState<string[]>([
-    '[UART] RX: $NEURIX_FRAME_001_PKT_OK (len=64)',
-    '[OPENCV] 21 Hand Landmarks Detected in 16.2ms',
-    '[GESTURE] Recognized: SWIPE_RIGHT (conf=98.4%)',
-    '[DSP] Audio feedback loop triggered @ 432Hz',
+    'INIT_SEQUENCE_SUCCESSFUL',
+    'HAND_DETECTION_STABLE',
+    'NEURAL_LAYER_LINKED',
+    'IO_SYNC_READY'
   ]);
 
   const oscCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const gestures = [
-    { id: 'SWIPE_RIGHT', name: 'Swipe Right', desc: 'Trigger sequential viewport transition', keypoints: '21 pts' },
-    { id: 'PINCH_ZOOM', name: 'Pinch & Zoom', desc: 'Scale spatial vector coordinate matrix', keypoints: 'Thumb + Index' },
-    { id: 'PALM_ROTATE', name: 'Palm Rotate', desc: 'Rotate active 3D spatial orientation axis', keypoints: '5 Finger Plane' },
-    { id: 'POINT_SELECT', name: 'Point & Select', desc: 'Precise hardware GPIO activation trigger', keypoints: 'Index Tip Vector' },
+    { id: 'SWIPE_RIGHT', name: 'Swipe Right', desc: 'Viewport navigation protocol', tag: 'NAV' },
+    { id: 'PINCH_ZOOM', name: 'Pinch & Zoom', desc: 'Spatial coordinate scaling', tag: 'SCALE' },
+    { id: 'PALM_ROTATE', name: 'Palm Rotate', desc: '3D orientation adjustment', tag: 'AXIS' },
+    { id: 'POINT_SELECT', name: 'Point & Select', desc: 'Hardware GPIO activation', tag: 'GPIO' },
   ];
 
-  // UART telemetry simulation interval
   useEffect(() => {
     if (!isStreaming) return;
     const interval = setInterval(() => {
       const g = gestures[Math.floor(Math.random() * gestures.length)];
-      const conf = (94 + Math.random() * 5.8).toFixed(1);
+      const conf = (96 + Math.random() * 3.5).toFixed(1);
       setActiveGesture(g.id);
       setConfidence(parseFloat(conf));
-      setFps(Math.round(59 + Math.random() * 2));
+      setFps(Math.round(58 + Math.random() * 4));
 
-      const newLog = `[UART] ${new Date().toISOString().slice(14, 23)} CMD:${g.id} CONF:${conf}% [OK]`;
-      setUartLog((prev) => [newLog, ...prev.slice(0, 7)]);
-    }, 2400);
+      const newLog = `${new Date().toLocaleTimeString()} :: CMD_${g.id} :: CONF_${conf}%`;
+      setUartLog((prev) => [newLog, ...prev.slice(0, 5)]);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [isStreaming]);
 
-  // Oscilloscope canvas loop
   useEffect(() => {
     const canvas = oscCanvasRef.current;
     if (!canvas) return;
@@ -50,169 +47,155 @@ export const LiveGestureDemo: React.FC = () => {
 
     let animId: number;
     let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
-    let height = (canvas.height = 180);
+    let height = (canvas.height = 240);
 
     let t = 0;
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Grid Lines
-      ctx.strokeStyle = 'rgba(217, 119, 6, 0.1)';
+      // Grid
+      ctx.strokeStyle = 'rgba(0, 217, 255, 0.05)';
       ctx.lineWidth = 1;
-      for (let x = 0; x < width; x += 30) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
+      for (let x = 0; x < width; x += 40) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
       }
-      for (let y = 0; y < height; y += 30) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
+      for (let y = 0; y < height; y += 40) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
       }
 
-      // Signal Trace
+      // Trace
       ctx.beginPath();
-      ctx.strokeStyle = '#FBBF24';
-      ctx.lineWidth = 2.5;
-      ctx.shadowColor = '#FBBF24';
-      ctx.shadowBlur = 8;
+      ctx.strokeStyle = '#00D9FF';
+      ctx.lineWidth = 2;
+      ctx.shadowColor = '#00D9FF';
+      ctx.shadowBlur = 10;
 
       for (let x = 0; x < width; x += 2) {
-        const y =
-          height / 2 +
-          Math.sin(x * 0.05 + t) * 30 +
-          Math.sin(x * 0.02 - t * 0.5) * 15;
+        const y = height / 2 + Math.sin(x * 0.03 + t) * 40 + Math.cos(x * 0.01 - t * 0.5) * 20;
         if (x === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      t += 0.08;
+      t += 0.05;
       animId = requestAnimationFrame(render);
     };
 
     render();
-
     return () => cancelAnimationFrame(animId);
   }, []);
 
   return (
-    <section
-      ref={containerRef}
-      id="live-demo-section"
-      className="py-28 px-4 sm:px-6 lg:px-8 border-b border-[#FBBF24]/15 bg-[#0F172A] font-mono relative overflow-hidden"
-    >
+    <section id="live-demo-section" className="py-32 px-6 lg:px-12 relative overflow-hidden bg-[#050B14]">
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Header with Scroll Animation */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-        >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1E293B] border border-[#FBBF24]/30 text-[#FBBF24] text-[11px] font-bold uppercase tracking-widest mb-3">
-              <Activity className="w-3.5 h-3.5" />
-              <span>Real-Time Bench Diagnostics</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] tracking-tight uppercase">
-              Live Optical <span className="text-[#FBBF24] amber-phosphor-glow">& Gesture Engine</span>
-            </h2>
-          </div>
-          
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsStreaming(!isStreaming)}
-              className={`px-4 py-2 border text-xs uppercase font-bold flex items-center gap-2 cursor-pointer transition-all ${
-                isStreaming
-                  ? 'bg-[#FBBF24] text-[#0F172A] border-[#FBBF24] shadow-[0_0_15px_rgba(217,119,6,0.3)]'
-                  : 'bg-[#1E293B] text-[#9CA3AF] border-[#FBBF24]/30'
-              }`}
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-24 gap-8">
+          <div className="max-w-2xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-3 py-1 bg-neurix-cyan/5 border border-neurix-cyan/20 rounded-full mb-8"
             >
-              {isStreaming ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-              {isStreaming ? 'PAUSE TELEMETRY' : 'RESUME TELEMETRY'}
-            </button>
+              <Binary className="w-3 h-3 text-neurix-cyan" />
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neurix-cyan">Diagnostic Feed</span>
+            </motion.div>
+            
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-5xl lg:text-7xl font-black text-[#F2FAFF] tracking-tight leading-[0.9]"
+            >
+              REAL-TIME <br /> <span className="text-neurix-cyan italic">SYNTHESIS</span>
+            </motion.h2>
           </div>
-        </motion.div>
 
-        {/* Diagnostics Sandbox Layout with Scroll-Driven Staggered Entry */}
+          <button
+            onClick={() => setIsStreaming(!isStreaming)}
+            className="px-8 py-3 bg-neurix-cyan/5 border border-neurix-cyan/20 hover:border-neurix-cyan text-neurix-cyan font-bold text-[10px] uppercase tracking-widest transition-all rounded-sm flex items-center gap-3"
+          >
+            {isStreaming ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+            {isStreaming ? 'SUSPEND FEED' : 'ACTIVATE FEED'}
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
-          {/* Left Column: Interactive Gesture State Cards */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-4 space-y-3"
-          >
-            <p className="text-xs text-[#9CA3AF] font-bold uppercase tracking-wider mb-2">
-              // Optical Tracking Pipeline
-            </p>
-            {gestures.map((g, idx) => {
-              const isActive = activeGesture === g.id;
-              return (
-                <motion.div
-                  key={g.id}
-                  whileHover={{ scale: 1.02 }}
-                  onClick={() => {
-                    setActiveGesture(g.id);
-                    setConfidence(98.9);
-                  }}
-                  className={`p-4 border transition-all cursor-pointer ${
-                    isActive
-                      ? 'bg-[#1E293B] border-[#FBBF24] shadow-[0_0_20px_rgba(217,119,6,0.25)] translate-x-1'
-                      : 'bg-[#1E293B]/40 border-[#FBBF24]/15 hover:border-[#FBBF24]/50'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className={`text-sm font-bold ${isActive ? 'text-[#FBBF24]' : 'text-[#F9FAFB]'}`}>
-                      {g.name}
-                    </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 bg-[#0F172A] border border-[#FBBF24]/20 text-[#9CA3AF]">
-                      {g.keypoints}
-                    </span>
-                  </div>
-                  <p className="text-xs text-[#9CA3AF] font-sans">{g.desc}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          {/* Left: Gesture Selector */}
+          <div className="lg:col-span-4 space-y-4">
+            <span className="text-[9px] font-mono text-[#8199AA] uppercase tracking-[0.3em] block mb-4">Select Protocol</span>
+            {gestures.map((g, idx) => (
+              <motion.div
+                key={g.id}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                onClick={() => setActiveGesture(g.id)}
+                className={`spatial-card p-6 cursor-pointer group flex items-center justify-between ${
+                  activeGesture === g.id ? 'border-neurix-cyan/50 bg-neurix-cyan/5' : ''
+                }`}
+              >
+                <div>
+                  <h4 className="text-sm font-bold mb-1 group-hover:text-neurix-cyan transition-colors">{g.name}</h4>
+                  <p className="text-[10px] text-[#8199AA] font-light uppercase tracking-wider">{g.desc}</p>
+                </div>
+                <div className={`text-[9px] font-mono p-1 border ${
+                  activeGesture === g.id ? 'border-neurix-cyan text-neurix-cyan' : 'border-white/10 text-white/30'
+                }`}>
+                  {g.tag}
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
-          {/* Center / Right: Oscilloscope & Feeds */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.7 }}
-            className="lg:col-span-8 space-y-6"
-          >
-            {/* Oscilloscope Panel */}
-            <div className="p-6 bg-[#1E293B]/70 border border-[#FBBF24]/30 shadow-xl backdrop-blur-sm">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#FBBF24]/15">
-                <span className="text-xs font-bold text-[#F9FAFB] uppercase flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-[#FBBF24]" />
-                  Real-Time Signal Visualizer
-                </span>
-                <div className="flex items-center gap-4 text-xs font-mono">
-                  <span className="text-emerald-400">FPS: {fps}</span>
-                  <span className="text-[#FBBF24]">CONF: {confidence}%</span>
+          {/* Right: Visualizer */}
+          <div className="lg:col-span-8 space-y-8">
+            <div className="spatial-card p-8">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/5">
+                <div className="flex items-center gap-3">
+                  <Activity className="w-4 h-4 text-neurix-cyan" />
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#F2FAFF]">Spectral Analysis</span>
+                </div>
+                <div className="flex items-center gap-6 text-[10px] font-mono">
+                  <span className="text-neurix-cyan">FREQ: 120HZ</span>
+                  <span className="text-neurix-cyan">SYNC: 99.8%</span>
                 </div>
               </div>
 
-              <div className="h-44 bg-[#0F172A] border border-[#FBBF24]/20 overflow-hidden relative">
+              <div className="h-60 bg-black/20 border border-white/5 relative overflow-hidden rounded-sm">
                 <canvas ref={oscCanvasRef} className="w-full h-full" />
+                <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+                  <div className="flex items-center gap-2 px-3 py-1 bg-black/40 backdrop-blur-md border border-neurix-cyan/20 text-[10px] font-mono text-neurix-cyan">
+                    {confidence}% CONF
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1 bg-black/40 backdrop-blur-md border border-white/5 text-[10px] font-mono text-[#8199AA]">
+                    {fps} FPS
+                  </div>
+                </div>
               </div>
             </div>
-          </motion.div>
 
+            {/* Telemetry Logs */}
+            <div className="spatial-card p-8">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Terminal className="w-4 h-4 text-neurix-cyan" />
+                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#F2FAFF]">System Telemetry</span>
+              </div>
+              <div className="space-y-2">
+                {uartLog.map((log, i) => (
+                  <div key={i} className="flex items-center gap-4 text-[10px] font-mono">
+                    <span className="text-white/20">[{i}]</span>
+                    <span className={i === 0 ? 'text-neurix-cyan' : 'text-[#8199AA]'}>{log}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-
       </div>
     </section>
   );

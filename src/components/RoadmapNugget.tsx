@@ -1,120 +1,136 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Cpu, Eye, BookOpen, Zap, Radio, Layers, CircuitBoard, CheckCircle, ArrowUpRight } from 'lucide-react';
+import { Cpu, Eye, BookOpen, CircuitBoard, ArrowUpRight } from 'lucide-react';
 
 export const RoadmapNugget: React.FC = () => {
-  const containerRef = useRef<HTMLElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   });
 
-  const yOffset = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const decorY1 = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const decorY2 = useTransform(scrollYProgress, [0, 1], ['20%', '-20%']);
 
   const pillars = [
     {
-      title: 'Hardware Integration',
-      description: 'Developing intelligent, low-latency firmware kernels using modern dual-core microcontrollers to push physical control loops to sub-millisecond responsiveness.',
-      icon: <Cpu className="w-7 h-7 text-[#FBBF24]" />,
-      accent: 'border-[#FBBF24]/30 hover:border-[#FBBF24]',
-      glow: 'group-hover:shadow-[0_0_30px_rgba(251,191,36,0.25)]',
-      tags: ['Processing', 'Low Latency', 'Physical Control'],
+      title: 'Hardware Architecture',
+      description: 'Ultra-low latency firmware kernels on dual-core processors, enabling sub-millisecond physical feedback loops.',
+      icon: <Cpu className="w-6 h-6 text-neurix-cyan" />,
+      tag: 'KERNEL v2.0',
     },
     {
-      title: 'Optical Tracking',
-      description: 'Utilizing dynamic computer vision algorithms via advanced interfaces to interpret and execute spatial commands in human-computer interaction fields.',
-      icon: <Eye className="w-7 h-7 text-amber-400" />,
-      accent: 'border-amber-500/30 hover:border-amber-400',
-      glow: 'group-hover:shadow-[0_0_30px_rgba(251,191,36,0.25)]',
-      tags: ['Vision', 'Spatial Commands', '60 FPS Tracking'],
+      title: 'Optical Synthesis',
+      description: 'Advanced computer vision arrays interpreting human motion into 6DoF spatial commands at 120Hz.',
+      icon: <Eye className="w-6 h-6 text-neurix-cyan" />,
+      tag: 'OPTIC ENGINE',
     },
     {
-      title: 'System Evaluation',
-      description: 'Structuring rigorous academic studies on gesture latency matrices, user hand-interaction ergonomic models, and computing efficiency.',
-      icon: <BookOpen className="w-7 h-7 text-emerald-400" />,
-      accent: 'border-emerald-500/30 hover:border-emerald-400',
-      glow: 'group-hover:shadow-[0_0_30px_rgba(52,211,153,0.25)]',
-      tags: ['Latency Benchmarks', 'Ergonomics', 'User Testing'],
+      title: 'HCI Ergonomics',
+      description: 'Rigorous cognitive load modeling to ensure touchless interaction feels intuitive and fatigue-free.',
+      icon: <BookOpen className="w-6 h-6 text-neurix-cyan" />,
+      tag: 'NEURAL UX',
     },
   ];
 
   return (
-    <section
-      ref={containerRef}
-      id="about-concept"
-      className="py-28 px-4 sm:px-6 lg:px-8 border-y border-[#FBBF24]/15 bg-[#0F172A]/80 font-mono relative overflow-hidden"
-    >
-      {/* Background Subtle Laser Lines */}
+    <section ref={containerRef} id="roadmap" className="py-32 px-6 lg:px-12 relative overflow-hidden bg-[#050B14]">
+      {/* Background Decor */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#163247] to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#163247] to-transparent" />
       
-
+      {/* Parallax Geometric Backgrounds */}
+      <motion.div 
+        style={{ y: decorY1 }}
+        className="absolute top-1/4 right-[5%] w-64 h-64 border border-neurix-cyan/5 rounded-full blur-3xl pointer-events-none" 
+      />
+      <motion.div 
+        style={{ y: decorY2 }}
+        className="absolute bottom-1/4 left-[5%] w-96 h-px bg-neurix-cyan/10 -rotate-12 pointer-events-none" 
+      />
+      
       <div className="max-w-7xl mx-auto relative z-10">
-        
-        {/* Header with Scroll Animation */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.7 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6"
-        >
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1E293B] border border-[#FBBF24]/30 text-[#FBBF24] text-[11px] font-bold uppercase tracking-widest mb-3">
-              <CircuitBoard className="w-3.5 h-3.5" />
-              <span>System Core Architecture</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-black font-display text-[#F9FAFB] tracking-tight uppercase">
-              Core Engineering <span className="text-[#FBBF24] amber-phosphor-glow">Pillars</span>
-            </h2>
-          </div>
-          <p className="text-[#9CA3AF] max-w-md text-sm font-sans leading-relaxed">
-            Bridging hardware firmware, computer vision optical tracking, and ergonomic HCI research into a unified spatial interface.
-          </p>
-        </motion.div>
-
-        {/* Pillars Grid with Staggered Scroll-Driven Reveals & 3D Hover */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {pillars.map((pillar, idx) => (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+          
+          {/* Header Area */}
+          <div className="lg:col-span-4 sticky top-32">
             <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ delay: idx * 0.18, duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className={`p-8 bg-[#1E293B]/80 border ${pillar.accent} ${pillar.glow} transition-all duration-300 relative group flex flex-col justify-between shadow-xl backdrop-blur-sm`}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 mb-6 px-3 py-1 bg-neurix-cyan/5 border border-neurix-cyan/20 rounded-full"
             >
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div className="p-3 bg-[#0F172A] border border-[#FBBF24]/30 group-hover:scale-110 transition-transform">
-                    {pillar.icon}
-                  </div>
-                  <span className="text-[10px] text-[#9CA3AF] font-mono">
-                    PILLAR // 0{idx + 1}
-                  </span>
-                </div>
+              <CircuitBoard className="w-3 h-3 text-neurix-cyan" />
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neurix-cyan">SYSTEM PILLARS</span>
+            </motion.div>
+            
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl lg:text-5xl font-black mb-6 leading-tight"
+            >
+              ENGINEERING <br /> <span className="text-neurix-cyan italic">INTELLIGENCE</span>
+            </motion.h2>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-[#9DB2C3] leading-relaxed font-light"
+            >
+              The technical foundation of Neurix is built upon three convergent disciplines: real-time hardware orchestration, high-fidelity computer vision, and cognitive ergonomics.
+            </motion.p>
 
-                <h3 className="text-xl font-bold font-display text-[#F9FAFB] mb-3 group-hover:text-[#FBBF24] transition-colors">
-                  {pillar.title}
-                </h3>
-                <p className="text-[#9CA3AF] text-sm font-sans leading-relaxed mb-6">
-                  {pillar.description}
-                </p>
-              </div>
-
-              <div className="pt-4 border-t border-[#FBBF24]/10 flex flex-wrap gap-2">
-                {pillar.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="text-[10px] px-2 py-1 bg-[#0F172A] border border-[#FBBF24]/20 text-[#9CA3AF] group-hover:border-[#FBBF24]/40 transition-colors"
-                  >
-                    {tag}
-                  </span>
-                ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-10"
+            >
+              <div className="flex items-center gap-4 text-neurix-cyan font-mono text-xs cursor-pointer group">
+                <span className="group-hover:mr-2 transition-all">READ WHITE PAPER</span>
+                <ArrowUpRight className="w-4 h-4" />
               </div>
             </motion.div>
-          ))}
-        </div>
+          </div>
 
+          {/* Pillars Area */}
+          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {pillars.map((pillar, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * idx }}
+                className={`spatial-card p-8 group ${idx === 2 ? 'md:col-span-2' : ''}`}
+              >
+                <div className="flex justify-between items-start mb-12">
+                  <div className="p-3 bg-neurix-cyan/5 rounded-sm border border-neurix-cyan/10 group-hover:border-neurix-cyan/30 transition-colors">
+                    {pillar.icon}
+                  </div>
+                  <span className="text-[10px] font-mono text-white/20 tracking-widest">{pillar.tag}</span>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-4 group-hover:text-neurix-cyan transition-colors">
+                  {pillar.title}
+                </h3>
+                <p className="text-sm text-[#9DB2C3] leading-relaxed font-light">
+                  {pillar.description}
+                </p>
+                
+                <div className="mt-8 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="h-px flex-1 bg-neurix-cyan/20" />
+                  <span className="text-[9px] font-mono text-neurix-cyan">EXPLORE CORE</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

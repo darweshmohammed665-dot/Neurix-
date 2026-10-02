@@ -17,7 +17,7 @@ export const loadingLetters: LoadingLetter[] = [
     char: 'U',
     label: 'UNIVERSAL_BUS',
     description: 'Inter-Integrated multi-device controller loaded.',
-    glow: 'shadow-cyan-500/50 text-amber-400',
+    glow: 'shadow-cyan-500/50 text-[#00D9FF]',
   },
   {
     char: 'R',
@@ -35,7 +35,7 @@ export const loadingLetters: LoadingLetter[] = [
     char: 'X',
     label: 'XTENSIBLE_SYS',
     description: 'Central matrix synchronization successful.',
-    glow: 'shadow-emerald-500/50 text-emerald-400',
+    glow: 'shadow-emerald-500/50 text-[#39E58C]',
   },
 ];
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NeurixLogo } from './NeurixLogo';
-import { Menu, X, Activity, Terminal, Radio, ShieldCheck } from 'lucide-react';
+import { Menu, X, Activity } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NeurixNavbarProps {
   onNavigateSection: (sectionId: string) => void;
@@ -13,16 +14,14 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
   const [activeSection, setActiveSection] = useState('hero-section');
 
   const navLinks = [
-    { id: 'hero-section', label: 'Home' },
-    { id: 'about-concept', label: 'Concept' },
-    { id: 'roadmap', label: 'The Team' },
-    { id: 'live-demo-section', label: 'Project' },
-    { id: 'contact-hub', label: 'Connect' },
+    { id: 'hero-section', label: 'Index' },
+    { id: 'roadmap', label: 'Systems' },
+    { id: 'live-demo-section', label: 'Feeds' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      setIsScrolled(window.scrollY > 50);
 
       const scrollPos = window.scrollY + 200;
       for (const link of navLinks) {
@@ -47,74 +46,71 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 font-mono transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#0F172A]/90 backdrop-blur-md border-b border-[#FBBF24]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8)]'
-          : 'bg-transparent border-b border-transparent'
+          ? 'py-4 bg-[#050B14]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl'
+          : 'py-8 bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between">
         
         {/* Brand Link */}
         <div
           onClick={() => handleLinkClick('hero-section')}
-          className="flex items-center gap-3.5 cursor-pointer group select-none"
+          className="flex items-center gap-4 cursor-pointer group select-none"
         >
-          <NeurixLogo className="w-10 h-10" glow />
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black font-display tracking-tight text-[#F9FAFB] group-hover:text-[#FBBF24] transition-colors flex items-center">
-                <span className="golden-neon-text">NEURIX</span>
-              </span>
-              <span className="px-2 py-0.5 text-[9px] font-bold bg-[#FBBF24]/15 border border-[#FBBF24]/40 text-[#FBBF24] uppercase tracking-wider">
-                CORE
-              </span>
-            </div>
-            <p className="text-[10px] text-[#9CA3AF] font-mono tracking-widest uppercase">
-              Spatial Interface Matrix
-            </p>
+          <NeurixLogo className="w-8 h-8" glow />
+          <div className="flex flex-col">
+            <span className="text-xl font-black tracking-tight text-[#F2FAFF] group-hover:text-neurix-cyan transition-colors">
+              NEURIX
+            </span>
+            <span className="text-[8px] font-mono tracking-[0.4em] uppercase text-[#8199AA]">OS v4.0.1</span>
           </div>
         </div>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-[#1E293B]/70 p-1.5 border border-[#FBBF24]/20">
+        <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleLinkClick(link.id)}
-                className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
-                  isActive
-                    ? 'bg-[#FBBF24] text-[#0F172A] shadow-[0_0_12px_rgba(217,119,6,0.4)]'
-                    : 'text-[#9CA3AF] hover:text-[#FBBF24] hover:bg-[#FBBF24]/10'
+                className={`relative py-1 text-[10px] font-mono uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer ${
+                  isActive ? 'text-neurix-cyan' : 'text-[#8199AA] hover:text-[#F2FAFF]'
                 }`}
               >
                 {link.label}
+                {isActive && (
+                  <motion.div
+                    layoutId="navUnderline"
+                    className="absolute bottom-0 left-0 right-0 h-px bg-neurix-cyan"
+                  />
+                )}
               </button>
             );
           })}
         </nav>
 
         {/* Right Status Badge & Telemetry Button */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-4">
           {onReplayIntro && (
             <button
               onClick={onReplayIntro}
-              title="Play Intro Video"
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#1E293B] hover:bg-[#FBBF24] hover:text-[#0F172A] border border-[#FBBF24]/50 text-[#FBBF24] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_12px_rgba(251,191,36,0.05)] cursor-pointer group"
+              title="Replay Cyber Pyramid & Benben Sequence"
+              className="px-3 py-1.5 bg-[#0C1B2A] hover:bg-[#FFD43B]/10 border border-[#163247] hover:border-[#FFD43B] text-[#9DB2C3] hover:text-[#FFD43B] font-mono text-[9px] uppercase tracking-widest transition-all rounded-sm flex items-center gap-1.5 cursor-pointer"
             >
-              <span className="w-2 h-2 rounded-full bg-[#FBBF24] group-hover:bg-[#0F172A] animate-ping" />
-              <span>Play Intro</span>
+              <span className="text-xs text-neurix-gold">𓂀</span>
+              <span>BENBEN INTRO</span>
             </button>
           )}
 
           <button
             onClick={() => handleLinkClick('live-demo-section')}
-            className="flex items-center gap-2 px-4 py-2 bg-[#FBBF24] hover:bg-[#F9FAFB] text-[#0F172A] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(251,191,36,0.3)] cursor-pointer"
+            className="px-5 py-2 bg-neurix-cyan/5 border border-neurix-cyan/20 hover:border-neurix-cyan text-neurix-cyan font-bold text-[10px] uppercase tracking-widest transition-all rounded-sm flex items-center gap-2 group cursor-pointer"
           >
-            <Activity className="w-3.5 h-3.5" />
-            <span>View Project</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-neurix-cyan animate-pulse group-hover:scale-125 transition-transform" />
+            <span>Project Portal</span>
           </button>
         </div>
 
@@ -122,7 +118,7 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
         <div className="flex items-center md:hidden">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 border border-[#FBBF24]/30 bg-[#1E293B] text-[#FBBF24] hover:text-[#F9FAFB] transition-colors cursor-pointer"
+            className="text-neurix-cyan transition-colors cursor-pointer"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -130,36 +126,45 @@ export const NeurixNavbar: React.FC<NeurixNavbarProps> = ({ onNavigateSection, o
       </div>
 
       {/* Mobile Drawer */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-[#0F172A] border-b border-[#FBBF24]/30 px-6 py-6 space-y-4">
-          {navLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => handleLinkClick(link.id)}
-              className="w-full text-left px-4 py-3 border border-[#FBBF24]/20 bg-[#1E293B]/50 text-slate-200 hover:text-[#FBBF24] hover:border-[#FBBF24] text-sm uppercase tracking-wider font-semibold transition-colors"
-            >
-              {link.label}
-            </button>
-          ))}
-          {onReplayIntro && (
-            <button
-              onClick={() => {
-                onReplayIntro();
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full text-left px-4 py-3 border border-[#FBBF24]/50 bg-[#1E293B] text-[#FBBF24] text-sm uppercase tracking-wider font-bold"
-            >
-              Play Intro Video
-            </button>
-          )}
-          <button
-            onClick={() => handleLinkClick('live-demo-section')}
-            className="w-full mt-4 py-3 bg-[#FBBF24] text-[#0F172A] font-bold text-center uppercase tracking-wider text-xs shadow-md"
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 right-0 md:hidden bg-[#050B14] border-b border-white/10 px-6 py-10 space-y-6 shadow-2xl"
           >
-            View Project
-          </button>
-        </div>
-      )}
+            {navLinks.map((link) => (
+              <button
+                key={link.id}
+                onClick={() => handleLinkClick(link.id)}
+                className="w-full text-left text-sm uppercase tracking-[0.2em] font-mono text-[#8199AA] hover:text-neurix-cyan transition-colors"
+              >
+                {link.label}
+              </button>
+            ))}
+
+            {onReplayIntro && (
+              <button
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  onReplayIntro();
+                }}
+                className="w-full py-3 bg-[#0C1B2A] border border-[#163247] text-neurix-gold font-mono text-xs uppercase tracking-widest text-center flex items-center justify-center gap-2 rounded-sm"
+              >
+                <span className="text-sm">𓂀</span> REPLAY CYBER PYRAMID
+              </button>
+            )}
+
+            <button
+              onClick={() => handleLinkClick('live-demo-section')}
+              className="w-full py-4 bg-neurix-cyan text-[#031018] font-bold text-center uppercase tracking-widest text-xs rounded-sm"
+            >
+              Project Portal
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
